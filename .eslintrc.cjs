@@ -41,6 +41,7 @@ module.exports = {
     'import/no-unresolved': 'error',
     '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
     'import/extensions': ['error', 'ignorePackages', { js: 'never', ts: 'never' }],
+    'import/no-extraneous-dependencies': ['error', { includeTypes: true }],
   },
   overrides: [
     {
