@@ -1,0 +1,35 @@
+@import '../../styles/variables';
+
+.footer {
+  display: flex;
+  min-height: 100px;
+  align-items: center;
+  justify-content: space-between;
+  margin: auto auto 0;
+}
+
+.rs-logo {
+  width: 100px;
+  height: 40px;
+  background: center / contain no-repeat url('/src/assets/img/rss.svg');
+  cursor: pointer;
+  filter: drop-shadow(1px 1px 2px $dark-color) brightness(0.6);
+  transition: all 0.3s ease;
+}
+
+.rs-logo:hover {
+  filter: drop-shadow(1px 1px 2px $dark-color) brightness(0.8);
+}
+
+.github {
+  width: 100px;
+  height: 50px;
+  background: center / contain no-repeat url('/src/assets/img/github.svg');
+  cursor: pointer;
+  filter: drop-shadow(1px 1px 2px $dark-color) brightness(0.6);
+  transition: all 0.3s ease;
+}
+
+.github:hover {
+  filter: drop-shadow(1px 1px 2px $dark-color) brightness(0.8);
+}
