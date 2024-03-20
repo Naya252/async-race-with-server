@@ -1,0 +1,50 @@
+@import './variables';
+
+:root {
+  background-color: #242424;
+  color: rgb(255 255 255 / 87%);
+  color-scheme: light dark;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis: none;
+  font-weight: 400;
+  line-height: 1.5;
+  text-rendering: optimizelegibility;
+}
+
+a {
+  color: rgba($main-color, 0.7);
+  font-weight: 500;
+  text-decoration: inherit;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  color: $main-color;
+}
+
+body {
+  display: flex;
+  width: 100%;
+  min-width: 320px;
+  min-height: 100dvh;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-content: stretch;
+  margin: 0;
+  place-items: center;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+.app {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 100dvh;
+  flex-direction: column;
+}
