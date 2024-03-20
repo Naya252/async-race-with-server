@@ -1,0 +1,20 @@
+@import '../../styles/variables';
+
+.header {
+  position: sticky;
+  display: flex;
+  background-color: rgba($dark-color, 0.2);
+}
+
+.title {
+  font-size: 1.5rem;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  font-size: 1.1rem;
+}
