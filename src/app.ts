@@ -3,6 +3,58 @@ import BaseComponent from '@/components/shared/base-component';
 import Header from './components/header/header-component';
 import Footer from './components/footer/footer-component';
 import { NAV_LINKS } from './shared/constants';
+import * as garage from './repositories/garage-repository';
+import * as engine from './repositories/engine-repository';
+
+const getAllCars = (): void => {
+  garage
+    .getAllCars()
+    .then((data) => {
+      console.log(data);
+    })
+    .catch(() => null);
+};
+
+const getCarById = (): void => {
+  garage
+    .getCarById(1)
+    .then((data) => {
+      console.log(data);
+    })
+    .catch(() => null);
+};
+
+const createCar = (): void => {
+  garage
+    .createCar({ name: 'MAZ', color: '#666' })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch(() => null);
+};
+
+const deleteCar = (): void => {
+  garage.deleteCar(5).catch(() => null);
+};
+
+const updateCar = (): void => {
+  garage.updateCar({ name: 'MAZ', color: '#000', id: 8 }).catch(() => null);
+};
+
+const changeEngine = (): void => {
+  engine
+    .changeEngineCar({ id: 1, status: 'started' })
+    .then((data) => {
+      console.log(data);
+      engine
+        .switchDriveMode(1)
+        .then((data2) => {
+          console.log(data2);
+        })
+        .catch(() => null);
+    })
+    .catch(() => null);
+};
 
 export default class App {
   private readonly appContainer: BaseComponent;
@@ -32,6 +84,14 @@ export default class App {
   public init(): void {
     const { body } = document;
     this.appContainer.appendToParent(body);
+
+    getAllCars();
+    getCarById();
+    createCar();
+    updateCar();
+    deleteCar();
+
+    changeEngine();
   }
 
   private navigate(value: string): void {
