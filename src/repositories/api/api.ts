@@ -56,6 +56,12 @@ async function response(url: string, params: RequestInit): Promise<SuccessData> 
 
   const resp: unknown = await res.json();
 
+  if (params.method === QUERIES.delete) {
+    if (typeof resp === 'object' && resp !== null) {
+      return resp;
+    }
+  }
+
   if (
     !isCars(resp) &&
     !isCar(resp) &&
