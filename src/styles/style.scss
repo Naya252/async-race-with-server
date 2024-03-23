@@ -48,3 +48,11 @@ h1 {
   min-height: 100dvh;
   flex-direction: column;
 }
+
+.modal-open {
+  overflow: hidden;
+}
+
+.block {
+  display: block;
+}
