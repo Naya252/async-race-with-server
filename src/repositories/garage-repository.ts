@@ -1,100 +1,45 @@
-import { BASE_URL } from '@/shared/constants';
 import { type Car } from '@/types/types';
 import { isCars, isCar } from './validation';
+import api from './api/api';
 
-const garageUrl = `${BASE_URL}garage/`;
+const GARAGE_ENDPOINT = `garage`;
+const ERROR_MESSAGES = {
+  Cars: 'Failed to parse Cars data',
+  Car: 'Failed to parse Car`s data',
+};
 
 export async function getAllCars(): Promise<Car[]> {
-  try {
-    const response = await fetch(garageUrl);
-    if (!response.ok) {
-      throw new Error('Failed to fetch data');
-    }
-    const data: unknown = await response.json();
-
-    if (!isCars(data)) {
-      throw new Error('Failed to parse Cars data');
-    }
-
-    return data;
-  } catch (error) {
-    throw new Error('Failed to fetch Cars data');
+  const data = await api.get({ endpoint: `${GARAGE_ENDPOINT}/` });
+  if (!isCars(data)) {
+    throw new Error(ERROR_MESSAGES.Cars);
   }
+  return data;
 }
 
 export async function getCarById(id: number): Promise<Car> {
-  try {
-    const response = await fetch(`${garageUrl}${id}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch data');
-    }
-    const data: unknown = await response.json();
-
-    if (!isCar(data)) {
-      throw new Error('Failed to parse Car data');
-    }
-    return data;
-  } catch (error) {
-    throw new Error('Failed to fetch Car data');
+  const data = await api.get({ endpoint: `${GARAGE_ENDPOINT}/${id}` });
+  if (!isCar(data)) {
+    throw new Error(ERROR_MESSAGES.Car);
   }
+  return data;
 }
 
 export async function createCar(carData: Record<string, number | string>): Promise<Car> {
-  try {
-    const response = await fetch(garageUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(carData),
-    });
-    if (!response.ok) {
-      throw new Error('Failed to create car');
-    }
-    const data: unknown = await response.json();
-
-    if (!isCar(data)) {
-      throw new Error('Failed to parse Car data');
-    }
-
-    return data;
-  } catch (error) {
-    throw new Error('Failed to create new car');
+  const data = await api.post({ endpoint: GARAGE_ENDPOINT, data: carData });
+  if (!isCar(data)) {
+    throw new Error(ERROR_MESSAGES.Car);
   }
-}
-
-export async function deleteCar(id: number): Promise<void> {
-  try {
-    const response = await fetch(`${garageUrl}${id}`, { method: 'DELETE' });
-
-    if (!response.ok) {
-      throw new Error('Failed to delete car');
-    }
-  } catch (error) {
-    throw new Error('Failed to delete car');
-  }
+  return data;
 }
 
 export async function updateCar(carData: Car): Promise<Car> {
-  try {
-    const response = await fetch(`${garageUrl}${carData.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(carData),
-    });
-    if (!response.ok) {
-      throw new Error('Failed to update car');
-    }
-    const data: unknown = await response.json();
-
-    if (!isCar(data)) {
-      throw new Error('Failed to parse Car data');
-    }
-
-    return data;
-  } catch (error) {
-    throw new Error('Failed to update new car');
+  const data = await api.put({ endpoint: `${GARAGE_ENDPOINT}/${carData.id}`, data: carData });
+  if (!isCar(data)) {
+    throw new Error(ERROR_MESSAGES.Car);
   }
+  return data;
+}
+
+export async function deleteCar(id: number): Promise<void> {
+  await api.delete({ endpoint: `${GARAGE_ENDPOINT}/${id}` });
 }

@@ -1,43 +1,31 @@
-import { BASE_URL } from '@/shared/constants';
 import type { EngineParams, CarRaceData, DriveMode } from '@/types/types';
 import { isCarRaceData, isDriveMode } from './validation';
+import api from './api/api';
 
-const engineUrl = `${BASE_URL}engine`;
+const ENGINE_ENDPOINT = `engine`;
+const ERROR_MESSAGES = {
+  Engine: 'Failed to change engine car',
+  Drive: 'Failed to parse drive mode for car',
+};
 
 export async function changeEngineCar(engineParams: EngineParams): Promise<CarRaceData> {
-  try {
-    const response = await fetch(`${engineUrl}?id=${engineParams.id}&status=${engineParams.status}`, {
-      method: 'PATCH',
-    });
-    if (!response.ok) {
-      throw new Error('Failed to change engine car');
-    }
-    const data: unknown = await response.json();
-    if (!isCarRaceData(data)) {
-      throw new Error('Failed to parse race data for car');
-    }
-    return data;
-  } catch (error) {
-    throw new Error('Failed to change engine car');
+  const data = await api.patch({
+    endpoint: `${ENGINE_ENDPOINT}`,
+    options: { id: String(engineParams.id), status: engineParams.status },
+  });
+  if (!isCarRaceData(data)) {
+    throw new Error(ERROR_MESSAGES.Engine);
   }
+  return data;
 }
 
 export async function switchDriveMode(id: number): Promise<DriveMode> {
-  try {
-    const response = await fetch(`${engineUrl}?id=${id}&status=drive`, {
-      method: 'PATCH',
-    });
-    if (!response.ok) {
-      throw new Error('Failed to change drive mode');
-    }
-    const data: unknown = await response.json();
-
-    if (!isDriveMode(data)) {
-      throw new Error('Failed to parse drive mode for car');
-    }
-
-    return data;
-  } catch (error) {
-    throw new Error('Failed to change drive mode');
+  const data = await api.patch({
+    endpoint: `${ENGINE_ENDPOINT}`,
+    options: { id: String(id), status: 'drive' },
+  });
+  if (!isDriveMode(data)) {
+    throw new Error(ERROR_MESSAGES.Drive);
   }
+  return data;
 }

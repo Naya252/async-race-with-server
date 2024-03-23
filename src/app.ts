@@ -10,7 +10,7 @@ const getAllCars = (): void => {
   garage
     .getAllCars()
     .then((data) => {
-      console.log(data);
+      // console.log(data);
     })
     .catch(() => null);
 };
@@ -19,7 +19,7 @@ const getCarById = (): void => {
   garage
     .getCarById(1)
     .then((data) => {
-      console.log(data);
+      // console.log(data);
     })
     .catch(() => null);
 };
@@ -28,13 +28,13 @@ const createCar = (): void => {
   garage
     .createCar({ name: 'MAZ', color: '#666' })
     .then((data) => {
-      console.log(data);
+      // console.log(data);
     })
     .catch(() => null);
 };
 
 const deleteCar = (): void => {
-  garage.deleteCar(5).catch(() => null);
+  garage.deleteCar(6).catch(() => null);
 };
 
 const updateCar = (): void => {

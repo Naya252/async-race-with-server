@@ -1,100 +1,45 @@
-import { BASE_URL } from '@/shared/constants';
 import { type Winner } from '@/types/types';
 import { isWinner, isWinners } from './validation';
+import api from './api/api';
 
-const winnersUrl = `${BASE_URL}winners/`;
+const WINNERS_ENDPOINT = `winners`;
+const ERROR_MESSAGES = {
+  Winners: 'Failed to parse Winners data',
+  Winner: 'Failed to parse Winner`s data',
+};
 
 export async function getAllWinners(): Promise<Winner[]> {
-  try {
-    const response = await fetch(winnersUrl);
-    if (!response.ok) {
-      throw new Error('Failed to fetch data');
-    }
-    const data: unknown = await response.json();
-
-    if (!isWinners(data)) {
-      throw new Error('Failed to parse Winners data');
-    }
-
-    return data;
-  } catch (error) {
-    throw new Error('Failed to fetch Winners data');
+  const data = await api.get({ endpoint: `${WINNERS_ENDPOINT}/` });
+  if (!isWinners(data)) {
+    throw new Error(ERROR_MESSAGES.Winners);
   }
+  return data;
 }
 
 export async function getWinnerById(id: number): Promise<Winner> {
-  try {
-    const response = await fetch(`${winnersUrl}${id}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch data');
-    }
-    const data: unknown = await response.json();
-
-    if (!isWinner(data)) {
-      throw new Error('Failed to parse data of the Winner');
-    }
-    return data;
-  } catch (error) {
-    throw new Error('Failed to parse data of the Winner');
+  const data = await api.get({ endpoint: `${WINNERS_ENDPOINT}/${id}` });
+  if (!isWinner(data)) {
+    throw new Error(ERROR_MESSAGES.Winner);
   }
+  return data;
 }
 
-export async function createWinner(winnerData: Record<string, number>): Promise<Winner> {
-  try {
-    const response = await fetch(winnersUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(winnerData),
-    });
-    if (!response.ok) {
-      throw new Error('Failed to create winner');
-    }
-    const data: unknown = await response.json();
-
-    if (!isWinner(data)) {
-      throw new Error('Failed to parse Winner`s data');
-    }
-
-    return data;
-  } catch (error) {
-    throw new Error('Failed to create new winner');
+export async function createWinner(carData: Record<string, number | string>): Promise<Winner> {
+  const data = await api.post({ endpoint: WINNERS_ENDPOINT, data: carData });
+  if (!isWinner(data)) {
+    throw new Error(ERROR_MESSAGES.Winner);
   }
+  return data;
+}
+
+export async function updateWinner(winnerData: Winner): Promise<Winner> {
+  const data = await api.put({ endpoint: `${WINNERS_ENDPOINT}/${winnerData.id}`, data: winnerData });
+  if (!isWinner(data)) {
+    throw new Error(ERROR_MESSAGES.Winner);
+  }
+  return data;
 }
 
 export async function deleteWinner(id: number): Promise<void> {
-  try {
-    const response = await fetch(`${winnersUrl}${id}`, { method: 'DELETE' });
-
-    if (!response.ok) {
-      throw new Error('Failed to delete winner');
-    }
-  } catch (error) {
-    throw new Error('Failed to delete winner');
-  }
-}
-
-export async function updateCar(winnerData: Winner): Promise<Winner> {
-  try {
-    const response = await fetch(`${winnersUrl}${winnerData.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(winnerData),
-    });
-    if (!response.ok) {
-      throw new Error('Failed to update car');
-    }
-    const data: unknown = await response.json();
-
-    if (!isWinner(data)) {
-      throw new Error('Failed to parse Winner data');
-    }
-
-    return data;
-  } catch (error) {
-    throw new Error('Failed to update car');
-  }
+  await api.delete({ endpoint: `${WINNERS_ENDPOINT}/${id}` });
 }
