@@ -1,0 +1,49 @@
+@import '../../styles/variables';
+
+.btn-pz-primary {
+  width: 100%;
+  margin-top: 16px;
+  background-color: $accent-color;
+  filter: brightness(1);
+
+  &:hover,
+  &:focus {
+    background-color: $accent-color;
+    filter: brightness(1.2);
+  }
+
+  &:active {
+    background-color: $accent-color;
+    filter: brightness(1);
+  }
+}
+
+.btn-pz-primary.outlined {
+  width: 100%;
+  border: 2px solid $accent-color;
+  margin-top: 16px;
+  background-color: rgba($accent-color, 0.1);
+  color: $accent-color;
+  filter: brightness(1);
+  font-weight: 600;
+
+  &:hover,
+  &:focus {
+    background-color: $accent-color;
+    color: $light-color;
+    filter: brightness(1.2);
+  }
+
+  &:active {
+    background-color: $accent-color;
+    color: $light-color;
+    filter: brightness(1);
+  }
+
+  &:disabled {
+    border: 2px solid rgba($dark-color, 0.6);
+    background-color: rgba($dark-color, 0.1);
+    color: rgba($dark-color, 0.8);
+    filter: brightness(1);
+  }
+}
