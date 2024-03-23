@@ -11,6 +11,10 @@ export default class Garage {
     return this.cars;
   }
 
+  public setCars(cars: Car[]): void {
+    this.cars = cars;
+  }
+
   public addCar(car: Car): void {
     this.cars.push(car);
   }
