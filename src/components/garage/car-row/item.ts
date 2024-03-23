@@ -15,8 +15,8 @@ export default class Item extends BaseComponent {
     this.onOpenRemoveModal = openRemoveModal;
 
     this.car = new Car(data);
-    this.editBtn = new BaseButton('button', 'Edit', ['btn', 'btn-outline-success', 'sbmt']);
-    this.removeBtn = new BaseButton('button', 'Remove', ['btn', 'btn-outline-success', 'sbmt']);
+    this.editBtn = new BaseButton('button', '', ['btn', 'btn-pz-primary', 'icon', 'edit']);
+    this.removeBtn = new BaseButton('button', '', ['btn', 'btn-pz-primary', 'icon', 'remove']);
     this.append(this.editBtn, this.removeBtn, this.car);
 
     this.removeBtn.addListener('click', () => {

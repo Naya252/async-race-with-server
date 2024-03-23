@@ -39,8 +39,8 @@ export default class BaseModal extends BaseComponent {
     });
     header.append(this.title, headerBtn);
 
-    this.submitBtn = new BaseButton('button', 'Ok', ['btn', 'btn-outline-success', 'sbmt']);
-    this.cancelBtn = new BaseButton('button', 'Cancel', ['btn', 'btn-outline-modal-cancel', 'cls']);
+    this.submitBtn = new BaseButton('button', 'Ok', ['btn', 'btn-pz-primary']);
+    this.cancelBtn = new BaseButton('button', 'Cancel', ['btn', 'btn-pz-primary', 'outlined', 'cls']);
     this.cancelBtn.addListener('click', () => {
       this.close();
     });
