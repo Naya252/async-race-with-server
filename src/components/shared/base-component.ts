@@ -85,6 +85,17 @@ export default class BaseComponent {
     return parent;
   }
 
+  public getId(): string {
+    const el = this.getElement();
+    const id = el.getAttribute('id');
+
+    if (id === null) {
+      throw new Error('not parent');
+    }
+
+    return id;
+  }
+
   public replaceChildren(...children: Array<HTMLElement | BaseComponent>): void {
     const elements = children.map((child) => {
       if (child instanceof BaseComponent) {

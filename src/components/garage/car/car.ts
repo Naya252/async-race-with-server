@@ -26,7 +26,7 @@ export default class Car extends BaseComponent {
     return this.name;
   }
 
-  public getId(): number {
+  public getCarId(): number {
     return this.id;
   }
 
