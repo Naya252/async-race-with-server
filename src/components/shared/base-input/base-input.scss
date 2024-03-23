@@ -1,0 +1,10 @@
+@import '../../styles/variables';
+
+.needs-validation .form-control {
+  padding-right: calc(1.5em + 0.75rem);
+}
+
+.form-text {
+  min-height: 44px;
+  color: $error-color;
+}
