@@ -1,6 +1,6 @@
 import BaseComponent from '@/components/shared/base-component';
 import Item from '@/components/garage/car-row/item';
-// import store from '@/store/store';
+import store from '@/store/store';
 import type { Car as CarType } from '@/types/types';
 import RemoveCar from './modals/remove-car-modal';
 import ChangeCar from './modals/change-car-modal';
@@ -81,6 +81,7 @@ export default class Garage extends BaseComponent {
     });
 
     if (typeof item !== 'undefined') {
+      store.garage.removeCar(carData);
       item.remove();
     }
   }
@@ -100,6 +101,7 @@ export default class Garage extends BaseComponent {
     });
 
     if (typeof item !== 'undefined') {
+      store.garage.changeCar(carData);
       item.changeCar(carData);
     }
   }
@@ -109,6 +111,7 @@ export default class Garage extends BaseComponent {
   }
 
   private submitCreateModal(carData: CarType): void {
+    store.garage.addCar(carData);
     this.createCar(carData);
   }
 
@@ -117,6 +120,7 @@ export default class Garage extends BaseComponent {
   }
 
   private submitCreateRandomModal(carsData: CarType[]): void {
+    store.garage.concatCars(carsData);
     this.createCars(carsData);
   }
 }
