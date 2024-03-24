@@ -84,10 +84,26 @@ const validation = (e: Event | HTMLElement): boolean => {
   }
 
   if (e instanceof HTMLElement) {
-    let arr = Array.from(e.childNodes);
-    arr = arr.map((el) => el.childNodes[1] ?? el);
+    const arr = Array.from(e.childNodes);
 
-    isValid = checkElements(arr);
+    const formElements: ChildNode[] = [];
+    arr.forEach((el) => {
+      if (el instanceof HTMLElement && el.classList.contains('color-picker')) {
+        const item = el.childNodes[0]?.childNodes[1];
+        const item2 = el.childNodes[1]?.childNodes[1];
+        if (typeof item !== 'undefined' && typeof item2 !== 'undefined') {
+          formElements.push(item);
+          formElements.push(item2);
+        }
+      } else {
+        const item = el.childNodes[1];
+        if (typeof item !== 'undefined') {
+          formElements.push(item);
+        }
+      }
+    });
+
+    isValid = checkElements(formElements);
   }
 
   return isValid;
