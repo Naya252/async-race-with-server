@@ -46,6 +46,8 @@ export default class ChangeCar extends BaseModal {
 
   public openModal(carData: CarType): void {
     this.data = carData;
+    this.nameInput.changeSubText();
+    this.colorInput.changeSubText();
     this.fillForm(carData);
     this.isSubmit = false;
     this.contentModal.removeClasses(['was-validated']);

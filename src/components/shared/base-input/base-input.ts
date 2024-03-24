@@ -27,6 +27,7 @@ type InputType =
 
 export default class BaseInput extends BaseComponent {
   private readonly input: BaseComponent;
+  text: BaseComponent;
 
   constructor(
     inputId: string,
@@ -49,9 +50,9 @@ export default class BaseInput extends BaseComponent {
       'aria-describedby': textId,
       type: inputType,
     });
-    const text = new BaseComponent('div', ['form-text'], { id: textId, text: subtext });
+    this.text = new BaseComponent('div', ['form-text'], { id: textId, text: subtext });
 
-    this.append(label, this.input, text);
+    this.append(label, this.input, this.text);
   }
 
   public inputListener(eventName: string, listener: EventListenerOrEventListenerObject): void {
@@ -82,5 +83,9 @@ export default class BaseInput extends BaseComponent {
     }
 
     el.value = value;
+  }
+
+  public changeSubText(): void {
+    this.text.setHTML('');
   }
 }

@@ -40,6 +40,9 @@ export default class CreateCar extends BaseModal {
 
   private fillForm(): void {
     if (this.data !== null) {
+      this.nameInput.changeSubText();
+      this.colorInput.changeSubText();
+
       this.nameInput.changeValue(this.data.name);
       this.colorInput.changeValue(this.data.color);
       this.body.replaceChildren(this.contentModal);
