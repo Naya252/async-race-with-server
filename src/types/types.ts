@@ -4,6 +4,12 @@ export type Car = {
   color: string;
 };
 
+export type CarTemplate = {
+  id?: number;
+  name: string;
+  color: string;
+};
+
 export type EngineParams = {
   id: number;
   status: StatusEngine;
