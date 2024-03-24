@@ -1,18 +1,21 @@
 import BaseComponent from '@/components/shared/base-component';
 import Item from '@/components/garage/car-row/item';
-import store from '@/store/store';
+// import store from '@/store/store';
 import type { Car as CarType } from '@/types/types';
 import RemoveCar from './modals/remove-car-modal';
 import ChangeCar from './modals/change-car-modal';
 import CreateCar from './modals/create-car-modal';
 import BaseButton from '../shared/base-button/base.button';
+import CreateRandomCars from './modals/create-random-cars';
 
 export default class Garage extends BaseComponent {
   private readonly cars: Item[];
   private readonly createCarBtn: BaseButton;
+  private readonly create100CarsBtn: BaseButton;
   private readonly removeCarModal: RemoveCar;
   private readonly changeCarModal: ChangeCar;
   private readonly createCarModal: CreateCar;
+  private readonly create100CarsModal: CreateRandomCars;
 
   constructor() {
     super('div', ['garage'], { id: 'garage' }, 'GARAGE`S PAGE');
@@ -21,6 +24,10 @@ export default class Garage extends BaseComponent {
     this.createCarBtn = new BaseButton('button', 'Add new car', []);
     this.createCarBtn.addListener('click', () => {
       this.openCreateModal();
+    });
+    this.create100CarsBtn = new BaseButton('button', 'Add random cars', []);
+    this.create100CarsBtn.addListener('click', () => {
+      this.openCreateRandomModal();
     });
     this.removeCarModal = new RemoveCar((carData: CarType) => {
       this.submitRemoveModal(carData);
@@ -31,12 +38,14 @@ export default class Garage extends BaseComponent {
     this.createCarModal = new CreateCar((carData: CarType) => {
       this.submitCreateModal(carData);
     });
+    this.create100CarsModal = new CreateRandomCars((carsData: CarType[]) => {
+      this.submitCreateRandomModal(carsData);
+    });
 
-    this.append(this.createCarBtn);
+    this.append(this.createCarBtn, this.create100CarsBtn);
   }
 
-  public createCars(): void {
-    const carsData = store.garage.getCars();
+  public createCars(carsData: CarType[]): void {
     carsData.forEach((el) => {
       this.createCar(el);
     });
@@ -101,5 +110,13 @@ export default class Garage extends BaseComponent {
 
   private submitCreateModal(carData: CarType): void {
     this.createCar(carData);
+  }
+
+  private openCreateRandomModal(): void {
+    this.create100CarsModal.openModal();
+  }
+
+  private submitCreateRandomModal(carsData: CarType[]): void {
+    this.createCars(carsData);
   }
 }

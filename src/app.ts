@@ -62,7 +62,8 @@ export default class App {
 
     const cars = await garageRepository.getAllCars();
     store.garage.setCars(cars);
-    this.garage.createCars();
+    const carsData = store.garage.getCars();
+    this.garage.createCars(carsData);
 
     // getCarById();
 
