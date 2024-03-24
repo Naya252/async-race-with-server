@@ -27,7 +27,7 @@ type InputType =
 
 export default class BaseInput extends BaseComponent {
   private readonly input: BaseComponent;
-  text: BaseComponent;
+  private readonly text: BaseComponent;
 
   constructor(
     inputId: string,
