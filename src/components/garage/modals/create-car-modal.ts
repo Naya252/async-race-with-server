@@ -24,7 +24,7 @@ export default class CreateCar extends BaseModal {
       value: '',
       maxlength: '30',
       minlength: '3',
-      pattern: '^[A-Z]{1}[a-z]*-?[A-Za-z]*$',
+      pattern: '^[A-Z]{1}[a-z]*-?[A-Za-z]* ?[A-Za-z]*$',
     });
 
     this.colorInput = new ColorPicker();
