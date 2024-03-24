@@ -38,6 +38,10 @@ export default class BaseInput extends BaseComponent {
   ) {
     super('div', ['input-wrapper']);
 
+    if (inputType === 'color') {
+      this.setClasses(['color-wrapper']);
+    }
+
     const label = new BaseComponent('label', ['form-label'], { for: inputId }, labelText);
     this.input = new BaseComponent('input', ['form-control'], {
       ...attr,
