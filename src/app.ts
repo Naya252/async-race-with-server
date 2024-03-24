@@ -5,30 +5,11 @@ import Header from './components/header/header-component';
 import Footer from './components/footer/footer-component';
 import { NAV_LINKS } from './shared/constants';
 import * as garageRepository from './repositories/garage-repository';
-// import * as engineRepository from './repositories/engine-repository';
 import store from './store/store';
 
-// const getAllCars = (): void => {
-//   garage
-//     .getAllCars()
-//     .then((data) => {
-//       // console.log(data);
-//     })
-//     .catch(() => null);
-// };
-
-const getCarById = (): void => {
-  garageRepository
-    .getCarById(1)
-    .then((data) => {
-      // console.log(data);
-    })
-    .catch(() => null);
-};
-
-// const createCar = (): void => {
-//   garage
-//     .createCar({ name: 'MAZ', color: '#666' })
+// const getCarById = (): void => {
+//   garageRepository
+//     .getCarById(1)
 //     .then((data) => {
 //       // console.log(data);
 //     })
@@ -83,8 +64,7 @@ export default class App {
     store.garage.setCars(cars);
     this.garage.createCars();
 
-    getCarById();
-    // createCar();
+    // getCarById();
 
     // changeEngine();
   }
