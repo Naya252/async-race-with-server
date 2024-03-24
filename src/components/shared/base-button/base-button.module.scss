@@ -120,6 +120,8 @@
     position: absolute;
     top: calc(50% - 12px);
     opacity: 0.5;
+    filter: brightness(0) saturate(100%) invert(40%) sepia(92%) saturate(735%) hue-rotate(198deg) brightness(92%)
+      contrast(88%);
   }
 }
 
@@ -130,5 +132,7 @@
     position: absolute;
     top: calc(50% - 12px);
     opacity: 0.5;
+    filter: brightness(0) saturate(100%) invert(40%) sepia(92%) saturate(735%) hue-rotate(198deg) brightness(92%)
+      contrast(88%);
   }
 }
