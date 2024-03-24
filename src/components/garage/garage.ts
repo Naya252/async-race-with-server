@@ -2,7 +2,7 @@ import BaseComponent from '@/components/shared/base-component';
 import Item from '@/components/garage/car-row/item';
 import store from '@/store/store';
 import type { Car as CarType } from '@/types/types';
-import RemoveCar from './modals/remove-card-modal';
+import RemoveCar from './modals/remove-car-modal';
 import ChangeCar from './modals/change-car-modal';
 import CreateCar from './modals/create-car-modal';
 import BaseButton from '../shared/base-button/base.button';
