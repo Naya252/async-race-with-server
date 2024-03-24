@@ -4,8 +4,8 @@ const ERROR_MESSAGES = {
     name: `Enter English letters and "-"<br>The first letter is capitalized`,
     color: `Enter HEX color`,
   },
-  minLength: `Min length `,
-  maxLength: `Max length `,
+  minlength: `Min length `,
+  maxlength: `Max length `,
 };
 
 const checkRequired = (el: HTMLInputElement, info: HTMLDivElement): boolean => {
@@ -43,11 +43,12 @@ const checkMinLength = (el: HTMLInputElement, info: HTMLDivElement): boolean => 
   let result = true;
   const clone = info;
 
-  if ('minLength' in el) {
+  const minLength = el.getAttribute('minlength');
+  if (minLength !== null) {
     result = el.value.length >= +el.minLength;
 
     if (!result) {
-      clone.innerHTML = `${ERROR_MESSAGES.minLength} ${el.minLength} `;
+      clone.innerHTML = `${ERROR_MESSAGES.minlength} ${el.minLength} `;
     }
   }
 
@@ -58,11 +59,12 @@ const checkMaxLength = (el: HTMLInputElement, info: HTMLDivElement): boolean => 
   let result = true;
   const clone = info;
 
-  if ('maxLength' in el) {
+  const maxLength = el.getAttribute('minlength');
+  if (maxLength !== null) {
     result = el.value.length <= +el.maxLength;
 
     if (!result) {
-      clone.innerHTML = `${ERROR_MESSAGES.maxLength}${el.maxLength} `;
+      clone.innerHTML = `${ERROR_MESSAGES.maxlength}${el.maxLength} `;
     }
   }
 
@@ -123,13 +125,13 @@ const checkElements = (element: ChildNode[] | HTMLFormControlsCollection): boole
       }
 
       info.innerHTML = '';
-      if (el.getAttribute('maxLegth') !== null) {
+      if (el.getAttribute('maxlength') !== null) {
         isValid.add(checkMaxLength(el, info));
       }
       if (el.getAttribute('pattern') !== null) {
         isValid.add(checkPattern(el, info));
       }
-      if (el.getAttribute('minLegth') !== null) {
+      if (el.getAttribute('minlength') !== null) {
         isValid.add(checkMinLength(el, info));
       }
 
