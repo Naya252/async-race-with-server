@@ -1,7 +1,7 @@
 const ERROR_MESSAGES = {
   required: 'Required',
   pattern: {
-    name: `Enter English letters and "-"<br>The first letter is capitalized`,
+    name: `Enter English letters or numbers and "-"<br>The first letter is capitalized`,
     color: `Enter HEX color`,
   },
   minlength: `Min length `,
