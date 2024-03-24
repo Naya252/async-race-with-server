@@ -35,10 +35,6 @@ const getCarById = (): void => {
 //     .catch(() => null);
 // };
 
-const updateCar = (): void => {
-  garageRepository.updateCar({ name: 'MAZ', color: '#000', id: 8 }).catch(() => null);
-};
-
 // const changeEngine = (): void => {
 //   engineRepository
 //     .changeEngineCar({ id: 1, status: 'started' })
@@ -89,7 +85,6 @@ export default class App {
 
     getCarById();
     // createCar();
-    updateCar();
 
     // changeEngine();
   }

@@ -4,7 +4,7 @@ import type { Car as CarType } from '@/types/types';
 export default class Car extends BaseComponent {
   private readonly id: number;
   private color: string;
-  private readonly name: string;
+  private name: string;
 
   constructor(data: CarType) {
     super('div', ['car'], { id: `car-${data.id}` }, `id:${data.id} --- name:${data.name} --- color:${data.color}`);
@@ -18,12 +18,26 @@ export default class Car extends BaseComponent {
     this.color = color;
   }
 
+  public setCar(data: CarType): void {
+    this.setColor(data.color);
+    this.setName(data.name);
+    this.setTextContent(`id:${this.id} --- name:${this.name} --- color:${this.color}`);
+  }
+
   public getColor(): string {
     return this.color;
   }
 
+  public setColor(color: string): void {
+    this.color = color;
+  }
+
   public getName(): string {
     return this.name;
+  }
+
+  public setName(name: string): void {
+    this.name = name;
   }
 
   public getCarId(): number {
