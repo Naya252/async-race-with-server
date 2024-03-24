@@ -3,6 +3,7 @@ import type { Car as CarType } from '@/types/types';
 import { updateCar } from '@/repositories/garage-repository';
 import BaseComponent from '@/components/shared/base-component';
 import BaseInput from '@/components/shared/base-input/base-input';
+import ColorPicker from '@/components/shared/color-picker/color-picker';
 import isValid from '@/utils/form-validation';
 
 export default class ChangeCar extends BaseModal {
@@ -10,7 +11,7 @@ export default class ChangeCar extends BaseModal {
   private data: CarType | null;
   private readonly onCloseModal: (data: CarType) => void;
   private readonly nameInput: BaseInput;
-  private readonly colorInput: BaseInput;
+  private readonly colorInput: ColorPicker;
   public isSubmit = false;
 
   constructor(closeModal: (carData: CarType) => void) {
@@ -25,14 +26,8 @@ export default class ChangeCar extends BaseModal {
       minlength: '3',
       pattern: '^[A-Z]{1}[a-z]*-?[A-Za-z]*$',
     });
-    this.colorInput = new BaseInput('color', 'Color', 'color-text', 'subtext', {
-      required: '',
-      autocomplete: 'off',
-      value: '',
-      maxlength: '7',
-      minlength: '4',
-      pattern: '^#[A-Fa-f0-9]{6}$',
-    });
+
+    this.colorInput = new ColorPicker();
     this.contentModal.append(this.nameInput, this.colorInput);
 
     this.data = null;
@@ -68,6 +63,7 @@ export default class ChangeCar extends BaseModal {
     try {
       if (this.data !== null && this.validateForm(e)) {
         this.changeData();
+
         await updateCar(this.data);
         this.onCloseModal(this.data);
         this.close();
@@ -83,7 +79,7 @@ export default class ChangeCar extends BaseModal {
         isValid(this.contentModal.getElement());
       }
     });
-    this.colorInput.inputListener('input', () => {
+    this.colorInput.colorListener('input', () => {
       if (this.isSubmit) {
         isValid(this.contentModal.getElement());
       }
