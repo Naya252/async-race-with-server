@@ -1,5 +1,5 @@
 import BaseComponent from '@/components/shared/base-component';
-import BaseButton from '../base-button/base.button';
+import BaseButton from '../base-button/base-button';
 import '@/components/shared/base-modal/modal.module.scss';
 
 export default class BaseModal extends BaseComponent {

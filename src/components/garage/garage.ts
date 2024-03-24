@@ -5,7 +5,7 @@ import type { Car as CarType } from '@/types/types';
 import RemoveCar from './modals/remove-car-modal';
 import ChangeCar from './modals/change-car-modal';
 import CreateCar from './modals/create-car-modal';
-import BaseButton from '../shared/base-button/base.button';
+import BaseButton from '../shared/base-button/base-button';
 import CreateRandomCars from './modals/create-random-cars';
 
 export default class Garage extends BaseComponent {

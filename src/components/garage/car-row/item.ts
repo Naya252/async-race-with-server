@@ -1,7 +1,7 @@
 import BaseComponent from '@/components/shared/base-component';
 import Car from '@/components/garage/car/car';
 import type { Car as CarType } from '@/types/types';
-import BaseButton from '@/components/shared/base-button/base.button';
+import BaseButton from '@/components/shared/base-button/base-button';
 
 export default class Item extends BaseComponent {
   private readonly car: Car;
