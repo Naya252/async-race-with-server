@@ -66,4 +66,17 @@ export default class BaseInput extends BaseComponent {
 
     return el.value;
   }
+
+  public changeValue(value: string): void {
+    const el = this.input.getElement();
+
+    if (!('value' in el)) {
+      throw new Error('not value');
+    }
+    if (typeof value !== 'string') {
+      throw new Error('not string');
+    }
+
+    el.value = value;
+  }
 }
