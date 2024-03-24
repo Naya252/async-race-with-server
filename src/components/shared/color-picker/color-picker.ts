@@ -66,4 +66,8 @@ export default class ColorPicker extends BaseComponent {
   public colorListener(eventName: string, listener: EventListenerOrEventListenerObject): void {
     this.textInput.addListener(eventName, listener);
   }
+
+  public colorPickerListener(eventName: string, listener: EventListenerOrEventListenerObject): void {
+    this.colorInput.addListener(eventName, listener);
+  }
 }

@@ -84,6 +84,11 @@ export default class ChangeCar extends BaseModal {
         isValid(this.contentModal.getElement());
       }
     });
+    this.colorInput.colorPickerListener('change', () => {
+      if (this.isSubmit) {
+        isValid(this.contentModal.getElement());
+      }
+    });
   }
 
   private validateForm(e: Event): boolean {
