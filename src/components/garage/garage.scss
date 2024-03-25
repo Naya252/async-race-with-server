@@ -1,0 +1,30 @@
+@import '../../styles/variables';
+
+.create-car-btn {
+  margin-top: 0 !important;
+}
+
+.btns-wrapper {
+  display: flex;
+  gap: 1rem;
+}
+
+.cars-wrapper {
+  margin-top: 2rem;
+
+  .item {
+    border-bottom: 2px dashed rgba($dark-color, 0.3);
+
+    .car-btns {
+      display: flex;
+      gap: 0.3rem;
+      padding: 0.5rem 0;
+    }
+
+    .car-title {
+      margin: 0;
+      font-size: 1.15rem;
+      padding-left: 1rem;
+    }
+  }
+}

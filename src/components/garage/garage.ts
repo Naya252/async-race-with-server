@@ -9,6 +9,7 @@ import BaseButton from '../shared/base-button/base-button';
 import CreateRandomCars from './modals/create-random-cars';
 import Pagination from '../shared/pagination/pagination';
 import { getCarsData } from './services/garage-service';
+import './garage.scss';
 
 export default class Garage extends BaseComponent {
   private cars: Item[];
@@ -26,11 +27,12 @@ export default class Garage extends BaseComponent {
 
     this.cars = [];
     this.carsWrapper = new BaseComponent('div', ['cars-wrapper']);
-    this.createCarBtn = new BaseButton('button', 'Add new car', []);
+    const buttonWrapper = new BaseComponent('div', ['btns-wrapper']);
+    this.createCarBtn = new BaseButton('button', 'add new car', ['outlined', 'create-car-btn', 'btn-sm']);
     this.createCarBtn.addListener('click', () => {
       this.openCreateModal();
     });
-    this.create100CarsBtn = new BaseButton('button', 'Add random cars', []);
+    this.create100CarsBtn = new BaseButton('button', 'add random cars', ['outlined', 'create-car-btn', 'btn-sm']);
     this.create100CarsBtn.addListener('click', () => {
       this.openCreateRandomModal();
     });
@@ -53,7 +55,8 @@ export default class Garage extends BaseComponent {
       });
     });
 
-    this.append(this.pagination, this.createCarBtn, this.create100CarsBtn, this.carsWrapper);
+    buttonWrapper.append(this.createCarBtn, this.create100CarsBtn);
+    this.append(this.pagination, buttonWrapper, this.carsWrapper);
   }
 
   public createCars(carsData: CarType[]): void {
