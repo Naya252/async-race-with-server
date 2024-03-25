@@ -4,8 +4,7 @@ import Garage from '@/components/garage/garage';
 import Header from './components/header/header-component';
 import Footer from './components/footer/footer-component';
 import { NAV_LINKS } from './shared/constants';
-import * as garageRepository from './repositories/garage-repository';
-import store from './store/store';
+import { getCarsData } from './components/garage/services/garage-service';
 
 // const getCarById = (): void => {
 //   garageRepository
@@ -60,10 +59,10 @@ export default class App {
     const { body } = document;
     this.appContainer.appendToParent(body);
 
-    const cars = await garageRepository.getAllCars();
-    store.garage.setCars(cars);
-    const carsData = store.garage.getCars();
-    this.garage.createCars(carsData);
+    const data = await getCarsData();
+
+    this.garage.createCars(data);
+    this.garage.createPagination();
 
     // getCarById();
 

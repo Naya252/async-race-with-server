@@ -2,4 +2,6 @@ import App from '@/app';
 
 const app = new App();
 
-app.init().catch(() => null);
+app.init().catch((error: Error) => {
+  console.error(error);
+});

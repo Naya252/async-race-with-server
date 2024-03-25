@@ -8,9 +8,10 @@ import CreateCar from './modals/create-car-modal';
 import BaseButton from '../shared/base-button/base-button';
 import CreateRandomCars from './modals/create-random-cars';
 import Pagination from '../shared/pagination/pagination';
+import { getCarsData } from './services/garage-service';
 
 export default class Garage extends BaseComponent {
-  private readonly cars: Item[];
+  private cars: Item[];
   private readonly carsWrapper: BaseComponent;
   private readonly createCarBtn: BaseButton;
   private readonly create100CarsBtn: BaseButton;
@@ -47,28 +48,25 @@ export default class Garage extends BaseComponent {
     });
 
     this.pagination = new Pagination(() => {
-      this.changeShowCars();
+      // this.changeShowCars();
     });
 
     this.append(this.pagination, this.createCarBtn, this.create100CarsBtn, this.carsWrapper);
   }
 
   public createCars(carsData: CarType[]): void {
+    this.cars = [];
+    this.carsWrapper.setHTML('');
+
     carsData.forEach((el) => {
       this.createCar(el);
     });
-    this.pagination.createAllPages();
-    this.changeShowCars();
+
+    this.carsWrapper.replaceChildren(...this.cars);
   }
 
-  public changeShowCars(): void {
-    const indexes = store.garage.getCarsForShow();
-    const firstIdx = indexes[0];
-    const lastIdx = indexes[1];
-    if (firstIdx !== undefined && lastIdx !== undefined) {
-      const items = this.cars.filter((el, i) => i >= firstIdx && i <= lastIdx);
-      this.carsWrapper.replaceChildren(...items);
-    }
+  public createPagination(): void {
+    this.pagination.createAllPages();
   }
 
   public createCar(el: CarType): void {
@@ -82,8 +80,6 @@ export default class Garage extends BaseComponent {
       },
     );
     this.cars.push(item);
-
-    // this.append(item);
   }
 
   private openRemoveModal(carData: CarType): void {
@@ -101,10 +97,19 @@ export default class Garage extends BaseComponent {
     });
 
     if (typeof item !== 'undefined') {
-      store.garage.removeCar(carData);
-      item.remove();
-      this.pagination.changePages();
+      this.changeGarage();
     }
+  }
+
+  private changeGarage(): void {
+    getCarsData()
+      .then((data) => {
+        this.createCars(data);
+        this.createPagination();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 
   private openChangeModal(carData: CarType): void {
@@ -132,9 +137,8 @@ export default class Garage extends BaseComponent {
   }
 
   private submitCreateModal(carData: CarType): void {
-    store.garage.addCar(carData);
-    this.createCar(carData);
-    this.pagination.changePages();
+    console.log(carData);
+    this.changeGarage();
   }
 
   private openCreateRandomModal(): void {
@@ -142,8 +146,7 @@ export default class Garage extends BaseComponent {
   }
 
   private submitCreateRandomModal(carsData: CarType[]): void {
-    store.garage.concatCars(carsData);
-    this.createCars(carsData);
-    this.pagination.changePages();
+    console.log(carsData);
+    this.changeGarage();
   }
 }

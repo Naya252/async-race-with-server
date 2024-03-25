@@ -4,11 +4,13 @@ export default class Garage {
   private cars: Car[];
   private currentPage: number;
   private allPages: number;
+  private allCarsCount: number;
 
   constructor(carsData: Car[]) {
     this.cars = carsData;
     this.currentPage = 1;
     this.allPages = 1;
+    this.allCarsCount = 0;
   }
 
   public getCars(): Car[] {
@@ -17,22 +19,6 @@ export default class Garage {
 
   public setCars(cars: Car[]): void {
     this.cars = cars;
-    this.changeAllPages();
-  }
-
-  public addCar(car: Car): void {
-    this.cars.push(car);
-    this.changeAllPages();
-  }
-
-  public concatCars(cars: Car[]): void {
-    this.cars = this.cars.concat(cars);
-    this.changeAllPages();
-  }
-
-  public removeCar(car: Car): void {
-    this.cars = this.cars.filter((el) => el !== car);
-    this.changeAllPages();
   }
 
   public changeCar(car: Car): void {
@@ -41,6 +27,11 @@ export default class Garage {
       item.color = car.color;
       item.name = car.name;
     }
+  }
+
+  public setAllCount(count: string): void {
+    this.allCarsCount = Number(count);
+    this.changeAllPages();
   }
 
   public getAllPages(): number {
@@ -52,7 +43,7 @@ export default class Garage {
   }
 
   public changeAllPages(): void {
-    this.allPages = Math.ceil(this.cars.length / 7);
+    this.allPages = Math.ceil(this.allCarsCount / 7);
   }
 
   public changeCurrentPage(value: number): void {
