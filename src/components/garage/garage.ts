@@ -48,8 +48,7 @@ export default class Garage extends BaseComponent {
     });
 
     this.pagination = new Pagination(() => {
-      const curPage = store.garage.getCurrentPage();
-      this.changeCars(String(curPage)).catch((err) => {
+      this.changeCars().catch((err) => {
         console.error(err);
       });
     });
@@ -114,8 +113,9 @@ export default class Garage extends BaseComponent {
       });
   }
 
-  private async changeCars(page = '1'): Promise<void> {
-    const data = await getCarsData(page);
+  private async changeCars(): Promise<void> {
+    const curPage = store.garage.getCurrentPage();
+    const data = await getCarsData(String(curPage));
     this.createCars(data);
   }
 
