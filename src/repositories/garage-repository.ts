@@ -2,6 +2,8 @@ import { type Car } from '@/types/types';
 import { isCars, isCar } from './validation';
 import api from './api/api';
 
+const LIMIT_GARAGE_PAGE = '7';
+
 const GARAGE_ENDPOINT = `garage`;
 const ERROR_MESSAGES = {
   Cars: 'Failed to parse Cars data',
@@ -13,6 +15,18 @@ export async function getAllCars(): Promise<Car[]> {
   if (!isCars(data)) {
     throw new Error(ERROR_MESSAGES.Cars);
   }
+  return data;
+}
+
+export async function getCarsByPage(page = '1'): Promise<Record<string, string | Car[]>> {
+  const data = await api.get({ endpoint: `${GARAGE_ENDPOINT}`, options: { _limit: LIMIT_GARAGE_PAGE, _page: page } });
+
+  if (typeof data === 'object' && 'resp' in data && 'total' in data && typeof data.total === 'string') {
+    if (!isCars(data.resp)) {
+      throw new Error(ERROR_MESSAGES.Cars);
+    }
+  }
+
   return data;
 }
 
