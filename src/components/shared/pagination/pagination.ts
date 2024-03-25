@@ -31,7 +31,7 @@ const createNext = (): BaseComponent => {
 
 export default class Pagination extends BaseComponent {
   private readonly wrapper: BaseComponent;
-  private readonly pages: BaseComponent[] = [];
+  private pages: BaseComponent[] = [];
   private readonly prew: BaseComponent;
   private readonly next: BaseComponent;
   private readonly dots: BaseComponent;
@@ -54,12 +54,13 @@ export default class Pagination extends BaseComponent {
   }
 
   public createAllPages(): void {
+    this.pages = [];
     const count = store.garage.getAllPages();
+
     let i = 0;
     while (i < count) {
       i += 1;
       const page = createPage(i);
-
       this.pages.push(page);
     }
 
@@ -75,7 +76,7 @@ export default class Pagination extends BaseComponent {
     } else {
       this.appendPages(0, 3);
       this.wrapper.append(this.dots);
-      this.appendPages(this.pages.length - 4, this.pages.length);
+      this.appendPages(this.pages.length - 3, this.pages.length);
     }
 
     this.changeActive();
@@ -85,11 +86,11 @@ export default class Pagination extends BaseComponent {
   private appendPages(start = 0, end = this.pages.length): void {
     let i = start;
     while (i < end) {
-      i += 1;
       const item = this.pages[i];
       if (typeof item !== 'undefined') {
         this.wrapper.append(item);
       }
+      i += 1;
     }
   }
 
@@ -115,14 +116,6 @@ export default class Pagination extends BaseComponent {
     if (activePage !== undefined && activePage instanceof HTMLElement) {
       activePage.classList.add('active');
       this.active = activePage;
-    }
-  }
-
-  public changePages(): void {
-    const children = this.wrapper.getChildren();
-    console.log(children.length);
-    if (children.length - 2 !== store.garage.getAllPages()) {
-      // this.addPages();
     }
   }
 }
