@@ -29,6 +29,10 @@ export default class Garage {
     }
   }
 
+  public getAllCarsCount(): number {
+    return this.allCarsCount;
+  }
+
   public setAllCount(count: string): void {
     this.allCarsCount = Number(count);
     this.changeAllPages();

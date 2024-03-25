@@ -22,7 +22,7 @@ export default class Garage extends BaseComponent {
   private readonly pagination: Pagination;
 
   constructor() {
-    super('div', ['garage'], { id: 'garage' }, 'GARAGE`S PAGE');
+    super('div', ['garage'], { id: 'garage' });
 
     this.cars = [];
     this.carsWrapper = new BaseComponent('div', ['cars-wrapper']);
@@ -69,6 +69,7 @@ export default class Garage extends BaseComponent {
 
   public createPagination(): void {
     this.pagination.createAllPages();
+    this.pagination.chageTitle();
   }
 
   public createCar(el: CarType): void {

@@ -30,6 +30,8 @@ const createNext = (): BaseComponent => {
 };
 
 export default class Pagination extends BaseComponent {
+  private readonly titleWrapper: BaseComponent;
+  private readonly title: string;
   private readonly wrapper: BaseComponent;
   private pages: BaseComponent[] = [];
   private readonly prew: BaseComponent;
@@ -39,15 +41,17 @@ export default class Pagination extends BaseComponent {
   private active: HTMLElement | null = null;
   private readonly onReplaceCars: () => void;
 
-  constructor(replaceCars: () => void) {
-    super('nav');
+  constructor(replaceCars: () => void, title = 'Garage') {
+    super('nav', ['nav-pagination']);
     this.onReplaceCars = replaceCars;
+    this.title = title;
+    this.titleWrapper = new BaseComponent('div', ['page-title', 'title'], {}, this.title);
     this.wrapper = new BaseComponent('ul', ['pagination', 'justify-content-end']);
     this.wrapper.addListener('click', (e: Event) => {
       this.changePage(e);
       this.onReplaceCars();
     });
-    this.append(this.wrapper);
+    this.append(this.titleWrapper, this.wrapper);
     this.dots = new BaseComponent('div', ['page-item', 'dots-pagination'], {}, '...');
     this.dots2 = new BaseComponent('div', ['page-item', 'dots-pagination'], {}, '...');
     this.prew = createPrew();
@@ -164,5 +168,9 @@ export default class Pagination extends BaseComponent {
       activePage.classList.add('active');
       this.active = activePage;
     }
+  }
+
+  public chageTitle(): void {
+    this.titleWrapper.setTextContent(`${this.title} - count: ${store.garage.getAllCarsCount()}`);
   }
 }
