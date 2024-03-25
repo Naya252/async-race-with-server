@@ -45,6 +45,7 @@ export default class ChangeCar extends BaseModal {
   }
 
   public openModal(carData: CarType): void {
+    this.submitBtn.removeClasses(['disabled']);
     this.data = carData;
     this.nameInput.changeSubText();
     this.colorInput.changeSubText();
@@ -65,7 +66,7 @@ export default class ChangeCar extends BaseModal {
     try {
       if (this.data !== null && this.validateForm(e)) {
         this.changeData();
-
+        this.submitBtn.setClasses(['disabled']);
         await updateCar(this.data);
         this.onCloseModal(this.data);
         this.close();

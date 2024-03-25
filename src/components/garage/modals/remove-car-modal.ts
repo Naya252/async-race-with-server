@@ -25,6 +25,7 @@ export default class RemoveCar extends BaseModal {
   }
 
   public openModal(carData: CarType): void {
+    this.submitBtn.removeClasses(['disabled']);
     this.data = carData;
     this.changeText(carData);
     this.open();
@@ -33,6 +34,7 @@ export default class RemoveCar extends BaseModal {
   public async submitModal(): Promise<void> {
     try {
       if (this.data !== null) {
+        this.submitBtn.setClasses(['disabled']);
         await deleteCar(this.data.id);
 
         this.onCloseRemoveModal(this.data);

@@ -50,6 +50,7 @@ export default class CreateCar extends BaseModal {
   }
 
   public openModal(): void {
+    this.submitBtn.removeClasses(['disabled']);
     this.data = { name: '', color: '#000000' };
     this.fillForm();
     this.isSubmit = false;
@@ -68,7 +69,7 @@ export default class CreateCar extends BaseModal {
     try {
       if (this.data !== null && this.validateForm(e)) {
         this.changeData();
-
+        this.submitBtn.setClasses(['disabled']);
         const newCar = await createCar(this.data);
         this.onCloseModal(newCar);
         this.close();

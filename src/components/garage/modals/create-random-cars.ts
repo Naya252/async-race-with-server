@@ -5,7 +5,7 @@ import { getRadomHex, getRandomName } from '../services/garage-service';
 
 export default class CreateRandomCars extends BaseModal {
   private readonly text: string;
-  private readonly data: CarType[] = [];
+  private data: CarType[] = [];
   private readonly onCloseCreateRandomModal: (data: CarType[]) => void;
 
   constructor(closeModal: (carsData: CarType[]) => void) {
@@ -21,16 +21,17 @@ export default class CreateRandomCars extends BaseModal {
   }
 
   public openModal(): void {
+    this.submitBtn.removeClasses(['disabled']);
+    this.data = [];
     this.open();
   }
 
   public submitModal(): void {
-    if (this.data !== null) {
-      let i = 0;
-      while (i < 100) {
-        i += 1;
-        this.generateNewCar();
-      }
+    this.submitBtn.setClasses(['disabled']);
+    let i = 0;
+    while (i < 100) {
+      i += 1;
+      this.generateNewCar();
     }
   }
 
