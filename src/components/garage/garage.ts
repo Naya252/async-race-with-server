@@ -48,7 +48,10 @@ export default class Garage extends BaseComponent {
     });
 
     this.pagination = new Pagination(() => {
-      // this.changeShowCars();
+      const curPage = store.garage.getCurrentPage();
+      this.changeCars(String(curPage)).catch((err) => {
+        console.error(err);
+      });
     });
 
     this.append(this.pagination, this.createCarBtn, this.create100CarsBtn, this.carsWrapper);
@@ -102,14 +105,18 @@ export default class Garage extends BaseComponent {
   }
 
   private changeGarage(): void {
-    getCarsData()
-      .then((data) => {
-        this.createCars(data);
+    this.changeCars()
+      .then(() => {
         this.createPagination();
       })
       .catch((err) => {
         console.error(err);
       });
+  }
+
+  private async changeCars(page = '1'): Promise<void> {
+    const data = await getCarsData(page);
+    this.createCars(data);
   }
 
   private openChangeModal(carData: CarType): void {

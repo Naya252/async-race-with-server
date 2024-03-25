@@ -2,4 +2,9 @@
 
 .dots-pagination {
   padding: 0.75rem 0.375rem;
+  user-select: none;
+}
+
+.page-item {
+  user-select: none;
 }

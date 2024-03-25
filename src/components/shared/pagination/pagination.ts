@@ -35,6 +35,7 @@ export default class Pagination extends BaseComponent {
   private readonly prew: BaseComponent;
   private readonly next: BaseComponent;
   private readonly dots: BaseComponent;
+  private readonly dots2: BaseComponent;
   private active: HTMLElement | null = null;
   private readonly onReplaceCars: () => void;
 
@@ -48,8 +49,26 @@ export default class Pagination extends BaseComponent {
     });
     this.append(this.wrapper);
     this.dots = new BaseComponent('div', ['page-item', 'dots-pagination'], {}, '...');
+    this.dots2 = new BaseComponent('div', ['page-item', 'dots-pagination'], {}, '...');
     this.prew = createPrew();
+    this.prew.addListener('click', () => {
+      const curPage = store.garage.getCurrentPage();
+      if (curPage > 1) {
+        store.garage.changeCurrentPage(curPage - 1);
+        this.showPages();
+        this.changeActive();
+      }
+    });
     this.next = createNext();
+    this.next.addListener('click', () => {
+      const curPage = store.garage.getCurrentPage();
+      const count = store.garage.getAllPages();
+      if (curPage < count) {
+        store.garage.changeCurrentPage(curPage + 1);
+        this.showPages();
+        this.changeActive();
+      }
+    });
     this.createAllPages();
   }
 
@@ -69,14 +88,39 @@ export default class Pagination extends BaseComponent {
 
   public showPages(): void {
     this.wrapper.setHTML('');
+
+    const curPage = store.garage.getCurrentPage();
+    const count = store.garage.getAllPages();
+
+    if (curPage === 1) {
+      this.prew.setClasses(['disabled']);
+    } else {
+      this.prew.removeClasses(['disabled']);
+    }
+
+    if (curPage === count) {
+      this.next.setClasses(['disabled']);
+    } else {
+      this.next.removeClasses(['disabled']);
+    }
+
     this.wrapper.append(this.prew);
 
     if (this.pages.length <= 7) {
       this.appendPages();
-    } else {
-      this.appendPages(0, 3);
-      this.wrapper.append(this.dots);
-      this.appendPages(this.pages.length - 3, this.pages.length);
+    }
+    if (this.pages.length > 7) {
+      if (curPage === 1 || curPage === 2 || curPage === count || curPage === count - 1) {
+        this.appendPages(0, 3);
+        this.wrapper.append(this.dots);
+        this.appendPages(this.pages.length - 3, this.pages.length);
+      } else {
+        this.appendPages(0, 1);
+        this.wrapper.append(this.dots);
+        this.appendPages(curPage - 2, curPage + 1);
+        this.wrapper.append(this.dots2);
+        this.appendPages(this.pages.length - 1, this.pages.length);
+      }
     }
 
     this.changeActive();
@@ -99,8 +143,10 @@ export default class Pagination extends BaseComponent {
     if (target !== null && target instanceof HTMLElement) {
       const item = target.closest('.page');
       const value = item?.textContent;
+
       if (value !== null && typeof value !== 'undefined') {
-        store.garage.changeCurrentPage(+value);
+        store.garage.changeCurrentPage(Number(value));
+        this.showPages();
         this.changeActive();
       }
     }
@@ -112,7 +158,8 @@ export default class Pagination extends BaseComponent {
     }
     const children = this.wrapper.getChildren();
     const active = store.garage.getCurrentPage();
-    const activePage = children[active];
+    const arr = Array.from(children);
+    const activePage = arr.find((el) => el.textContent === active.toString());
     if (activePage !== undefined && activePage instanceof HTMLElement) {
       activePage.classList.add('active');
       this.active = activePage;
