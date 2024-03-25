@@ -49,6 +49,7 @@ function validateResponse(resp: unknown): resp is ApiResponseSuccess {
 
 async function response(url: string, params: RequestInit): Promise<SuccessData> {
   const res = await fetch(url, params);
+  const totalCount = res.headers.get('X-Total-Count');
 
   if (!validateResponse(res)) {
     throwError(res);
@@ -73,6 +74,10 @@ async function response(url: string, params: RequestInit): Promise<SuccessData> 
     throw new Error('Failed to parse data');
   }
 
+  if (totalCount !== null) {
+    return { total: totalCount, resp };
+  }
+
   return resp;
 }
 
@@ -95,6 +100,7 @@ class Requests {
       method: QUERIES.get,
     };
     const responseSuccess = await response(url, params);
+
     return responseSuccess;
   }
 
