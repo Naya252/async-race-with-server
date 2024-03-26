@@ -6,4 +6,38 @@
     width: 100%;
     height: auto;
   }
+
+  &.fast {
+    position: relative;
+
+    &:before {
+      position: absolute;
+      top: -20%;
+      left: -5%;
+      width: 40%;
+      height: 50%;
+      background-image: url(/src/assets/icons/fast.svg);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      content: '';
+    }
+  }
+
+  &.wrench {
+    position: relative;
+
+    &:before {
+      position: absolute;
+      top: -30%;
+      right: -5%;
+      width: 40%;
+      height: 60%;
+      background-image: url(/src/assets/icons/wrench.svg);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      content: '';
+    }
+  }
 }

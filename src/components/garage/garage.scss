@@ -14,6 +14,20 @@
 
   .item {
     border-bottom: 2px dashed rgba($dark-color, 0.3);
+    position: relative;
+
+    &:before {
+      position: absolute;
+      top: 0;
+      right: calc(10% - 2rem);
+      width: 2rem;
+      height: 100%;
+      background-image: url(/src/assets/icons/flag-checkered.svg);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      content: '';
+    }
 
     .car-btns {
       display: flex;
