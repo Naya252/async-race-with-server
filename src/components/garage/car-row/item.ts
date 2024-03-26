@@ -13,14 +13,23 @@ export default class Item extends BaseComponent {
   private readonly carName: BaseComponent;
   private readonly onOpenRemoveModal: (data: CarType) => void;
   private readonly onOpenChangeModal: (data: CarType) => void;
+  private readonly onChangeWinner: (data: CarType, time: number) => void;
   private carAnimtion: Animation | null = null;
+  private time: number;
+  private carData: CarType;
 
-  constructor(data: CarType, openRemoveModal: (carData: CarType) => void, openChangeModal: (carData: CarType) => void) {
+  constructor(
+    data: CarType,
+    openRemoveModal: (carData: CarType) => void,
+    openChangeModal: (carData: CarType) => void,
+    changeWinner: (carData: CarType, time: number) => void,
+  ) {
     super('div', ['item'], { id: `item-${data.id}` });
-
     this.onOpenRemoveModal = openRemoveModal;
     this.onOpenChangeModal = openChangeModal;
-
+    this.onChangeWinner = changeWinner;
+    this.time = 0;
+    this.carData = data;
     this.car = new Car(data);
     this.editBtn = new BaseButton('button', '', ['btn', 'btn-pz-primary', 'icon', 'edit']);
     this.removeBtn = new BaseButton('button', '', ['btn', 'btn-pz-primary', 'icon', 'remove']);
@@ -30,7 +39,6 @@ export default class Item extends BaseComponent {
     const btnWrapper = new BaseComponent('div', ['car-btns']);
     btnWrapper.append(this.removeBtn, this.editBtn, this.startBtn, this.returnBtn, this.carName);
     this.append(btnWrapper, this.car);
-
     this.removeBtn.addListener('click', () => {
       this.onOpenRemoveModal(data);
     });
@@ -57,11 +65,26 @@ export default class Item extends BaseComponent {
 
   public changeCar(data: CarType): void {
     this.car.setCar(data);
+    this.carData = data;
     this.changeCarName(data.name);
   }
 
   private changeCarName(name: string): void {
     this.carName.setTextContent(name);
+  }
+
+  public startRace(): void {
+    const btn = this.startBtn.getElement();
+    if (btn !== null) {
+      btn.click();
+    }
+  }
+
+  public returnCar(): void {
+    const btn = this.returnBtn.getElement();
+    if (btn !== null) {
+      btn.click();
+    }
   }
 
   private handleStart(): void {
@@ -73,9 +96,9 @@ export default class Item extends BaseComponent {
           this.startBtn.setClasses(['disabled']);
           this.animate(engineData);
           changeDriveMode(id)
-            .then((data) => {
-              console.log(data);
+            .then(() => {
               this.car.removeClasses(['fast']);
+              this.onChangeWinner(this.carData, this.time);
             })
             .catch(() => {
               this.car.removeClasses(['fast']);
@@ -88,14 +111,14 @@ export default class Item extends BaseComponent {
   }
 
   private animate(engineData: CarRaceData): void {
-    const time = Math.round(engineData.distance / engineData.velocity);
+    this.time = Math.round(engineData.distance / engineData.velocity);
     const road = this.getElement();
     const roadWidth = road.clientWidth * 0.9;
 
     const carTranslating = [{ transform: 'translateX(0)' }, { transform: `translateX(${roadWidth}px)` }];
 
     const carTiming = {
-      duration: time,
+      duration: this.time,
       iterations: 1,
     };
 
