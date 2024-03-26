@@ -19,6 +19,7 @@ export default class Item extends BaseComponent {
   private time: number;
   private carData: CarType;
   private controller: AbortController;
+  private isRace: boolean;
 
   constructor(
     data: CarType,
@@ -51,6 +52,7 @@ export default class Item extends BaseComponent {
     this.controller = new AbortController();
     this.handleStart();
     this.handleReturn();
+    this.isRace = false;
   }
 
   public getCarId(): number {
@@ -70,6 +72,7 @@ export default class Item extends BaseComponent {
   public startRace(): void {
     const btn = this.startBtn.getElement();
     if (btn !== null) {
+      this.isRace = true;
       btn.click();
     }
   }
@@ -77,12 +80,14 @@ export default class Item extends BaseComponent {
   public returnCar(): void {
     const btn = this.returnBtn.getElement();
     if (btn !== null) {
+      this.isRace = false;
       btn.click();
     }
   }
 
   private handleReturn(): void {
     this.returnBtn.addListener('click', () => {
+      this.returnBtn.setClasses(['disabled']);
       if (this.carAnimtion !== null) {
         this.carAnimtion.pause();
       }
@@ -99,7 +104,6 @@ export default class Item extends BaseComponent {
   }
 
   private changeItemToDafault(): void {
-    this.returnBtn.setClasses(['disabled']);
     this.startBtn.removeClasses(['disabled']);
     this.car.removeClasses(['fast', 'wrench']);
     const car = this.car.getElement();
@@ -111,12 +115,15 @@ export default class Item extends BaseComponent {
 
   private handleStart(): void {
     this.startBtn.addListener('click', () => {
+      this.startBtn.setClasses(['disabled']);
       this.controller = new AbortController();
       const id = this.car.getCarId();
       startEngine(id)
         .then((engineData) => {
-          this.returnBtn.removeClasses(['disabled']);
-          this.startBtn.setClasses(['disabled']);
+          if (!this.isRace) {
+            this.returnBtn.removeClasses(['disabled']);
+          }
+
           this.animate(engineData);
 
           changeDriveMode(id, this.controller)
