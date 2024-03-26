@@ -23,14 +23,15 @@ function throwError(resp: unknown): void {
   if (
     resp !== null &&
     typeof resp === 'object' &&
+    'status' in resp &&
+    typeof resp.status === 'number' &&
     'statusText' in resp &&
-    resp.statusText === 'error' &&
-    'code' in resp &&
-    typeof resp.code === 'number' &&
-    'message' in resp &&
-    typeof resp.message === 'string'
+    typeof resp.statusText === 'string'
   ) {
-    throw new Error(`${resp.code} - ${resp.message} `);
+    if (resp.status === STATUSES.ServerError) {
+      throw new Error(`error 500`);
+    }
+    throw new Error(`${resp.status} - ${resp.statusText} `);
   }
   throw new Error('Invalid response');
 }
