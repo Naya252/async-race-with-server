@@ -3,7 +3,7 @@ import Car from '@/components/garage/car/car';
 import type { Car as CarType, CarRaceData } from '@/types/types';
 import BaseButton from '@/components/shared/base-button/base-button';
 import { startEngine, changeDriveMode, stopEngine } from '@/components/garage/services/garage-service';
-import { ENGINE_ERROR } from '@/repositories/api/api';
+import { ENGINE_ERROR, NOT_FOUND_ERROR } from '@/repositories/api/api';
 
 export default class Item extends BaseComponent {
   private readonly car: Car;
@@ -132,10 +132,19 @@ export default class Item extends BaseComponent {
               this.onChangeWinner(this.carData, this.time);
             })
             .catch((error: Error) => {
+              console.log(error);
               if (error.message === ENGINE_ERROR) {
                 this.car.removeClasses(['fast']);
                 this.car.setClasses(['wrench']);
                 this.stopAnimate();
+              }
+              if (error.message === NOT_FOUND_ERROR) {
+                const btn = this.startBtn.getElement();
+
+                if (btn !== null && this.carAnimtion !== null) {
+                  this.carAnimtion.cancel();
+                  btn.click();
+                }
               }
             });
         })

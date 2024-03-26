@@ -229,6 +229,7 @@ export default class Garage extends BaseComponent {
   }
 
   private openWinnerModal(carData: CarType, time: number): void {
-    this.winnerModal.openModal(carData, time);
+    console.log(`show winner`, carData, time, this.hasWin);
+    // this.winnerModal.openModal(carData, time);
   }
 }

@@ -20,6 +20,7 @@ const STATUSES: Statuses = {
 };
 
 export const ENGINE_ERROR = 'Car has been stopped suddenly. It`s engine was broken down';
+export const NOT_FOUND_ERROR = '404 - Not Found';
 
 function throwError(resp: unknown): void {
   if (
@@ -32,6 +33,9 @@ function throwError(resp: unknown): void {
   ) {
     if (resp.status === STATUSES.ServerError) {
       throw new Error(ENGINE_ERROR);
+    }
+    if (resp.status === STATUSES.NotFound) {
+      throw new Error(NOT_FOUND_ERROR);
     }
     throw new Error(`${resp.status} - ${resp.statusText} `);
   }
