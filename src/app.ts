@@ -15,21 +15,6 @@ import { getCarsData } from './components/garage/services/garage-service';
 //     .catch(() => null);
 // };
 
-// const changeEngine = (): void => {
-//   engineRepository
-//     .changeEngineCar({ id: 1, status: 'started' })
-//     .then((data) => {
-//       console.log(data);
-//       engineRepository
-//         .switchDriveMode(1)
-//         .then((data2) => {
-//           console.log(data2);
-//         })
-//         .catch(() => null);
-//     })
-//     .catch(() => null);
-// };
-
 export default class App {
   private readonly appContainer: BaseComponent;
   private readonly header: Header;
@@ -65,8 +50,6 @@ export default class App {
     this.garage.createPagination();
 
     // getCarById();
-
-    // changeEngine();
   }
 
   private navigate(value: string): void {
