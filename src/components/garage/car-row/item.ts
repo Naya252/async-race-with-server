@@ -112,10 +112,8 @@ export default class Item extends BaseComponent {
 
   private animate(engineData: CarRaceData): void {
     this.time = Math.round(engineData.distance / engineData.velocity);
-    const road = this.getElement();
-    const roadWidth = road.clientWidth * 0.9;
 
-    const carTranslating = [{ transform: 'translateX(0)' }, { transform: `translateX(${roadWidth}px)` }];
+    const carTranslating = [{ transform: 'translateX(0)' }, { transform: `translateX(900%)` }];
 
     const carTiming = {
       duration: this.time,
@@ -127,7 +125,7 @@ export default class Item extends BaseComponent {
     this.car.setClasses(['fast']);
 
     this.carAnimtion.onfinish = () => {
-      car.style.transform = `translateX(${roadWidth}px)`;
+      car.style.transform = `translateX(900%)`;
     };
   }
 
