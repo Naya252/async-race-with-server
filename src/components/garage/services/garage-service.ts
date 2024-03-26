@@ -1,7 +1,8 @@
 import { FIRST_PART_NAME, SECOND_PART_NAME } from '@/shared/constants';
 import * as garageRepository from '@/repositories/garage-repository';
+import * as engineRepository from '@/repositories/engine-repository';
 import store from '@/store/store';
-import type { Car } from '@/types/types';
+import type { Car, CarRaceData, DriveMode } from '@/types/types';
 
 export function getRadomHex(): string {
   const r = Math.floor(Math.random() * 256);
@@ -35,4 +36,14 @@ export async function getCarsData(page = '1'): Promise<Car[]> {
   }
 
   return data;
+}
+
+export async function changeEngine(carId: number): Promise<CarRaceData> {
+  const engine = await engineRepository.changeEngineCar({ id: carId, status: 'started' });
+  return engine;
+}
+
+export async function changeDriveMode(carId: number): Promise<DriveMode> {
+  const driveMode = await engineRepository.switchDriveMode(carId);
+  return driveMode;
 }
