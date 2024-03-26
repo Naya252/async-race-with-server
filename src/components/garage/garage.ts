@@ -27,11 +27,13 @@ export default class Garage extends BaseComponent {
   private readonly pagination: Pagination;
   private hasWin: boolean;
   private isRace: boolean;
+  private countRaceCars: number;
 
   constructor() {
     super('div', ['garage'], { id: 'garage' });
     this.hasWin = false;
     this.isRace = false;
+    this.countRaceCars = 0;
     this.cars = [];
     this.carsWrapper = new BaseComponent('div', ['cars-wrapper']);
     const buttonWrapper = new BaseComponent('div', ['btns-wrapper']);
@@ -121,6 +123,8 @@ export default class Garage extends BaseComponent {
 
     this.isRace = false;
     this.hasWin = false;
+    // this.countRaceCars = 0;
+    // this.calculateCarsInRace(0);
   }
 
   public createCars(carsData: CarType[]): void {
@@ -150,6 +154,9 @@ export default class Garage extends BaseComponent {
       },
       (carData: CarType, time: number) => {
         this.changeWin(carData, time);
+      },
+      (value: number) => {
+        this.calculateCarsInRace(value);
       },
     );
     this.cars.push(item);
@@ -231,5 +238,31 @@ export default class Garage extends BaseComponent {
   private openWinnerModal(carData: CarType, time: number): void {
     console.log(`show winner`, carData, time, this.hasWin);
     // this.winnerModal.openModal(carData, time);
+  }
+
+  private calculateCarsInRace(value: number): void {
+    console.log(value);
+    this.countRaceCars += value;
+    this.checkCarsInRace();
+  }
+
+  private checkCarsInRace(): void {
+    console.log(this.countRaceCars);
+    if (this.countRaceCars > 0) {
+      this.raceCarsBtn.setClasses(['disabled']);
+      if (!this.isRace) {
+        this.returnCarsBtn.removeClasses(['disabled']);
+      }
+      if (this.isRace && this.countRaceCars < this.cars.length) {
+        this.returnCarsBtn.setClasses(['disabled']);
+      }
+      if (this.isRace && this.countRaceCars === this.cars.length) {
+        this.returnCarsBtn.removeClasses(['disabled']);
+      }
+    }
+    if (this.countRaceCars === 0) {
+      this.raceCarsBtn.removeClasses(['disabled']);
+      this.returnCarsBtn.setClasses(['disabled']);
+    }
   }
 }

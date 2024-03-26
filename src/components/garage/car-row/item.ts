@@ -15,6 +15,7 @@ export default class Item extends BaseComponent {
   private readonly onOpenRemoveModal: (data: CarType) => void;
   private readonly onOpenChangeModal: (data: CarType) => void;
   private readonly onChangeWinner: (data: CarType, time: number) => void;
+  private readonly onChangeCountInRace: (value: number) => void;
   private carAnimtion: Animation | null = null;
   private time: number;
   private carData: CarType;
@@ -26,11 +27,13 @@ export default class Item extends BaseComponent {
     openRemoveModal: (carData: CarType) => void,
     openChangeModal: (carData: CarType) => void,
     changeWinner: (carData: CarType, time: number) => void,
+    changeCountInRace: (value: number) => void,
   ) {
     super('div', ['item'], { id: `item-${data.id}` });
     this.onOpenRemoveModal = openRemoveModal;
     this.onOpenChangeModal = openChangeModal;
     this.onChangeWinner = changeWinner;
+    this.onChangeCountInRace = changeCountInRace;
     this.time = 0;
     this.carData = data;
     this.car = new Car(data);
@@ -98,6 +101,7 @@ export default class Item extends BaseComponent {
       stopEngine(id)
         .then(() => {
           this.changeItemToDafault();
+          this.onChangeCountInRace(-1);
         })
         .catch(() => {});
     });
@@ -125,6 +129,7 @@ export default class Item extends BaseComponent {
           }
 
           this.animate(engineData);
+          this.onChangeCountInRace(1);
 
           changeDriveMode(id, this.controller)
             .then(() => {
@@ -132,7 +137,6 @@ export default class Item extends BaseComponent {
               this.onChangeWinner(this.carData, this.time);
             })
             .catch((error: Error) => {
-              console.log(error);
               if (error.message === ENGINE_ERROR) {
                 this.car.removeClasses(['fast']);
                 this.car.setClasses(['wrench']);
@@ -143,6 +147,7 @@ export default class Item extends BaseComponent {
 
                 if (btn !== null && this.carAnimtion !== null) {
                   this.carAnimtion.cancel();
+                  this.onChangeCountInRace(-1);
                   btn.click();
                 }
               }
