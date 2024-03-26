@@ -38,12 +38,17 @@ export async function getCarsData(page = '1'): Promise<Car[]> {
   return data;
 }
 
-export async function changeEngine(carId: number): Promise<CarRaceData> {
-  const engine = await engineRepository.changeEngineCar({ id: carId, status: 'started' });
-  return engine;
+export async function startEngine(carId: number, controller?: AbortController): Promise<CarRaceData> {
+  const data = await engineRepository.changeEngineCar({ id: carId, status: 'started' }, controller);
+  return data;
 }
 
-export async function changeDriveMode(carId: number): Promise<DriveMode> {
-  const driveMode = await engineRepository.switchDriveMode(carId);
+export async function stopEngine(carId: number, controller?: AbortController): Promise<CarRaceData> {
+  const data = await engineRepository.changeEngineCar({ id: carId, status: 'stopped' }, controller);
+  return data;
+}
+
+export async function changeDriveMode(carId: number, controller?: AbortController): Promise<DriveMode> {
+  const driveMode = await engineRepository.switchDriveMode(carId, controller);
   return driveMode;
 }

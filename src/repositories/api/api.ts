@@ -19,6 +19,8 @@ const STATUSES: Statuses = {
   ServerError: 500,
 };
 
+export const ENGINE_ERROR = 'Car has been stopped suddenly. It`s engine was broken down';
+
 function throwError(resp: unknown): void {
   if (
     resp !== null &&
@@ -29,7 +31,7 @@ function throwError(resp: unknown): void {
     typeof resp.statusText === 'string'
   ) {
     if (resp.status === STATUSES.ServerError) {
-      throw new Error(`error 500`);
+      throw new Error(ENGINE_ERROR);
     }
     throw new Error(`${resp.status} - ${resp.statusText} `);
   }
@@ -161,13 +163,16 @@ class Requests {
   public async patch({
     endpoint = '',
     options = null,
+    signal,
   }: {
     endpoint: string;
     options?: Record<string, string> | null;
+    signal?: AbortSignal;
   }): Promise<SuccessData> {
     const url = this.makeUrl(endpoint, options);
     const params: RequestInit = {
       method: QUERIES.patch,
+      signal,
     };
     const responseSuccess = await response(url, params);
     return responseSuccess;

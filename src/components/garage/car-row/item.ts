@@ -2,7 +2,8 @@ import BaseComponent from '@/components/shared/base-component';
 import Car from '@/components/garage/car/car';
 import type { Car as CarType, CarRaceData } from '@/types/types';
 import BaseButton from '@/components/shared/base-button/base-button';
-import { changeEngine, changeDriveMode } from '@/components/garage/services/garage-service';
+import { startEngine, changeDriveMode, stopEngine } from '@/components/garage/services/garage-service';
+import { ENGINE_ERROR } from '@/repositories/api/api';
 
 export default class Item extends BaseComponent {
   private readonly car: Car;
@@ -17,6 +18,7 @@ export default class Item extends BaseComponent {
   private carAnimtion: Animation | null = null;
   private time: number;
   private carData: CarType;
+  private controller: AbortController;
 
   constructor(
     data: CarType,
@@ -46,17 +48,9 @@ export default class Item extends BaseComponent {
       this.onOpenChangeModal(data);
     });
 
+    this.controller = new AbortController();
     this.handleStart();
-    this.returnBtn.addListener('click', () => {
-      this.returnBtn.setClasses(['disabled']);
-      this.startBtn.removeClasses(['disabled']);
-      this.car.removeClasses(['fast', 'wrench']);
-      const car = this.car.getElement();
-      car.style.transform = `translateX(0)`;
-      if (this.carAnimtion !== null) {
-        this.carAnimtion.cancel();
-      }
-    });
+    this.handleReturn();
   }
 
   public getCarId(): number {
@@ -87,26 +81,58 @@ export default class Item extends BaseComponent {
     }
   }
 
+  private handleReturn(): void {
+    this.returnBtn.addListener('click', () => {
+      if (this.carAnimtion !== null) {
+        this.carAnimtion.pause();
+      }
+      this.controller.abort();
+
+      const id = this.car.getCarId();
+
+      stopEngine(id)
+        .then(() => {
+          this.changeItemToDafault();
+        })
+        .catch(() => {});
+    });
+  }
+
+  private changeItemToDafault(): void {
+    this.returnBtn.setClasses(['disabled']);
+    this.startBtn.removeClasses(['disabled']);
+    this.car.removeClasses(['fast', 'wrench']);
+    const car = this.car.getElement();
+    car.style.transform = `translateX(0)`;
+    if (this.carAnimtion !== null) {
+      this.carAnimtion.cancel();
+    }
+  }
+
   private handleStart(): void {
     this.startBtn.addListener('click', () => {
+      this.controller = new AbortController();
       const id = this.car.getCarId();
-      changeEngine(id)
-        .then((engineData: CarRaceData) => {
+      startEngine(id)
+        .then((engineData) => {
           this.returnBtn.removeClasses(['disabled']);
           this.startBtn.setClasses(['disabled']);
           this.animate(engineData);
-          changeDriveMode(id)
+
+          changeDriveMode(id, this.controller)
             .then(() => {
               this.car.removeClasses(['fast']);
               this.onChangeWinner(this.carData, this.time);
             })
-            .catch(() => {
-              this.car.removeClasses(['fast']);
-              this.car.setClasses(['wrench']);
-              this.stopAnimate();
+            .catch((error: Error) => {
+              if (error.message === ENGINE_ERROR) {
+                this.car.removeClasses(['fast']);
+                this.car.setClasses(['wrench']);
+                this.stopAnimate();
+              }
             });
         })
-        .catch(() => null);
+        .catch(() => {});
     });
   }
 
