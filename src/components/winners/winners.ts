@@ -16,7 +16,7 @@ export default class Winners extends BaseComponent {
 
     this.winners = [];
 
-    this.pagination = new Pagination(() => {
+    this.pagination = new Pagination('Winners', store.winners, () => {
       this.changeWinners().catch((err) => {
         console.error(err);
       });
@@ -26,7 +26,7 @@ export default class Winners extends BaseComponent {
   }
 
   private async changeWinners(): Promise<void> {
-    const curPage = store.garage.getCurrentPage();
+    const curPage = store.winners.getCurrentPage();
     const data = await getWinnersData(String(curPage));
     this.createWinners(data);
   }

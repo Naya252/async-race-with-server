@@ -1,6 +1,7 @@
 import BaseComponent from '@/components/shared/base-component';
 import '@/components/shared/pagination/pagination.module.scss';
-import store from '@/store/store';
+import type Garage from '@/store/garage-store/store';
+import type Winners from '@/store/winners-store/store';
 
 const createPrew = (): BaseComponent => {
   const item = new BaseComponent('li', ['page-item']);
@@ -32,6 +33,7 @@ const createNext = (): BaseComponent => {
 export default class Pagination extends BaseComponent {
   private readonly titleWrapper: BaseComponent;
   private readonly title: string;
+  private readonly store: Garage | Winners;
   private readonly wrapper: BaseComponent;
   private pages: BaseComponent[] = [];
   private readonly prew: BaseComponent;
@@ -39,36 +41,37 @@ export default class Pagination extends BaseComponent {
   private readonly dots: BaseComponent;
   private readonly dots2: BaseComponent;
   private active: HTMLElement | null = null;
-  private readonly onReplaceCars: () => void;
+  private readonly onReplaceItems: () => void;
 
-  constructor(replaceCars: () => void, title = 'Garage') {
+  constructor(title: string, store: Garage | Winners, replaceItems: () => void) {
     super('nav', ['nav-pagination']);
-    this.onReplaceCars = replaceCars;
+    this.store = store;
+    this.onReplaceItems = replaceItems;
     this.title = title;
     this.titleWrapper = new BaseComponent('div', ['page-title', 'title'], {}, this.title);
     this.wrapper = new BaseComponent('ul', ['pagination', 'justify-content-end']);
     this.wrapper.addListener('click', (e: Event) => {
       this.changePage(e);
-      this.onReplaceCars();
+      this.onReplaceItems();
     });
     this.append(this.titleWrapper, this.wrapper);
     this.dots = new BaseComponent('div', ['page-item', 'dots-pagination'], {}, '...');
     this.dots2 = new BaseComponent('div', ['page-item', 'dots-pagination'], {}, '...');
     this.prew = createPrew();
     this.prew.addListener('click', () => {
-      const curPage = store.garage.getCurrentPage();
+      const curPage = this.store.getCurrentPage();
       if (curPage > 1) {
-        store.garage.changeCurrentPage(curPage - 1);
+        this.store.changeCurrentPage(curPage - 1);
         this.showPages();
         this.changeActive();
       }
     });
     this.next = createNext();
     this.next.addListener('click', () => {
-      const curPage = store.garage.getCurrentPage();
-      const count = store.garage.getAllPages();
+      const curPage = this.store.getCurrentPage();
+      const count = this.store.getAllPages();
       if (curPage < count) {
-        store.garage.changeCurrentPage(curPage + 1);
+        this.store.changeCurrentPage(curPage + 1);
         this.showPages();
         this.changeActive();
       }
@@ -78,7 +81,7 @@ export default class Pagination extends BaseComponent {
 
   public createAllPages(): void {
     this.pages = [];
-    const count = store.garage.getAllPages();
+    const count = this.store.getAllPages();
 
     let i = 0;
     while (i < count) {
@@ -93,8 +96,8 @@ export default class Pagination extends BaseComponent {
   public showPages(): void {
     this.wrapper.setHTML('');
 
-    const curPage = store.garage.getCurrentPage();
-    const count = store.garage.getAllPages();
+    const curPage = this.store.getCurrentPage();
+    const count = this.store.getAllPages();
 
     if (curPage === 1) {
       this.prew.setClasses(['disabled']);
@@ -149,7 +152,7 @@ export default class Pagination extends BaseComponent {
       const value = item?.textContent;
 
       if (value !== null && typeof value !== 'undefined') {
-        store.garage.changeCurrentPage(Number(value));
+        this.store.changeCurrentPage(Number(value));
         this.showPages();
         this.changeActive();
       }
@@ -161,7 +164,7 @@ export default class Pagination extends BaseComponent {
       this.active.classList.remove('active');
     }
     const children = this.wrapper.getChildren();
-    const active = store.garage.getCurrentPage();
+    const active = this.store.getCurrentPage();
     const arr = Array.from(children);
     const activePage = arr.find((el) => el.textContent === active.toString());
     if (activePage !== undefined && activePage instanceof HTMLElement) {
@@ -171,6 +174,6 @@ export default class Pagination extends BaseComponent {
   }
 
   public chageTitle(): void {
-    this.titleWrapper.setTextContent(`${this.title} - count: ${store.garage.getAllCarsCount()}`);
+    this.titleWrapper.setTextContent(`${this.title} - count: ${this.store.getAllItemsCount()}`);
   }
 }

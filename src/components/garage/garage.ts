@@ -53,7 +53,7 @@ export default class Garage extends BaseComponent {
       this.submitCreateRandomModal(carsData);
     });
 
-    this.pagination = new Pagination(() => {
+    this.pagination = new Pagination('Garage', store.garage, () => {
       this.changeCars().catch((err) => {
         console.error(err);
       });
