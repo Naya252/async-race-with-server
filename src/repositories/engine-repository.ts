@@ -1,12 +1,7 @@
 import type { EngineParams, CarRaceData, DriveMode } from '@/types/types';
+import { ENDPOINTS, ERROR_MESSAGES } from '@/shared/api-constants';
 import { isCarRaceData, isDriveMode } from './validation';
 import api from './api/api';
-
-const ENGINE_ENDPOINT = `engine`;
-const ERROR_MESSAGES = {
-  Engine: 'Failed to change engine car',
-  Drive: 'Failed to parse drive mode for car',
-};
 
 export async function changeEngineCar(engineParams: EngineParams, controller?: AbortController): Promise<CarRaceData> {
   let signal;
@@ -15,7 +10,7 @@ export async function changeEngineCar(engineParams: EngineParams, controller?: A
   }
 
   const data = await api.patch({
-    endpoint: `${ENGINE_ENDPOINT}`,
+    endpoint: `${ENDPOINTS.engine}`,
     options: { id: String(engineParams.id), status: engineParams.status },
     signal,
   });
@@ -32,7 +27,7 @@ export async function switchDriveMode(id: number, controller?: AbortController):
   }
 
   const data = await api.patch({
-    endpoint: `${ENGINE_ENDPOINT}`,
+    endpoint: `${ENDPOINTS.engine}`,
     options: { id: String(id), status: 'drive' },
     signal,
   });

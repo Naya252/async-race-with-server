@@ -1,5 +1,5 @@
 import { isCars, isCar, isWinner, isWinners, isCarRaceData, isDriveMode } from '@/repositories/validation';
-import { BASE_URL } from '@/shared/constants';
+import { BASE_URL } from '@/shared/api-constants';
 import type { ApiResponseSuccess, SuccessData, Statuses } from './api-types';
 
 export const QUERIES = {

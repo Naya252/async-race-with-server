@@ -1,37 +1,55 @@
 import { type Winner } from '@/types/types';
+import { ITEMS_PER_PAGE } from '@/shared/api-constants';
 
 export default class Winers {
   private winners: Winner[];
+  private currentPage: number;
+  private allPages: number;
+  private allWinnersCount: number;
 
   constructor(winnersData: Winner[]) {
     this.winners = winnersData;
+    this.currentPage = 1;
+    this.allPages = 1;
+    this.allWinnersCount = 0;
   }
 
   public getWinners(): Winner[] {
     return this.winners;
   }
 
-  public addWinner(winner: Winner): void {
-    this.winners.push(winner);
+  public setWinners(winners: Winner[]): void {
+    this.winners = winners;
   }
 
-  public removeWinner(winner: Winner): void {
-    this.winners = this.winners.filter((el) => el !== winner);
+  public getAllWinnersCount(): number {
+    return this.allWinnersCount;
   }
 
-  public changeWinnerWins(winner: Winner): void {
-    const item = this.winners.find((el) => el.id === winner.id);
-    if (item !== null && typeof item !== 'undefined') {
-      item.wins = winner.wins;
-    }
+  public setAllCount(count: string): void {
+    this.allWinnersCount = Number(count);
+    this.changeAllPages();
   }
 
-  public changeWinnerTime(winner: Winner): void {
-    const item = this.winners.find((el) => el.id === winner.id);
-    if (item !== null && typeof item !== 'undefined') {
-      if (winner.time < item.time) {
-        item.time = winner.time;
-      }
-    }
+  public getAllPages(): number {
+    return this.allPages;
+  }
+
+  public getCurrentPage(): number {
+    return this.currentPage;
+  }
+
+  public changeAllPages(): void {
+    this.allPages = Math.ceil(this.allWinnersCount / ITEMS_PER_PAGE.winners);
+  }
+
+  public changeCurrentPage(value: number): void {
+    this.currentPage = value;
+  }
+
+  public getWinnersForShow(): number[] {
+    const current = this.currentPage;
+    const end = current * ITEMS_PER_PAGE.winners;
+    return [end - ITEMS_PER_PAGE.winners, end - 1];
   }
 }

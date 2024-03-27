@@ -1,4 +1,5 @@
 import { type Car } from '@/types/types';
+import { ITEMS_PER_PAGE } from '@/shared/api-constants';
 
 export default class Garage {
   private cars: Car[];
@@ -47,7 +48,7 @@ export default class Garage {
   }
 
   public changeAllPages(): void {
-    this.allPages = Math.ceil(this.allCarsCount / 7);
+    this.allPages = Math.ceil(this.allCarsCount / ITEMS_PER_PAGE.garage);
   }
 
   public changeCurrentPage(value: number): void {
@@ -56,7 +57,7 @@ export default class Garage {
 
   public getCarsForShow(): number[] {
     const current = this.currentPage;
-    const end = current * 7;
-    return [end - 7, end - 1];
+    const end = current * ITEMS_PER_PAGE.garage;
+    return [end - ITEMS_PER_PAGE.garage, end - 1];
   }
 }

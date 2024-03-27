@@ -1,4 +1,4 @@
-import { FIRST_PART_NAME, SECOND_PART_NAME } from '@/shared/constants';
+import { FIRST_PART_NAME, SECOND_PART_NAME } from '@/shared/car-constants';
 import * as garageRepository from '@/repositories/garage-repository';
 import * as engineRepository from '@/repositories/engine-repository';
 import store from '@/store/store';
