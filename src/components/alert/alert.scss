@@ -1,0 +1,37 @@
+.alerts {
+  position: fixed;
+  top: 70px;
+  right: 1rem;
+  z-index: 99;
+  width: 292px;
+
+  .alert {
+    align-items: flex-start !important;
+    gap: 16px;
+    font-weight: 600;
+
+    .icon {
+      margin-top: 4px;
+      width: 1.5rem;
+      height: 1.5rem;
+
+      &.success {
+        background: center / contain no-repeat url('/src/assets/icons/circle.svg');
+        filter: brightness(0) saturate(100%) invert(40%) sepia(92%) saturate(735%) hue-rotate(198deg) brightness(92%)
+          contrast(88%);
+      }
+
+      &.info {
+        background: center / contain no-repeat url('/src/assets/icons/info.svg');
+        filter: brightness(0) saturate(100%) invert(40%) sepia(92%) saturate(735%) hue-rotate(198deg) brightness(92%)
+          contrast(88%);
+      }
+
+      &.warning {
+        background: center / contain no-repeat url('/src/assets/icons/alarm.svg');
+        filter: brightness(0) saturate(100%) invert(40%) sepia(92%) saturate(735%) hue-rotate(198deg) brightness(92%)
+          contrast(88%);
+      }
+    }
+  }
+}

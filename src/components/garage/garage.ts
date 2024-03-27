@@ -5,12 +5,12 @@ import type { Car as CarType } from '@/types/types';
 import RemoveCar from './modals/remove-car-modal';
 import ChangeCar from './modals/change-car-modal';
 import CreateCar from './modals/create-car-modal';
-import WinnerModal from './modals/winner-modal';
 import BaseButton from '../shared/base-button/base-button';
 import CreateRandomCars from './modals/create-random-cars';
 import Pagination from '../shared/pagination/pagination';
 import { getCarsData } from './services/garage-service';
 import './garage.scss';
+import alerts from '../alert/alert';
 
 export default class Garage extends BaseComponent {
   private cars: Item[];
@@ -22,7 +22,6 @@ export default class Garage extends BaseComponent {
   private readonly removeCarModal: RemoveCar;
   private readonly changeCarModal: ChangeCar;
   private readonly createCarModal: CreateCar;
-  private readonly winnerModal: WinnerModal;
   private readonly create100CarsModal: CreateRandomCars;
   private readonly pagination: Pagination;
   private hasWin: boolean;
@@ -53,7 +52,6 @@ export default class Garage extends BaseComponent {
     this.create100CarsModal = new CreateRandomCars((carsData: CarType[]) => {
       this.submitCreateRandomModal(carsData);
     });
-    this.winnerModal = new WinnerModal();
 
     this.pagination = new Pagination(() => {
       this.changeCars().catch((err) => {
@@ -233,7 +231,7 @@ export default class Garage extends BaseComponent {
 
   private openWinnerModal(carData: CarType, time: number): void {
     console.log(`show winner`, carData, time, this.hasWin);
-    // this.winnerModal.openModal(carData, time);
+    alerts.addAlert('success', `${carData.name} is winner! <br> time: ${time} ms`);
   }
 
   private calculateCarsInRace(value: number): void {

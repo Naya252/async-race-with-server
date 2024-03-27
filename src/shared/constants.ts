@@ -3,6 +3,12 @@ export const NAV_LINKS = ['Garage', 'Winners'];
 
 export const BASE_URL = `http://localhost:3000/`;
 
+export const ALERT_TYPES = {
+  success: 'success',
+  info: 'info',
+  warning: 'warning',
+};
+
 export const FIRST_PART_NAME = [
   'BMW',
   'Volvo',

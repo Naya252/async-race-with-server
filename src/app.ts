@@ -1,10 +1,11 @@
 import '@/styles/core.scss';
 import BaseComponent from '@/components/shared/base-component';
 import Garage from '@/components/garage/garage';
-import Header from './components/header/header-component';
-import Footer from './components/footer/footer-component';
+import Header from '@/components/header/header-component';
+import Footer from '@/components/footer/footer-component';
+import { getCarsData } from '@/components/garage/services/garage-service';
+import alerts from '@/components/alert/alert';
 import { NAV_LINKS } from './shared/constants';
-import { getCarsData } from './components/garage/services/garage-service';
 
 // const getCarById = (): void => {
 //   garageRepository
@@ -37,7 +38,7 @@ export default class App {
 
     this.footer = new Footer();
 
-    this.appContainer.append(this.header, this.main, this.footer);
+    this.appContainer.append(this.header, this.main, this.footer, alerts);
   }
 
   public async init(): Promise<void> {
