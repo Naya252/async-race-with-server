@@ -13,9 +13,8 @@ export async function getWinnersByPage(
     options: { _limit: String(ITEMS_PER_PAGE.winners), _page: page, _sort: sort, _order: order },
   });
 
-  console.log(data);
   if (typeof data === 'object' && 'resp' in data && 'total' in data && typeof data.total === 'string') {
-    if (!isWinners(data)) {
+    if (!isWinners(data.resp)) {
       throw new Error(ERROR_MESSAGES.Winners);
     }
   }
@@ -33,17 +32,14 @@ export async function getWinnerById(id: number): Promise<Winner> {
 
 export async function createWinner(carData: Record<string, number | string>): Promise<Winner> {
   const data = await api.post({ endpoint: ENDPOINTS.winners, data: carData });
-  console.log(data);
   if (!isWinner(data)) {
     throw new Error(ERROR_MESSAGES.Winner);
   }
-  console.log(data);
   return data;
 }
 
 export async function updateWinner(winnerData: Winner): Promise<Winner> {
   const data = await api.put({ endpoint: `${ENDPOINTS.winners}/${winnerData.id}`, data: winnerData });
-  console.log(data);
   if (!isWinner(data)) {
     throw new Error(ERROR_MESSAGES.Winner);
   }
