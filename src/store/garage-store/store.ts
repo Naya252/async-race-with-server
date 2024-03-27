@@ -30,7 +30,7 @@ export default class Garage {
     }
   }
 
-  public getAllCarsCount(): number {
+  public getAllItemsCount(): number {
     return this.allCarsCount;
   }
 

@@ -22,7 +22,7 @@ export default class Winers {
     this.winners = winners;
   }
 
-  public getAllWinnersCount(): number {
+  public getAllItemsCount(): number {
     return this.allWinnersCount;
   }
 
