@@ -9,6 +9,12 @@
     align-items: flex-start !important;
     gap: 16px;
     font-weight: 600;
+    padding-right: 1rem;
+
+    .alert-content {
+      flex-grow: 1;
+      margin-bottom: 0;
+    }
 
     .icon {
       margin-top: 4px;
