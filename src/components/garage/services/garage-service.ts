@@ -3,6 +3,7 @@ import * as garageRepository from '@/repositories/garage-repository';
 import * as engineRepository from '@/repositories/engine-repository';
 import store from '@/store/store';
 import type { Car, CarRaceData, DriveMode } from '@/types/types';
+import alerts from '@/components/alert/alert';
 
 export function getRadomHex(): string {
   const r = Math.floor(Math.random() * 256);
@@ -52,3 +53,16 @@ export async function changeDriveMode(carId: number, controller?: AbortControlle
   const driveMode = await engineRepository.switchDriveMode(carId, controller);
   return driveMode;
 }
+
+export const showWinnerAlert = (carData: Car, time: number): void => {
+  alerts.addAlert('success', `${carData.name} is winner! <br> time: ${time} s`);
+};
+
+// const getCarById = (): void => {
+//   garageRepository
+//     .getCarById(1)
+//     .then((data) => {
+//       // console.log(data);
+//     })
+//     .catch(() => null);
+// };

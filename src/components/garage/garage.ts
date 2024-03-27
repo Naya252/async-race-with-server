@@ -8,14 +8,9 @@ import CreateCar from './modals/create-car-modal';
 import BaseButton from '../shared/base-button/base-button';
 import CreateRandomCars from './modals/create-random-cars';
 import Pagination from '../shared/pagination/pagination';
-import { getCarsData } from './services/garage-service';
+import { getCarsData, showWinnerAlert } from './services/garage-service';
 import { saveWinner } from '../winners/services/winners-service';
 import './garage.scss';
-import alerts from '../alert/alert';
-
-const showWinnerAlert = (carData: CarType, time: number): void => {
-  alerts.addAlert('success', `${carData.name} is winner! <br> time: ${time} ms`);
-};
 
 export default class Garage extends BaseComponent {
   private cars: Item[];
@@ -104,8 +99,9 @@ export default class Garage extends BaseComponent {
     if (!this.hasWin && this.isRace) {
       this.hasWin = true;
       console.log(`${carData.name} (${time}ms) - WINNER`);
-      showWinnerAlert(carData, time);
-      saveWinner(carData, time).catch(() => null);
+      const seconds = time / 1000;
+      showWinnerAlert(carData, seconds);
+      saveWinner(carData, seconds).catch(() => null);
     }
   }
 
@@ -123,7 +119,6 @@ export default class Garage extends BaseComponent {
       el.returnCar();
     });
 
-    // this.isRace = false;
     this.hasWin = false;
   }
 
