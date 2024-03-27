@@ -108,7 +108,6 @@ export default class Garage extends BaseComponent {
   private raceCars(): void {
     this.isRace = true;
     this.raceCarsBtn.setClasses(['disabled']);
-    this.returnCarsBtn.removeClasses(['disabled']);
     this.cars.forEach((el) => {
       el.startRace();
     });
@@ -116,15 +115,12 @@ export default class Garage extends BaseComponent {
 
   private returnCars(): void {
     this.returnCarsBtn.setClasses(['disabled']);
-    this.raceCarsBtn.removeClasses(['disabled']);
     this.cars.forEach((el) => {
       el.returnCar();
     });
 
-    this.isRace = false;
+    // this.isRace = false;
     this.hasWin = false;
-    // this.countRaceCars = 0;
-    // this.calculateCarsInRace(0);
   }
 
   public createCars(carsData: CarType[]): void {
@@ -241,28 +237,27 @@ export default class Garage extends BaseComponent {
   }
 
   private calculateCarsInRace(value: number): void {
-    console.log(value);
     this.countRaceCars += value;
     this.checkCarsInRace();
   }
 
   private checkCarsInRace(): void {
-    console.log(this.countRaceCars);
     if (this.countRaceCars > 0) {
       this.raceCarsBtn.setClasses(['disabled']);
-      if (!this.isRace) {
-        this.returnCarsBtn.removeClasses(['disabled']);
-      }
+
       if (this.isRace && this.countRaceCars < this.cars.length) {
         this.returnCarsBtn.setClasses(['disabled']);
       }
       if (this.isRace && this.countRaceCars === this.cars.length) {
-        this.returnCarsBtn.removeClasses(['disabled']);
+        setTimeout(() => {
+          this.returnCarsBtn.removeClasses(['disabled']);
+        }, 2000);
       }
     }
     if (this.countRaceCars === 0) {
       this.raceCarsBtn.removeClasses(['disabled']);
       this.returnCarsBtn.setClasses(['disabled']);
+      this.isRace = false;
     }
   }
 }

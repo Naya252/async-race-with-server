@@ -20,7 +20,8 @@ export default class Item extends BaseComponent {
   private time: number;
   private carData: CarType;
   private controller: AbortController;
-  private isRace: boolean;
+  private isRaceDrive: boolean;
+  private isDrive: boolean;
 
   constructor(
     data: CarType,
@@ -55,7 +56,8 @@ export default class Item extends BaseComponent {
     this.controller = new AbortController();
     this.handleStart();
     this.handleReturn();
-    this.isRace = false;
+    this.isRaceDrive = false;
+    this.isDrive = false;
   }
 
   public getCarId(): number {
@@ -75,7 +77,7 @@ export default class Item extends BaseComponent {
   public startRace(): void {
     const btn = this.startBtn.getElement();
     if (btn !== null) {
-      this.isRace = true;
+      this.isRaceDrive = true;
       btn.click();
     }
   }
@@ -83,8 +85,10 @@ export default class Item extends BaseComponent {
   public returnCar(): void {
     const btn = this.returnBtn.getElement();
     if (btn !== null) {
-      this.isRace = false;
-      btn.click();
+      this.isRaceDrive = false;
+      if (this.isDrive) {
+        btn.click();
+      }
     }
   }
 
@@ -102,6 +106,7 @@ export default class Item extends BaseComponent {
         .then(() => {
           this.changeItemToDafault();
           this.onChangeCountInRace(-1);
+          this.isDrive = false;
         })
         .catch(() => {});
     });
@@ -120,16 +125,17 @@ export default class Item extends BaseComponent {
   private handleStart(): void {
     this.startBtn.addListener('click', () => {
       this.startBtn.setClasses(['disabled']);
+      this.onChangeCountInRace(1);
+
       this.controller = new AbortController();
       const id = this.car.getCarId();
       startEngine(id)
         .then((engineData) => {
-          if (!this.isRace) {
+          if (!this.isRaceDrive) {
             this.returnBtn.removeClasses(['disabled']);
           }
-
           this.animate(engineData);
-          this.onChangeCountInRace(1);
+          this.isDrive = true;
 
           changeDriveMode(id, this.controller)
             .then(() => {
