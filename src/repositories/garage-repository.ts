@@ -3,14 +3,6 @@ import { ITEMS_PER_PAGE, ENDPOINTS, ERROR_MESSAGES } from '@/shared/api-constant
 import { isCars, isCar } from './validation';
 import api from './api/api';
 
-export async function getAllCars(): Promise<Car[]> {
-  const data = await api.get({ endpoint: `${ENDPOINTS.garage}/` });
-  if (!isCars(data)) {
-    throw new Error(ERROR_MESSAGES.Cars);
-  }
-  return data;
-}
-
 export async function getCarsByPage(page = '1'): Promise<Record<string, string | Car[]>> {
   const data = await api.get({
     endpoint: `${ENDPOINTS.garage}`,
