@@ -1,7 +1,7 @@
 import '@/styles/core.scss';
 import BaseComponent from '@/components/shared/base-component';
 import Garage from '@/components/garage/garage';
-import Winers from '@/components/winners/winners';
+import Winners from '@/components/winners/winners';
 import Header from '@/components/header/header-component';
 import Footer from '@/components/footer/footer-component';
 import { getCarsData } from '@/components/garage/services/garage-service';
@@ -14,7 +14,7 @@ export default class App {
   private readonly main: BaseComponent;
   private readonly footer: Footer;
   private readonly garage: Garage;
-  private readonly winners: Winers;
+  private readonly winners: Winners;
 
   constructor() {
     this.appContainer = new BaseComponent('div', ['app']);
@@ -24,8 +24,10 @@ export default class App {
     });
     this.main = new BaseComponent('div', ['content', 'container']);
 
-    this.garage = new Garage();
-    this.winners = new Winers();
+    this.garage = new Garage(() => {
+      this.changeWinnersPage();
+    });
+    this.winners = new Winners();
     this.main.append(this.garage);
 
     this.footer = new Footer();
@@ -51,9 +53,13 @@ export default class App {
       if (value.toLocaleUpperCase() !== item.id) {
         this.main.replaceChildren(value === NAV_LINKS[0] ? this.garage : this.winners);
         if (value === NAV_LINKS[1]) {
-          this.winners.changeWinnersPage();
+          this.changeWinnersPage();
         }
       }
     }
+  }
+
+  private changeWinnersPage(): void {
+    this.winners.changeWinnersPage();
   }
 }

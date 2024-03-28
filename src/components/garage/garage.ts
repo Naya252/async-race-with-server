@@ -27,9 +27,11 @@ export default class Garage extends BaseComponent {
   private hasWin: boolean;
   private isRace: boolean;
   private countRaceCars: number;
+  private readonly onChangeWinners: () => void;
 
-  constructor() {
+  constructor(changeWinners: () => void) {
     super('div', ['garage'], { id: 'garage' });
+    this.onChangeWinners = changeWinners;
     this.hasWin = false;
     this.isRace = false;
     this.countRaceCars = 0;
@@ -101,12 +103,17 @@ export default class Garage extends BaseComponent {
       console.log(`${carData.name} (${time}ms) - WINNER`);
       const seconds = time / 1000;
       showWinnerAlert(carData, seconds);
-      saveWinner(carData, seconds).catch(() => null);
+      saveWinner(carData, seconds)
+        .then(() => {
+          this.onChangeWinners();
+        })
+        .catch(() => null);
     }
   }
 
   private raceCars(): void {
     this.isRace = true;
+    this.pagination.addDisabled();
     this.raceCarsBtn.setClasses(['disabled']);
     this.cars.forEach((el) => {
       el.startRace();
@@ -123,14 +130,20 @@ export default class Garage extends BaseComponent {
   }
 
   public createCars(carsData: CarType[]): void {
+    this.destroyCars();
     this.cars = [];
-    this.carsWrapper.setHTML('');
 
     carsData.forEach((el) => {
       this.createCar(el);
     });
 
     this.carsWrapper.replaceChildren(...this.cars);
+  }
+
+  private destroyCars(): void {
+    this.cars.forEach((el) => {
+      el.remove();
+    });
   }
 
   public createPagination(): void {
@@ -190,6 +203,9 @@ export default class Garage extends BaseComponent {
     const curPage = store.garage.getCurrentPage();
     const data = await getCarsData(String(curPage));
     this.createCars(data);
+    this.isRace = false;
+    this.countRaceCars = 0;
+    this.checkCarsInRace();
   }
 
   private openChangeModal(carData: CarType): void {
@@ -252,6 +268,7 @@ export default class Garage extends BaseComponent {
       this.raceCarsBtn.removeClasses(['disabled']);
       this.returnCarsBtn.setClasses(['disabled']);
       this.isRace = false;
+      this.pagination.removeDisabled();
     }
   }
 }
