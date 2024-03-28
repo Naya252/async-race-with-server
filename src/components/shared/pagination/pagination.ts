@@ -176,4 +176,12 @@ export default class Pagination extends BaseComponent {
   public chageTitle(): void {
     this.titleWrapper.setTextContent(`${this.title} - count: ${this.store.getAllItemsCount()}`);
   }
+
+  public addDisabled(): void {
+    this.wrapper.setClasses(['disabled']);
+  }
+
+  public removeDisabled(): void {
+    this.wrapper.removeClasses(['disabled']);
+  }
 }
