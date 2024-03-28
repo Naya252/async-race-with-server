@@ -54,6 +54,10 @@ export default class App {
         this.main.replaceChildren(value === NAV_LINKS[0] ? this.garage : this.winners);
         if (value === NAV_LINKS[1]) {
           this.changeWinnersPage();
+          this.garage.hideRightModal();
+        }
+        if (value === NAV_LINKS[0]) {
+          this.garage.showRightModal();
         }
       }
     }

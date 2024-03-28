@@ -271,4 +271,14 @@ export default class Garage extends BaseComponent {
       this.pagination.removeDisabled();
     }
   }
+
+  public hideRightModal(): void {
+    this.createCarModal.hideModal();
+    this.changeCarModal.hideModal();
+  }
+
+  public showRightModal(): void {
+    this.createCarModal.showModal();
+    this.changeCarModal.showModal();
+  }
 }

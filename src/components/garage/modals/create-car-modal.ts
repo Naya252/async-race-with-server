@@ -1,4 +1,4 @@
-import BaseModal from '@/components/shared/base-modal/base-modal';
+import RightModal from '@/components/shared/base-right-modal/base-right-modal';
 import type { Car as CarType, CarTemplate } from '@/types/types';
 import { createCar } from '@/repositories/garage-repository';
 import BaseComponent from '@/components/shared/base-component';
@@ -6,7 +6,7 @@ import BaseInput from '@/components/shared/base-input/base-input';
 import ColorPicker from '@/components/shared/color-picker/color-picker';
 import isValid from '@/utils/form-validation';
 
-export default class CreateCar extends BaseModal {
+export default class CreateCar extends RightModal {
   private readonly contentModal: BaseComponent;
   private data: CarTemplate | null;
   private readonly onCloseModal: (data: CarType) => void;
