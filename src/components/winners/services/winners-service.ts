@@ -2,9 +2,13 @@ import * as winnersRepository from '@/repositories/winners-repository';
 import store from '@/store/store';
 import type { Car as CarType, Winner } from '@/types/types';
 import alerts from '@/components/alert/alert';
+import { ORDER, SORT } from '@/shared/api-constants';
 
-export async function getWinnersData(page = '1', sort = 'id'): Promise<Winner[]> {
-  const winners = await winnersRepository.getWinnersByPage(page, sort);
+export async function getWinnersData(): Promise<Winner[]> {
+  const page = String(store.winners.getCurrentPage());
+  const sort = store.winners.getSort();
+  const order = store.winners.getOrder();
+  const winners = await winnersRepository.getWinnersByPage(page, sort, order);
   let data: Winner[] = [];
 
   if (typeof winners.resp !== 'string' && typeof winners.resp !== 'undefined' && typeof winners.total === 'string') {
@@ -16,6 +20,41 @@ export async function getWinnersData(page = '1', sort = 'id'): Promise<Winner[]>
   }
 
   return data;
+}
+
+export async function changeSort(e: Event): Promise<Winner[]> {
+  let value;
+  if (e.target !== null && e.target instanceof HTMLElement) {
+    if (e.target.id === SORT.time) {
+      value = await sortTable(SORT.time);
+    }
+    if (e.target.id === SORT.wins) {
+      value = await sortTable(SORT.wins);
+    }
+  }
+  if (typeof value === 'undefined') {
+    throw new Error('winnrs undefined');
+  }
+  return value;
+}
+
+async function sortTable(sortBy: string): Promise<Winner[]> {
+  const sort = store.winners.getSort();
+  const order = store.winners.getOrder();
+
+  if (sort === sortBy) {
+    if (order === ORDER.more) {
+      store.winners.setOrder(ORDER.less);
+    } else {
+      store.winners.setOrder(ORDER.more);
+    }
+  } else {
+    store.winners.setSort(sortBy);
+    store.winners.setOrder(ORDER.more);
+  }
+
+  const value = await getWinnersData();
+  return value;
 }
 
 export async function getWinnerById(id: number): Promise<Winner> {
