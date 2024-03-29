@@ -19,3 +19,14 @@ export const ERROR_MESSAGES = {
   Winners: 'Failed to parse Winners data',
   Winner: 'Failed to parse Winner`s data',
 };
+
+export const SORT = {
+  time: 'time',
+  id: 'id',
+  wins: 'wins',
+};
+
+export const ORDER = {
+  more: 'ASC',
+  less: 'DESC',
+};
