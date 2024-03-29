@@ -51,12 +51,12 @@ export default class App {
 
     if (item !== null && item instanceof HTMLElement) {
       if (value.toLocaleUpperCase() !== item.id) {
-        this.main.replaceChildren(value === NAV_LINKS[0] ? this.garage : this.winners);
-        if (value === NAV_LINKS[1]) {
+        this.main.replaceChildren(value === NAV_LINKS.garage ? this.garage : this.winners);
+        if (value === NAV_LINKS.winners) {
           this.changeWinnersPage();
           this.garage.hideRightModal();
         }
-        if (value === NAV_LINKS[0]) {
+        if (value === NAV_LINKS.garage) {
           this.garage.showRightModal();
         }
       }

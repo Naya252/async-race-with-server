@@ -24,7 +24,8 @@ export default class Header extends BaseComponent {
 
   private createNav(): BaseComponent {
     const nav = new BaseComponent('ul', ['navbar-nav', 'flex-row', 'flex-wrap', 'bd-navbar-nav']);
-    NAV_LINKS.forEach((el) => {
+    const links = Object.values(NAV_LINKS);
+    links.forEach((el) => {
       const item = new BaseComponent('li', ['nav-item']);
       const link = new BaseComponent('a', ['nav-link'], { href: '#' }, el);
       link.appendToParent(item);
