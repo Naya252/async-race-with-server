@@ -47,8 +47,8 @@ export default class Garage extends BaseComponent {
     this.removeCarModal = new RemoveCar((carData: CarType) => {
       this.submitRemoveModal(carData).catch(() => null);
     });
-    this.changeCarModal = new ChangeCar((carData: CarType) => {
-      this.submitChangeModal(carData);
+    this.changeCarModal = new ChangeCar(() => {
+      this.submitChangeModal();
     });
     this.createCarModal = new CreateCar(() => {
       this.submitCreateModal();
@@ -215,10 +215,12 @@ export default class Garage extends BaseComponent {
   }
 
   private async changeCars(): Promise<void> {
+    console.log(111111111111);
     const curPage = store.garage.getCurrentPage();
     const data = await getCarsData(String(curPage));
     this.createCars(data);
     this.isRace = false;
+    this.hasWin = false;
     this.countRaceCars = 0;
     this.checkCarsInRace();
   }
@@ -227,22 +229,8 @@ export default class Garage extends BaseComponent {
     this.changeCarModal.openModal(carData);
   }
 
-  private submitChangeModal(carData: CarType): void {
-    const item = this.cars.find((el) => {
-      const id = el.getCarId();
-
-      if (id === carData.id) {
-        return el;
-      }
-      return false;
-    });
-
-    if (typeof item !== 'undefined') {
-      store.garage.changeCar(carData);
-      item.changeCar(carData);
-
-      this.onChangeWinners();
-    }
+  private submitChangeModal(): void {
+    this.changeGarage();
   }
 
   private openCreateModal(): void {

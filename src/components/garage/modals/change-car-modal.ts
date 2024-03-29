@@ -10,12 +10,12 @@ import alerts from '@/components/alert/alert';
 export default class ChangeCar extends RightModal {
   private readonly contentModal: BaseComponent;
   private data: CarType | null;
-  private readonly onCloseModal: (data: CarType) => void;
+  private readonly onCloseModal: () => void;
   private readonly nameInput: BaseInput;
   private readonly colorInput: ColorPicker;
   public isSubmit = false;
 
-  constructor(closeModal: (carData: CarType) => void) {
+  constructor(closeModal: () => void) {
     super();
     this.contentModal = new BaseComponent('form', ['needs-validation'], { novalidate: '', action: '', method: 'post' });
     this.title.setTextContent(`Change car`);
@@ -69,7 +69,7 @@ export default class ChangeCar extends RightModal {
         this.changeData();
         this.submitBtn.setClasses(['disabled']);
         await updateCar(this.data);
-        this.onCloseModal(this.data);
+        this.onCloseModal();
         this.close();
         alerts.addAlert('success', `${this.data.name} updated`);
       }
