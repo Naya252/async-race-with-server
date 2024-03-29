@@ -31,3 +31,10 @@ export type Winner = {
   wins: number;
   time: number;
 };
+
+export type TableTitle = {
+  key: string;
+  value: string;
+  cssClasses: string[];
+  isSort?: boolean;
+};
