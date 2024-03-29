@@ -13,32 +13,32 @@
   margin-top: 2rem;
 
   .item {
-    border-bottom: 2px dashed rgba($dark-color, 0.3);
     position: relative;
+    border-bottom: 2px dashed rgba($dark-color, 0.3);
 
-    &:before {
+    &::before {
       position: absolute;
       top: 0;
       right: calc(10% - 2rem);
       width: 2rem;
       height: 100%;
-      background-image: url(/src/assets/icons/flag-checkered.svg);
-      background-size: contain;
-      background-repeat: no-repeat;
+      background-image: url('/src/assets/icons/flag-checkered.svg');
       background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
       content: '';
     }
 
     .car-btns {
       display: flex;
-      gap: 0.3rem;
       padding: 0.5rem 0;
+      gap: 0.3rem;
     }
 
     .car-title {
+      padding-left: 1rem;
       margin: 0;
       font-size: 1.15rem;
-      padding-left: 1rem;
     }
   }
 }

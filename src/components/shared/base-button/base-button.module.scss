@@ -47,8 +47,6 @@
 }
 
 .btn-pz-primary.icon {
-  color: $accent-color;
-  filter: brightness(0.5);
   position: relative;
   z-index: 1;
   display: flex;
@@ -60,6 +58,8 @@
   border-radius: 50%;
   margin: 0;
   background-color: transparent;
+  color: $accent-color;
+  filter: brightness(0.5);
   font-size: 0.9rem;
   font-weight: 600;
 
@@ -86,6 +86,7 @@
     &::after {
       background-color: rgba($dark-color, 0.2);
     }
+
     &::before {
       opacity: 0.9;
     }
@@ -99,6 +100,7 @@
 
     &::after {
       background-color: rgba($dark-color, 0.4);
+
       &::before {
         opacity: 1;
       }
@@ -114,51 +116,51 @@
 }
 
 .icon.edit {
-  &:before {
-    content: url(../../../assets/icons/tooltip-edit-outline.svg);
-    min-width: 24px;
+  &::before {
     position: absolute;
     top: calc(50% - 12px);
-    opacity: 0.5;
+    min-width: 24px;
+    content: url('../../../assets/icons/tooltip-edit-outline.svg');
     filter: brightness(0) saturate(100%) invert(40%) sepia(92%) saturate(735%) hue-rotate(198deg) brightness(92%)
       contrast(88%);
+    opacity: 0.5;
   }
 }
 
 .icon.remove {
-  &:before {
-    content: url(../../../assets/icons/tooltip-remove-outline.svg);
-    min-width: 24px;
+  &::before {
     position: absolute;
     top: calc(50% - 12px);
-    opacity: 0.5;
+    min-width: 24px;
+    content: url('../../../assets/icons/tooltip-remove-outline.svg');
     filter: brightness(0) saturate(100%) invert(40%) sepia(92%) saturate(735%) hue-rotate(198deg) brightness(92%)
       contrast(88%);
+    opacity: 0.5;
   }
 }
 
 .icon.start {
   margin-left: 1rem;
 
-  &:before {
-    content: url(../../../assets/icons/play-circle-outline.svg);
-    min-width: 24px;
+  &::before {
     position: absolute;
     top: calc(50% - 12px);
-    opacity: 0.5;
+    min-width: 24px;
+    content: url('../../../assets/icons/play-circle-outline.svg');
     filter: brightness(0) saturate(100%) invert(40%) sepia(92%) saturate(735%) hue-rotate(198deg) brightness(92%)
       contrast(88%);
+    opacity: 0.5;
   }
 }
 
 .icon.return {
-  &:before {
-    content: url(../../../assets/icons/replay.svg);
-    min-width: 24px;
+  &::before {
     position: absolute;
     top: calc(50% - 12px);
-    opacity: 0.5;
+    min-width: 24px;
+    content: url('../../../assets/icons/replay.svg');
     filter: brightness(0) saturate(100%) invert(40%) sepia(92%) saturate(735%) hue-rotate(198deg) brightness(92%)
       contrast(88%);
+    opacity: 0.5;
   }
 }

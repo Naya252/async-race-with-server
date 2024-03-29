@@ -5,16 +5,16 @@
 }
 
 .arrow {
-  cursor: pointer;
   position: relative;
   padding-right: 1rem !important;
+  cursor: pointer;
 
   &::before {
-    font-size: 1.5rem;
-    content: '\2191';
     position: absolute;
     top: 4px;
     right: 4px;
+    content: '\2191';
+    font-size: 1.5rem;
     transition: all 0.3s ease;
   }
 

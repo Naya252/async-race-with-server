@@ -1,15 +1,15 @@
 .alerts {
   position: fixed;
+  z-index: 99;
   top: 70px;
   right: 1rem;
-  z-index: 99;
   width: 292px;
 
   .alert {
     align-items: flex-start !important;
-    gap: 16px;
-    font-weight: 600;
     padding-right: 1rem;
+    font-weight: 600;
+    gap: 16px;
 
     .alert-content {
       flex-grow: 1;
@@ -17,9 +17,9 @@
     }
 
     .icon {
-      margin-top: 4px;
       width: 1.5rem;
       height: 1.5rem;
+      margin-top: 4px;
 
       &.success {
         background: center / contain no-repeat url('/src/assets/icons/circle.svg');
