@@ -19,11 +19,14 @@ const headers = [
 export default class Winners extends BaseComponent {
   private readonly winners: BaseTable;
   private readonly winnersWrapper: BaseComponent;
+  private readonly emptyRow: BaseComponent;
   private readonly pagination: Pagination;
 
   constructor() {
     super('div', ['winners'], { id: 'winners' });
     this.winnersWrapper = new BaseComponent('div', ['winners-wrapper']);
+
+    this.emptyRow = new BaseComponent('h2', [], {}, 'The list of winners is empty');
 
     this.winners = new BaseTable(headers);
     this.winners.head.addListener('click', (e: Event) => {
@@ -34,7 +37,7 @@ export default class Winners extends BaseComponent {
       this.changeWinners().catch(() => null);
     });
 
-    this.winnersWrapper.append(this.winners);
+    this.winnersWrapper.append(this.winners, this.emptyRow);
 
     this.append(this.pagination, this.winnersWrapper);
   }
@@ -46,7 +49,17 @@ export default class Winners extends BaseComponent {
 
   private async changeWinners(): Promise<void> {
     const data = await getWinnersData();
-    await this.createWinners(data);
+
+    if (data.length > 0) {
+      await this.createWinners(data);
+      this.winners.removeClasses(['hide-item']);
+      this.emptyRow.setClasses(['hide-item']);
+      this.pagination.show();
+    } else {
+      this.winners.setClasses(['hide-item']);
+      this.emptyRow.removeClasses(['hide-item']);
+      this.pagination.hide();
+    }
   }
 
   public async createWinners(winnersData: Winner[]): Promise<void> {
@@ -89,6 +102,7 @@ export default class Winners extends BaseComponent {
   }
 
   public changeWinnersPage(): void {
+    console.log(123);
     this.changeWinners()
       .then(() => {
         this.createPagination();

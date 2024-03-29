@@ -184,4 +184,12 @@ export default class Pagination extends BaseComponent {
   public removeDisabled(): void {
     this.wrapper.removeClasses(['disabled']);
   }
+
+  public hide(): void {
+    this.wrapper.setClasses(['hide-item']);
+  }
+
+  public show(): void {
+    this.wrapper.removeClasses(['hide-item']);
+  }
 }

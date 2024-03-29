@@ -28,6 +28,7 @@ export default class Garage extends BaseComponent {
   private hasWin: boolean;
   private isRace: boolean;
   private countRaceCars: number;
+  private readonly emptyRow: BaseComponent;
   private readonly onChangeWinners: () => void;
 
   constructor(changeWinners: () => void) {
@@ -55,6 +56,8 @@ export default class Garage extends BaseComponent {
     this.create100CarsModal = new CreateRandomCars(() => {
       this.submitCreateRandomModal();
     });
+
+    this.emptyRow = new BaseComponent('h2', [], {}, 'The garage is empty');
 
     this.pagination = new Pagination('Garage', store.garage, () => {
       this.changeCars().catch(() => null);
@@ -129,14 +132,24 @@ export default class Garage extends BaseComponent {
   }
 
   public createCars(carsData: CarType[]): void {
-    this.destroyCars();
     this.cars = [];
+    this.destroyCars();
 
-    carsData.forEach((el) => {
-      this.createCar(el);
-    });
+    if (carsData.length > 0) {
+      carsData.forEach((el) => {
+        this.createCar(el);
+      });
 
-    this.carsWrapper.replaceChildren(...this.cars);
+      this.carsWrapper.replaceChildren(...this.cars);
+      this.pagination.show();
+      this.raceCarsBtn.removeClasses(['hide-item']);
+      this.returnCarsBtn.removeClasses(['hide-item']);
+    } else {
+      this.pagination.hide();
+      this.raceCarsBtn.setClasses(['hide-item']);
+      this.returnCarsBtn.setClasses(['hide-item']);
+      this.carsWrapper.replaceChildren(this.emptyRow);
+    }
   }
 
   private destroyCars(): void {

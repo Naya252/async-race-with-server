@@ -28,8 +28,6 @@ export default class App {
       this.changeWinnersPage();
     });
     this.winners = new Winners();
-    // this.main.append(this.garage);
-
     this.winners.changeWinnersPage();
 
     this.footer = new Footer();
