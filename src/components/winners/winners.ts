@@ -10,7 +10,7 @@ import './winners.scss';
 
 const headers = [
   { key: 'order', value: '#', cssClasses: [] },
-  { key: 'name', value: 'Name', cssClasses: [] },
+  { key: 'name', value: 'Name', cssClasses: ['width-40'] },
   { key: 'car', value: 'Car', cssClasses: [] },
   { key: 'wins', value: 'Wins', isSort: true, cssClasses: ['arrow', 'shadow-icon'] },
   { key: 'time', value: 'Best time (seconds)', isSort: true, cssClasses: ['arrow', 'active'] },
@@ -43,37 +43,46 @@ export default class Winners extends BaseComponent {
 
   private async sortTabe(e: Event): Promise<void> {
     const winnersData = await changeSort(e);
-    this.createWinners(winnersData);
+    await this.createWinners(winnersData);
   }
 
   private async changeWinners(): Promise<void> {
     const data = await getWinnersData();
-    this.createWinners(data);
+    await this.createWinners(data);
   }
 
-  public createWinners(winnersData: Winner[]): void {
-    this.winners.createBody();
+  public async createWinners(winnersData: Winner[]): Promise<void> {
+    this.winners.clearItems();
 
-    winnersData.forEach((el, i) => {
-      const start = store.winners.getStartNumber();
-      this.createWinner(el, start + i);
+    const start = store.winners.getStartNumber();
+    const createWinnerPromises: Array<Promise<boolean>> = [];
+
+    for (let i = 0; i < winnersData.length; i += 1) {
+      const el = winnersData[i];
+      if (typeof el !== 'undefined') {
+        createWinnerPromises.push(this.createWinner(el, start + i));
+      }
+    }
+
+    await Promise.all(createWinnerPromises);
+
+    this.winners.changeTable();
+  }
+
+  public async createWinner(el: Winner, number: number): Promise<boolean> {
+    const carData = await getCarById(el.id);
+
+    const car = new Car(carData);
+    car.setClasses(['table-car']);
+    this.winners.createBodyItem({
+      number,
+      name: carData.name,
+      car: car.getElement(),
+      wins: el.wins,
+      time: el.time,
     });
-  }
 
-  public createWinner(el: Winner, number: number): void {
-    getCarById(el.id)
-      .then((carData) => {
-        const car = new Car(carData);
-        car.setClasses(['table-car']);
-        this.winners.createBodyItem({
-          number,
-          name: carData.name,
-          car: car.getElement(),
-          wins: el.wins,
-          time: el.time,
-        });
-      })
-      .catch(() => null);
+    return true;
   }
 
   public createPagination(): void {

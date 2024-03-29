@@ -5,8 +5,9 @@ import type { TableTitle } from '@/types/types';
 export default class BaseTable extends BaseComponent {
   public readonly head: BaseComponent;
   private readonly tr: BaseComponent;
-  private body: BaseComponent;
+  private readonly body: BaseComponent;
   private readonly titles: TableTitle[];
+  private rows: BaseComponent[];
 
   constructor(titles: TableTitle[]) {
     super('table', ['table', 'table-striped']);
@@ -16,6 +17,7 @@ export default class BaseTable extends BaseComponent {
     this.tr = new BaseComponent('tr');
     this.head.append(this.tr);
     this.body = new BaseComponent('tbody');
+    this.rows = [];
 
     this.createHeaderItems();
     this.append(this.head, this.body);
@@ -60,11 +62,12 @@ export default class BaseTable extends BaseComponent {
     });
   }
 
-  public createBody(): void {
-    console.log(this.body);
-    this.body.remove();
-    this.body = new BaseComponent('tbody');
-    this.append(this.body);
+  public clearItems(): void {
+    this.rows = [];
+  }
+
+  public changeTable(): void {
+    this.body.replaceChildren(...this.rows);
   }
 
   public createBodyItem(item: Record<string, string | number | HTMLElement>): void {
@@ -91,6 +94,6 @@ export default class BaseTable extends BaseComponent {
       i += 1;
     }
 
-    this.body.append(tr);
+    this.rows.push(tr);
   }
 }
