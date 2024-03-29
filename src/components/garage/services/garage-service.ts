@@ -58,11 +58,7 @@ export const showWinnerAlert = (carData: Car, time: number): void => {
   alerts.addAlert('success', `${carData.name} is winner! <br> time: ${time} s`);
 };
 
-// const getCarById = (): void => {
-//   garageRepository
-//     .getCarById(1)
-//     .then((data) => {
-//       // console.log(data);
-//     })
-//     .catch(() => null);
-// };
+export async function getCarById(id: number): Promise<Car> {
+  const car = await garageRepository.getCarById(id);
+  return car;
+}
