@@ -102,7 +102,6 @@ export default class Winners extends BaseComponent {
   }
 
   public changeWinnersPage(): void {
-    console.log(123);
     this.changeWinners()
       .then(() => {
         this.createPagination();

@@ -102,7 +102,6 @@ export default class Garage extends BaseComponent {
   private changeWin(carData: CarType, time: number): void {
     if (!this.hasWin && this.isRace) {
       this.hasWin = true;
-      console.log(`${carData.name} (${time}ms) - WINNER`);
       const seconds = time / 1000;
       showWinnerAlert(carData, seconds);
       saveWinner(carData, seconds)
@@ -215,7 +214,6 @@ export default class Garage extends BaseComponent {
   }
 
   private async changeCars(): Promise<void> {
-    console.log(111111111111);
     const curPage = store.garage.getCurrentPage();
     const data = await getCarsData(String(curPage));
     this.createCars(data);
