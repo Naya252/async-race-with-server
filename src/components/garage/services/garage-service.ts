@@ -2,7 +2,7 @@ import { FIRST_PART_NAME, SECOND_PART_NAME } from '@/shared/car-constants';
 import * as garageRepository from '@/repositories/garage-repository';
 import * as engineRepository from '@/repositories/engine-repository';
 import store from '@/store/store';
-import type { Car, CarRaceData, DriveMode } from '@/types/types';
+import { type Car, type CarRaceData, type DriveMode, STATUS } from '@/types/types';
 import alerts from '@/components/alert/alert';
 
 export function getRadomHex(): string {
@@ -40,12 +40,18 @@ export async function getCarsData(page = '1'): Promise<Car[]> {
 }
 
 export async function startEngine(carId: number, controller?: AbortController): Promise<CarRaceData> {
-  const data = await engineRepository.changeEngineCar({ id: carId, status: 'started' }, controller);
+  if (typeof STATUS.start === 'undefined') {
+    throw new Error('STATUS.start === undefined');
+  }
+  const data = await engineRepository.changeEngineCar({ id: carId, status: STATUS.start }, controller);
   return data;
 }
 
 export async function stopEngine(carId: number, controller?: AbortController): Promise<CarRaceData> {
-  const data = await engineRepository.changeEngineCar({ id: carId, status: 'stopped' }, controller);
+  if (typeof STATUS.stop === 'undefined') {
+    throw new Error('STATUS.stop === undefined');
+  }
+  const data = await engineRepository.changeEngineCar({ id: carId, status: STATUS.stop }, controller);
   return data;
 }
 

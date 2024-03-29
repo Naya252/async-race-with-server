@@ -33,7 +33,7 @@ export async function changeSort(e: Event): Promise<Winner[]> {
     }
   }
   if (typeof value === 'undefined') {
-    throw new Error('winnrs undefined');
+    throw new Error('winners undefined');
   }
   return value;
 }

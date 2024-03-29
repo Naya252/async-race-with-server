@@ -15,7 +15,13 @@ export type EngineParams = {
   status: StatusEngine;
 };
 
-export type StatusEngine = 'started' | 'stopped';
+export const STATUS: Record<string, StatusEngine> = {
+  start: 'started',
+  drive: 'drive',
+  stop: 'stopped',
+};
+
+export type StatusEngine = 'started' | 'drive' | 'stopped';
 
 export type CarRaceData = {
   velocity: number;

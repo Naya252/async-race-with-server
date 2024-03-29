@@ -1,4 +1,4 @@
-import type { EngineParams, CarRaceData, DriveMode } from '@/types/types';
+import { type EngineParams, type CarRaceData, type DriveMode, STATUS } from '@/types/types';
 import { ENDPOINTS, ERROR_MESSAGES } from '@/shared/api-constants';
 import { isCarRaceData, isDriveMode } from './validation';
 import api from './api/api';
@@ -26,9 +26,13 @@ export async function switchDriveMode(id: number, controller?: AbortController):
     signal = controller.signal;
   }
 
+  if (typeof STATUS.drive === 'undefined') {
+    throw new Error('STATUS.drive === undefined');
+  }
+
   const data = await api.patch({
     endpoint: `${ENDPOINTS.engine}`,
-    options: { id: String(id), status: 'drive' },
+    options: { id: String(id), status: STATUS.drive },
     signal,
   });
   if (!isDriveMode(data)) {
