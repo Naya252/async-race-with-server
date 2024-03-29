@@ -31,9 +31,7 @@ export default class Winners extends BaseComponent {
     });
 
     this.pagination = new Pagination('Winners', store.winners, () => {
-      this.changeWinners().catch((err) => {
-        console.error(err);
-      });
+      this.changeWinners().catch(() => null);
     });
 
     this.winnersWrapper.append(this.winners);
@@ -95,8 +93,6 @@ export default class Winners extends BaseComponent {
       .then(() => {
         this.createPagination();
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch(() => null);
   }
 }

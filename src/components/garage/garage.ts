@@ -56,9 +56,7 @@ export default class Garage extends BaseComponent {
     });
 
     this.pagination = new Pagination('Garage', store.garage, () => {
-      this.changeCars().catch((err) => {
-        console.error(err);
-      });
+      this.changeCars().catch(() => null);
     });
 
     buttonWrapper.append(this.createCarBtn, this.create100CarsBtn, this.raceCarsBtn, this.returnCarsBtn);
@@ -194,9 +192,7 @@ export default class Garage extends BaseComponent {
       .then(() => {
         this.createPagination();
       })
-      .catch((err) => {
-        console.error(err);
-      });
+      .catch(() => null);
   }
 
   private async changeCars(): Promise<void> {

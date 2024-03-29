@@ -39,7 +39,7 @@ export default class CreateRandomCars extends BaseModal {
     const name = getRandomName();
     const color = getRadomHex();
 
-    this.createCar({ name, color }).catch(() => {});
+    this.createCar({ name, color }).catch(() => null);
   }
 
   private async createCar(template: CarTemplate): Promise<void> {

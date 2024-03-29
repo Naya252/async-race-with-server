@@ -94,22 +94,23 @@ export default class Item extends BaseComponent {
 
   private handleReturn(): void {
     this.returnBtn.addListener('click', () => {
-      this.returnBtn.setClasses(['disabled']);
-      if (this.carAnimtion !== null) {
-        this.carAnimtion.pause();
-      }
-      this.controller.abort();
-
-      const id = this.car.getCarId();
-
-      stopEngine(id)
-        .then(() => {
-          this.changeItemToDafault();
-          this.onChangeCountInRace(-1);
-          this.isDrive = false;
-        })
-        .catch(() => {});
+      this.stop().catch(() => null);
     });
+  }
+
+  private async stop(): Promise<void> {
+    this.returnBtn.setClasses(['disabled']);
+    if (this.carAnimtion !== null) {
+      this.carAnimtion.pause();
+    }
+    this.controller.abort();
+    const id = this.car.getCarId();
+
+    await stopEngine(id);
+
+    this.changeItemToDafault();
+    this.onChangeCountInRace(-1);
+    this.isDrive = false;
   }
 
   private changeItemToDafault(): void {
@@ -124,43 +125,54 @@ export default class Item extends BaseComponent {
 
   private handleStart(): void {
     this.startBtn.addListener('click', () => {
-      this.startBtn.setClasses(['disabled']);
-      this.onChangeCountInRace(1);
-
-      this.controller = new AbortController();
-      const id = this.car.getCarId();
-      startEngine(id)
-        .then((engineData) => {
-          if (!this.isRaceDrive) {
-            this.returnBtn.removeClasses(['disabled']);
-          }
-          this.animate(engineData);
-          this.isDrive = true;
-
-          changeDriveMode(id, this.controller)
-            .then(() => {
-              this.car.removeClasses(['fast']);
-              this.onChangeWinner(this.carData, this.time);
-            })
-            .catch((error: Error) => {
-              if (error.message === ENGINE_ERROR) {
-                this.car.removeClasses(['fast']);
-                this.car.setClasses(['wrench']);
-                this.stopAnimate();
-              }
-              if (error.message === NOT_FOUND_ERROR) {
-                const btn = this.startBtn.getElement();
-
-                if (btn !== null && this.carAnimtion !== null) {
-                  this.carAnimtion.cancel();
-                  this.onChangeCountInRace(-1);
-                  btn.click();
-                }
-              }
-            });
-        })
-        .catch(() => {});
+      this.start().catch(() => null);
     });
+  }
+
+  private async start(): Promise<void> {
+    this.startBtn.setClasses(['disabled']);
+    this.onChangeCountInRace(1);
+    this.controller = new AbortController();
+    const id = this.car.getCarId();
+
+    const engineData = await startEngine(id);
+    if (!this.isRaceDrive) {
+      this.returnBtn.removeClasses(['disabled']);
+    }
+    this.animate(engineData);
+    this.isDrive = true;
+
+    try {
+      await changeDriveMode(id, this.controller);
+      this.car.removeClasses(['fast']);
+      this.onChangeWinner(this.carData, this.time);
+    } catch (error: unknown) {
+      if (!(error instanceof Error)) {
+        throw new Error('not error');
+      }
+
+      if (error.message === ENGINE_ERROR) {
+        this.showWrench();
+      }
+      if (error.message === NOT_FOUND_ERROR) {
+        this.showPortal();
+      }
+    }
+  }
+
+  private showWrench(): void {
+    this.car.removeClasses(['fast']);
+    this.car.setClasses(['wrench']);
+    this.stopAnimate();
+  }
+
+  private showPortal(): void {
+    const btn = this.startBtn.getElement();
+    if (btn !== null && this.carAnimtion !== null) {
+      this.carAnimtion.cancel();
+      this.onChangeCountInRace(-1);
+      btn.click();
+    }
   }
 
   private animate(engineData: CarRaceData): void {
