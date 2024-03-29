@@ -55,9 +55,9 @@ export default class Garage {
     this.currentPage = value;
   }
 
-  public getCarsForShow(): number[] {
+  public getStartNumber(): number {
     const current = this.currentPage;
     const end = current * ITEMS_PER_PAGE.garage;
-    return [end - ITEMS_PER_PAGE.garage, end - 1];
+    return end - ITEMS_PER_PAGE.garage;
   }
 }

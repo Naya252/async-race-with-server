@@ -1,17 +1,21 @@
 import { type Winner } from '@/types/types';
-import { ITEMS_PER_PAGE } from '@/shared/api-constants';
+import { ITEMS_PER_PAGE, SORT, ORDER } from '@/shared/api-constants';
 
 export default class Winers {
   private winners: Winner[];
   private currentPage: number;
   private allPages: number;
   private allWinnersCount: number;
+  private sort: string;
+  private order: string;
 
   constructor(winnersData: Winner[]) {
     this.winners = winnersData;
     this.currentPage = 1;
     this.allPages = 1;
     this.allWinnersCount = 0;
+    this.sort = SORT.time;
+    this.order = ORDER.more;
   }
 
   public getWinners(): Winner[] {
@@ -47,9 +51,25 @@ export default class Winers {
     this.currentPage = value;
   }
 
-  public getWinnersForShow(): number[] {
+  public getStartNumber(): number {
     const current = this.currentPage;
     const end = current * ITEMS_PER_PAGE.winners;
-    return [end - ITEMS_PER_PAGE.winners, end - 1];
+    return end - ITEMS_PER_PAGE.winners + 1;
+  }
+
+  public getSort(): string {
+    return this.sort;
+  }
+
+  public setSort(value: string): void {
+    this.sort = value;
+  }
+
+  public getOrder(): string {
+    return this.order;
+  }
+
+  public setOrder(value: string): void {
+    this.order = value;
   }
 }
