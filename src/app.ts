@@ -19,7 +19,7 @@ export default class App {
   constructor() {
     this.appContainer = new BaseComponent('div', ['app']);
 
-    this.header = new Header((value: string) => {
+    this.header = new Header((value: BaseComponent) => {
       this.navigate(value);
     });
     this.main = new BaseComponent('div', ['content', 'container']);
@@ -28,11 +28,14 @@ export default class App {
       this.changeWinnersPage();
     });
     this.winners = new Winners();
-    this.main.append(this.garage);
+    // this.main.append(this.garage);
+
+    this.winners.changeWinnersPage();
 
     this.footer = new Footer();
 
     this.appContainer.append(this.header, this.main, this.footer, alerts);
+    this.header.initActive();
   }
 
   public async init(): Promise<void> {
@@ -45,21 +48,16 @@ export default class App {
     this.garage.createPagination();
   }
 
-  private navigate(value: string): void {
-    const items = this.main.getChildren();
-    const item = items[0];
+  private navigate(value: BaseComponent): void {
+    const id = value.getId();
 
-    if (item !== null && item instanceof HTMLElement) {
-      if (value.toLocaleUpperCase() !== item.id) {
-        this.main.replaceChildren(value === NAV_LINKS.garage ? this.garage : this.winners);
-        if (value === NAV_LINKS.winners) {
-          this.changeWinnersPage();
-          this.garage.hideRightModal();
-        }
-        if (value === NAV_LINKS.garage) {
-          this.garage.showRightModal();
-        }
-      }
+    this.main.replaceChildren(id === NAV_LINKS.garage.toLowerCase() ? this.garage : this.winners);
+
+    if (id === NAV_LINKS.winners.toLowerCase()) {
+      this.garage.hideRightModal();
+    }
+    if (id === NAV_LINKS.garage.toLowerCase()) {
+      this.garage.showRightModal();
     }
   }
 

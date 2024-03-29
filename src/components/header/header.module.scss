@@ -4,6 +4,7 @@
   position: sticky;
   display: flex;
   background-color: rgba($dark-color, 0.2);
+  user-select: none;
 }
 
 .title {
@@ -17,4 +18,10 @@
 
 .nav-link {
   font-size: 1.1rem;
+
+  &.active {
+    color: $accent-color;
+    user-select: none;
+    cursor: default;
+  }
 }
