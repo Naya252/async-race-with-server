@@ -5,7 +5,7 @@ import api from './api/api';
 
 export async function getWinnersByPage(
   page = '1',
-  sort = 'id',
+  sort = 'time',
   order = 'ASC',
 ): Promise<Record<string, string | Winner[]>> {
   const data = await api.get({
