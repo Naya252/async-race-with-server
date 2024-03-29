@@ -1,6 +1,7 @@
 import BaseModal from '@/components/shared/base-modal/base-modal';
 import type { Car as CarType } from '@/types/types';
 import { deleteCar } from '@/repositories/garage-repository';
+import alerts from '@/components/alert/alert';
 
 export default class RemoveCar extends BaseModal {
   private text: string;
@@ -32,16 +33,17 @@ export default class RemoveCar extends BaseModal {
   }
 
   public async submitModal(): Promise<void> {
-    try {
-      if (this.data !== null) {
+    if (this.data !== null) {
+      try {
         this.submitBtn.setClasses(['disabled']);
         await deleteCar(this.data.id);
 
         this.onCloseRemoveModal(this.data);
         this.close();
+        alerts.addAlert('success', `${this.data.name} removed`);
+      } catch (err) {
+        alerts.addAlert('warning', `Error with remove ${this.data.name}`);
       }
-    } catch (err) {
-      console.log(err);
     }
   }
 }

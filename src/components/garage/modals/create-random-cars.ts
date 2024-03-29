@@ -1,6 +1,7 @@
 import BaseModal from '@/components/shared/base-modal/base-modal';
 import type { Car as CarType, CarTemplate } from '@/types/types';
 import { createCar } from '@/repositories/garage-repository';
+import alerts from '@/components/alert/alert';
 import { getRadomHex, getRandomName } from '../services/garage-service';
 
 export default class CreateRandomCars extends BaseModal {
@@ -43,12 +44,18 @@ export default class CreateRandomCars extends BaseModal {
   }
 
   private async createCar(template: CarTemplate): Promise<void> {
-    const newCar = await createCar(template);
-    this.data.push(newCar);
+    try {
+      const newCar = await createCar(template);
+      this.data.push(newCar);
 
-    if (this.data.length === 100) {
-      this.onCloseCreateRandomModal(this.data);
-      this.close();
+      if (this.data.length === 100) {
+        this.onCloseCreateRandomModal(this.data);
+        this.close();
+
+        alerts.addAlert('success', `Add new cars`);
+      }
+    } catch {
+      alerts.addAlert('warning', `Error with create cars`);
     }
   }
 }

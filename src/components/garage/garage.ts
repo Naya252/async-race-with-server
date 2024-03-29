@@ -2,6 +2,7 @@ import BaseComponent from '@/components/shared/base-component';
 import Item from '@/components/garage/car-row/item';
 import store from '@/store/store';
 import type { Car as CarType } from '@/types/types';
+import { deleteWinner } from '@/repositories/winners-repository';
 import RemoveCar from './modals/remove-car-modal';
 import ChangeCar from './modals/change-car-modal';
 import CreateCar from './modals/create-car-modal';
@@ -43,16 +44,16 @@ export default class Garage extends BaseComponent {
     this.raceCarsBtn = this.initRaceBtn();
     this.returnCarsBtn = this.initReturnCarsBtn();
     this.removeCarModal = new RemoveCar((carData: CarType) => {
-      this.submitRemoveModal(carData);
+      this.submitRemoveModal(carData).catch(() => null);
     });
     this.changeCarModal = new ChangeCar((carData: CarType) => {
       this.submitChangeModal(carData);
     });
-    this.createCarModal = new CreateCar((carData: CarType) => {
-      this.submitCreateModal(carData);
+    this.createCarModal = new CreateCar(() => {
+      this.submitCreateModal();
     });
-    this.create100CarsModal = new CreateRandomCars((carsData: CarType[]) => {
-      this.submitCreateRandomModal(carsData);
+    this.create100CarsModal = new CreateRandomCars(() => {
+      this.submitCreateRandomModal();
     });
 
     this.pagination = new Pagination('Garage', store.garage, () => {
@@ -172,7 +173,7 @@ export default class Garage extends BaseComponent {
     this.removeCarModal.openModal(carData);
   }
 
-  private submitRemoveModal(carData: CarType): void {
+  private async submitRemoveModal(carData: CarType): Promise<void> {
     const item = this.cars.find((el) => {
       const id = el.getCarId();
 
@@ -185,6 +186,11 @@ export default class Garage extends BaseComponent {
     if (typeof item !== 'undefined') {
       this.changeGarage();
     }
+
+    try {
+      await deleteWinner(carData.id);
+      this.onChangeWinners();
+    } catch {}
   }
 
   private changeGarage(): void {
@@ -221,6 +227,8 @@ export default class Garage extends BaseComponent {
     if (typeof item !== 'undefined') {
       store.garage.changeCar(carData);
       item.changeCar(carData);
+
+      this.onChangeWinners();
     }
   }
 
@@ -228,8 +236,7 @@ export default class Garage extends BaseComponent {
     this.createCarModal.openModal();
   }
 
-  private submitCreateModal(carData: CarType): void {
-    console.log(carData);
+  private submitCreateModal(): void {
     this.changeGarage();
   }
 
@@ -237,8 +244,7 @@ export default class Garage extends BaseComponent {
     this.create100CarsModal.openModal();
   }
 
-  private submitCreateRandomModal(carsData: CarType[]): void {
-    console.log(carsData);
+  private submitCreateRandomModal(): void {
     this.changeGarage();
   }
 

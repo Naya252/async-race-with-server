@@ -5,6 +5,7 @@ import BaseComponent from '@/components/shared/base-component';
 import BaseInput from '@/components/shared/base-input/base-input';
 import ColorPicker from '@/components/shared/color-picker/color-picker';
 import isValid from '@/utils/form-validation';
+import alerts from '@/components/alert/alert';
 
 export default class ChangeCar extends RightModal {
   private readonly contentModal: BaseComponent;
@@ -70,9 +71,10 @@ export default class ChangeCar extends RightModal {
         await updateCar(this.data);
         this.onCloseModal(this.data);
         this.close();
+        alerts.addAlert('success', `${this.data.name} updated`);
       }
     } catch (err) {
-      console.log(err);
+      alerts.addAlert('warning', `Error with changing car`);
     }
   }
 

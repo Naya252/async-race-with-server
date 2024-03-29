@@ -1,20 +1,21 @@
 import RightModal from '@/components/shared/base-right-modal/base-right-modal';
-import type { Car as CarType, CarTemplate } from '@/types/types';
+import type { CarTemplate } from '@/types/types';
 import { createCar } from '@/repositories/garage-repository';
 import BaseComponent from '@/components/shared/base-component';
 import BaseInput from '@/components/shared/base-input/base-input';
 import ColorPicker from '@/components/shared/color-picker/color-picker';
 import isValid from '@/utils/form-validation';
+import alerts from '@/components/alert/alert';
 
 export default class CreateCar extends RightModal {
   private readonly contentModal: BaseComponent;
   private data: CarTemplate | null;
-  private readonly onCloseModal: (data: CarType) => void;
+  private readonly onCloseModal: () => void;
   private readonly nameInput: BaseInput;
   private readonly colorInput: ColorPicker;
   public isSubmit = false;
 
-  constructor(closeModal: (carData: CarType) => void) {
+  constructor(closeModal: () => void) {
     super();
     this.contentModal = new BaseComponent('form', ['needs-validation'], { novalidate: '', action: '', method: 'post' });
     this.title.setTextContent(`Add new car`);
@@ -71,11 +72,12 @@ export default class CreateCar extends RightModal {
         this.changeData();
         this.submitBtn.setClasses(['disabled']);
         const newCar = await createCar(this.data);
-        this.onCloseModal(newCar);
+        this.onCloseModal();
         this.close();
+        alerts.addAlert('success', `Add new car - ${newCar.name}`);
       }
     } catch (err) {
-      console.log(err);
+      alerts.addAlert('warning', `Error with new car`);
     }
   }
 
