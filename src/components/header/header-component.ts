@@ -1,5 +1,5 @@
 import BaseComponent from '@/components/shared/base-component';
-import '@/components/header/header.module.scss';
+import '@/components/header/header.scss';
 import { APP_NAME, NAV_LINKS } from '@/shared/constants';
 
 const createTitle = (): BaseComponent => {

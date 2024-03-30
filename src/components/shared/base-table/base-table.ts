@@ -1,5 +1,5 @@
 import BaseComponent from '@/components/shared/base-component';
-import '@/components/shared/base-table/base-table.module.scss';
+import '@/components/shared/base-table/base-table.scss';
 import type { TableTitle } from '@/types/types';
 
 export default class BaseTable extends BaseComponent {

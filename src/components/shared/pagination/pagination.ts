@@ -1,5 +1,5 @@
 import BaseComponent from '@/components/shared/base-component';
-import '@/components/shared/pagination/pagination.module.scss';
+import '@/components/shared/pagination/pagination.scss';
 import type Garage from '@/store/garage-store/store';
 import type Winners from '@/store/winners-store/store';
 

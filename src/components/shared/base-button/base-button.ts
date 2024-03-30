@@ -1,5 +1,5 @@
 import BaseComponent from '@/components/shared/base-component';
-import '@/components/shared/base-button/base-button.module.scss';
+import '@/components/shared/base-button/base-button.scss';
 
 type ButtonType = 'submit' | 'reset' | 'button' | 'menu';
 

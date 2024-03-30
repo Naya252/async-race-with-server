@@ -1,6 +1,6 @@
 import BaseComponent from '@/components/shared/base-component';
 import BaseButton from '../base-button/base-button';
-import '@/components/shared/base-right-modal/right-modal.module.scss';
+import '@/components/shared/base-right-modal/right-modal.scss';
 
 export default class BaseRightModal extends BaseComponent {
   private readonly backdrop: BaseComponent;

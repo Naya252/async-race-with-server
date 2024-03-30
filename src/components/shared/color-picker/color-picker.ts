@@ -1,6 +1,6 @@
 import BaseInput from '@/components/shared/base-input/base-input';
 import BaseComponent from '@/components/shared/base-component';
-import '@/components/shared/color-picker/base-color-picker.module.scss';
+import '@/components/shared/color-picker/base-color-picker.scss';
 
 export default class ColorPicker extends BaseComponent {
   private readonly textInput: BaseInput;

@@ -1,7 +1,7 @@
 import BaseComponent from '@/components/shared/base-component';
 import type { Car as CarType } from '@/types/types';
 import car from '@/assets/img/car';
-import './car.module.scss';
+import './car.scss';
 
 export default class Car extends BaseComponent {
   private readonly id: number;

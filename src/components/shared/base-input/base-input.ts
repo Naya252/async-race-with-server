@@ -1,5 +1,5 @@
 import BaseComponent from '@/components/shared/base-component';
-import '@/components/shared/base-input/base-input.module.scss';
+import '@/components/shared/base-input/base-input.scss';
 
 type InputType =
   | 'text'
