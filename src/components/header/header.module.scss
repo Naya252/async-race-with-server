@@ -11,6 +11,10 @@
 .title {
   composes: title from global;
   font-size: 1.5rem;
+  color: $color14;
+  text-shadow:
+    $color17 0px 0px 4px,
+    $color18 0px 0px 5px;
 }
 
 .navbar-nav {
@@ -23,8 +27,12 @@
   composes: nav-link from global;
   font-size: 1.1rem;
 
+  &:hover {
+    color: rgba($color15, 0.5);
+  }
+
   &.active-nav {
-    color: $accent-color !important;
+    color: $color15 !important;
     cursor: default;
     user-select: none;
   }
