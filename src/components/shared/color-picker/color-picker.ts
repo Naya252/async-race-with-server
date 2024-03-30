@@ -24,6 +24,7 @@ export default class ColorPicker extends BaseComponent {
         pattern: '^#[A-Fa-f0-9]{6}$',
       },
       'color',
+      'form-control-color',
     );
 
     this.textInput = new BaseInput('color', 'Color', 'color-text', 'subtext', {

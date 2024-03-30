@@ -1,7 +1,7 @@
 import BaseComponent from '@/components/shared/base-component';
 import type { Car as CarType } from '@/types/types';
 import car from '@/assets/img/car';
-import './car.scss';
+import styles from './car.module.scss';
 
 export default class Car extends BaseComponent {
   private readonly id: number;
@@ -11,7 +11,7 @@ export default class Car extends BaseComponent {
   private name: string;
 
   constructor(data: CarType) {
-    super('div', ['car'], { id: `car-${data.id}`, style: `color: ${data.color}` });
+    super('div', [styles.car], { id: `car-${data.id}`, style: `color: ${data.color}` });
 
     this.setHTML(car);
 

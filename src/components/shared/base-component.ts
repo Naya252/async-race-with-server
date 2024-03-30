@@ -1,9 +1,31 @@
+const formatClasses = (classNames: (string | undefined)[]): string[] => {
+  let classes: string[] = [];
+
+  if (classNames.length > 0) {
+    classNames.forEach((el) => {
+      const splitClass = el?.split(' ');
+      splitClass?.forEach((cl) => classes.push(cl));
+    });
+
+    classes = classes.filter((el): el is string => typeof el === 'string');
+  }
+
+  return classes;
+};
+
 export default class BaseComponent {
   protected readonly element: HTMLElement;
 
-  constructor(tag = 'div', classNames: string[] = [], attributes: Record<string, string> = {}, textContent = '') {
+  constructor(
+    tag = 'div',
+    classNames: (string | undefined)[] = [],
+    attributes: Record<string, string> = {},
+    textContent = '',
+  ) {
     this.element = document.createElement(tag);
-    this.setClasses(classNames);
+
+    const classes = classNames.filter((el): el is string => typeof el === 'string');
+    this.setClasses(classes);
     this.setAttributes(attributes);
     this.setTextContent(textContent);
   }
@@ -12,17 +34,21 @@ export default class BaseComponent {
     return this.element;
   }
 
-  public setClasses(classNames: string[]): void {
+  public setClasses(classNames: (string | undefined)[]): void {
     if (classNames.length > 0) {
-      classNames.forEach((className) => {
+      const classes = formatClasses(classNames);
+
+      classes.forEach((className) => {
         this.element.classList.add(className);
       });
     }
   }
 
-  public removeClasses(classNames: string[]): void {
+  public removeClasses(classNames: (string | undefined)[]): void {
     if (classNames.length > 0) {
-      classNames.forEach((className) => {
+      const classes = formatClasses(classNames);
+
+      classes.forEach((className) => {
         this.element.classList.remove(className);
       });
     }

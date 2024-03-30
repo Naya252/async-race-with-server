@@ -4,6 +4,8 @@ import type { Car as CarType, CarRaceData } from '@/types/types';
 import BaseButton from '@/components/shared/base-button/base-button';
 import { startEngine, changeDriveMode, stopEngine } from '@/components/garage/services/garage-service';
 import { ENGINE_ERROR, NOT_FOUND_ERROR } from '@/repositories/api/api';
+import carStyles from '@/components/garage/car/car.module.scss';
+import styles from '@/components/garage/garage.module.scss';
 
 export default class Item extends BaseComponent {
   private readonly car: Car;
@@ -45,7 +47,7 @@ export default class Item extends BaseComponent {
     changeWinner: (carData: CarType, time: number) => void,
     changeCountInRace: (value: number) => void,
   ) {
-    super('div', ['item'], { id: `item-${data.id}` });
+    super('div', [styles.item], { id: `item-${data.id}` });
     this.onOpenRemoveModal = openRemoveModal;
     this.onOpenChangeModal = openChangeModal;
     this.onChangeWinner = changeWinner;
@@ -57,8 +59,8 @@ export default class Item extends BaseComponent {
     this.removeBtn = new BaseButton('button', '', ['btn', 'btn-pz-primary', 'icon', 'remove']);
     this.startBtn = new BaseButton('button', '', ['btn', 'btn-pz-primary', 'icon', 'start']);
     this.returnBtn = new BaseButton('button', '', ['btn', 'btn-pz-primary', 'icon', 'return', 'disabled']);
-    this.carName = new BaseComponent('p', ['car-title'], {}, data.name);
-    const btnWrapper = new BaseComponent('div', ['car-btns']);
+    this.carName = new BaseComponent('p', [styles['car-title']], {}, data.name);
+    const btnWrapper = new BaseComponent('div', [styles['car-btns']]);
     btnWrapper.append(this.removeBtn, this.editBtn, this.startBtn, this.returnBtn, this.carName);
     this.append(btnWrapper, this.car);
     this.removeBtn.addListener('click', () => {
@@ -130,7 +132,7 @@ export default class Item extends BaseComponent {
 
   private changeItemToDafault(): void {
     this.startBtn.removeClasses(['disabled']);
-    this.car.removeClasses(['fast', 'wrench']);
+    this.car.removeClasses([carStyles.fast, carStyles.wrench]);
     const car = this.car.getElement();
     car.style.transform = `translateX(0)`;
     if (this.carAnimtion !== null) {
@@ -159,7 +161,7 @@ export default class Item extends BaseComponent {
 
     try {
       await changeDriveMode(id, this.controller);
-      this.car.removeClasses(['fast']);
+      this.car.removeClasses([carStyles.fast]);
       this.onChangeWinner(this.carData, this.time);
     } catch (error: unknown) {
       if (!(error instanceof Error)) {
@@ -176,8 +178,8 @@ export default class Item extends BaseComponent {
   }
 
   private showWrench(): void {
-    this.car.removeClasses(['fast']);
-    this.car.setClasses(['wrench']);
+    this.car.removeClasses([carStyles.fast]);
+    this.car.setClasses([carStyles.wrench]);
     this.stopAnimate();
   }
 
@@ -202,10 +204,11 @@ export default class Item extends BaseComponent {
 
     const car = this.car.getElement();
     this.carAnimtion = car.animate(carTranslating, carTiming);
-    this.car.setClasses(['fast']);
+    this.car.setClasses([carStyles.fast]);
 
     this.carAnimtion.onfinish = (): void => {
       car.style.transform = `translateX(900%)`;
+      this.car.removeClasses([carStyles.fast]);
     };
   }
 

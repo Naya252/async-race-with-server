@@ -1,6 +1,7 @@
 @import '../../styles/variables';
 
 .footer {
+  composes: footer from global;
   display: flex;
   min-height: 100px;
   align-items: center;

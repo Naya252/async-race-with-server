@@ -1,5 +1,5 @@
 import BaseComponent from '@/components/shared/base-component';
-import '@/components/alert/alert.scss';
+import styles from '@/components/alert/alert.module.scss';
 import { ALERT_TYPES } from '@/shared/constants';
 
 const removeAlert = (alert: BaseComponent): void => {
@@ -17,31 +17,35 @@ class BaseAlert extends BaseComponent {
   private count: number;
 
   constructor() {
-    super('div', ['alerts']);
+    super('div', [styles.alerts]);
     this.count = 0;
   }
 
   private createAlert(type: AlertType, message: string): BaseComponent {
-    const alert = new BaseComponent('div', ['alert', 'd-flex', 'align-items-center', 'alert-dismissible', 'fade'], {
-      id: `alert-${this.count}`,
-    });
-    const icon = new BaseComponent('div', ['icon']);
-    const text = new BaseComponent('p', ['alert-content']);
+    const alert = new BaseComponent(
+      'div',
+      [styles.alert, 'd-flex', 'align-items-center', 'alert-dismissible', 'fade'],
+      {
+        id: `alert-${this.count}`,
+      },
+    );
+    const icon = new BaseComponent('div', [styles.icon]);
+    const text = new BaseComponent('p', [styles['alert-content']]);
     alert.append(icon, text);
 
     if (type === ALERT_TYPES.success) {
       alert.setClasses(['alert-success']);
-      icon.setClasses(['success']);
+      icon.setClasses([styles.success]);
       text.setHTML(message);
     }
     if (type === ALERT_TYPES.info) {
       alert.setClasses(['alert-info']);
-      icon.setClasses(['info']);
+      icon.setClasses([styles.info]);
       text.setHTML(message);
     }
     if (type === ALERT_TYPES.warning) {
       alert.setClasses(['alert-danger']);
-      icon.setClasses(['warning']);
+      icon.setClasses([styles.warning]);
       text.setHTML(message);
     }
 

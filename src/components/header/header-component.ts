@@ -1,9 +1,9 @@
 import BaseComponent from '@/components/shared/base-component';
-import '@/components/header/header.scss';
+import styles from '@/components/header/header.module.scss';
 import { APP_NAME, NAV_LINKS } from '@/shared/constants';
 
 const createTitle = (): BaseComponent => {
-  const title = new BaseComponent('h1', ['title'], {}, APP_NAME);
+  const title = new BaseComponent('h1', [styles.title], {}, APP_NAME);
   return title;
 };
 
@@ -13,7 +13,7 @@ export default class Header extends BaseComponent {
   private active: BaseComponent | null;
 
   constructor(onChangeLink: (value: BaseComponent) => void) {
-    super('header', ['header', 'navbar', 'navbar-dark', 'bd-navbar']);
+    super('header', [styles.header, 'navbar', 'navbar-dark', 'bd-navbar']);
     this.onChangeLink = onChangeLink;
 
     const container = new BaseComponent('nav', ['container-xxl', 'navbar-dark', 'bd-navbar']);
@@ -26,12 +26,12 @@ export default class Header extends BaseComponent {
   }
 
   private createNav(): BaseComponent {
-    const nav = new BaseComponent('ul', ['navbar-nav', 'flex-row', 'flex-wrap', 'bd-navbar-nav']);
+    const nav = new BaseComponent('ul', [styles['navbar-nav'], 'flex-row', 'flex-wrap', 'bd-navbar-nav']);
 
     const links = Object.values(NAV_LINKS);
     links.forEach((el) => {
       const item = new BaseComponent('li', ['nav-item']);
-      const link = new BaseComponent('a', ['nav-link'], { href: '#', id: el.toLowerCase() }, el);
+      const link = new BaseComponent('a', [styles['nav-link']], { href: '#', id: el.toLowerCase() }, el);
       link.appendToParent(item);
 
       link.addListener('click', () => {
@@ -45,11 +45,11 @@ export default class Header extends BaseComponent {
 
   private changeActive(link: BaseComponent): void {
     if (this.active !== null && typeof this.active !== 'undefined') {
-      this.active.removeClasses(['active']);
+      this.active.removeClasses([styles['active-nav']]);
     }
 
     this.active = link;
-    link.setClasses(['active']);
+    link.setClasses([styles['active-nav']]);
 
     this.onChangeLink(link);
   }

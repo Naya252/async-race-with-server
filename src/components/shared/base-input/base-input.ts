@@ -37,6 +37,7 @@ export default class BaseInput extends BaseComponent {
     subtext: string,
     attr: Record<string, string>,
     inputType: InputType = 'text',
+    classes = '',
   ) {
     super('div', ['input-wrapper']);
 
@@ -51,6 +52,9 @@ export default class BaseInput extends BaseComponent {
       'aria-describedby': textId,
       type: inputType,
     });
+    if (classes.length > 0) {
+      this.input.setClasses([classes]);
+    }
     this.text = new BaseComponent('div', ['form-text'], { id: textId, text: subtext });
 
     this.append(label, this.input, this.text);

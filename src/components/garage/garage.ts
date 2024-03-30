@@ -11,7 +11,7 @@ import CreateRandomCars from './modals/create-random-cars';
 import Pagination from '../shared/pagination/pagination';
 import { getCarsData, showWinnerAlert } from './services/garage-service';
 import { saveWinner } from '../winners/services/winners-service';
-import './garage.scss';
+import styles from './garage.module.scss';
 
 export default class Garage extends BaseComponent {
   private cars: Item[];
@@ -53,8 +53,8 @@ export default class Garage extends BaseComponent {
     this.isRace = false;
     this.countRaceCars = 0;
     this.cars = [];
-    this.carsWrapper = new BaseComponent('div', ['cars-wrapper']);
-    const buttonWrapper = new BaseComponent('div', ['btns-wrapper']);
+    this.carsWrapper = new BaseComponent('div', [styles['cars-wrapper']]);
+    const buttonWrapper = new BaseComponent('div', [styles['btns-wrapper']]);
     this.createCarBtn = this.initCreateCarBtn();
     this.create100CarsBtn = this.initCreateRandomCarsBtn();
     this.raceCarsBtn = this.initRaceBtn();
@@ -83,7 +83,7 @@ export default class Garage extends BaseComponent {
   }
 
   private initCreateCarBtn(): BaseButton {
-    const btn = new BaseButton('button', 'add new car', ['outlined', 'create-car-btn', 'btn-sm']);
+    const btn = new BaseButton('button', 'add new car', ['outlined', styles['create-car-btn'], 'btn-sm']);
     btn.addListener('click', () => {
       this.openCreateModal();
     });
@@ -91,7 +91,7 @@ export default class Garage extends BaseComponent {
   }
 
   private initCreateRandomCarsBtn(): BaseButton {
-    const btn = new BaseButton('button', 'add random cars', ['outlined', 'create-car-btn', 'btn-sm']);
+    const btn = new BaseButton('button', 'add random cars', ['outlined', styles['create-car-btn'], 'btn-sm']);
     btn.addListener('click', () => {
       this.openCreateRandomModal();
     });
@@ -99,7 +99,7 @@ export default class Garage extends BaseComponent {
   }
 
   private initRaceBtn(): BaseButton {
-    const btn = new BaseButton('button', 'RACE', ['outlined', 'create-car-btn', 'btn-sm']);
+    const btn = new BaseButton('button', 'RACE', ['outlined', styles['create-car-btn'], 'btn-sm']);
     btn.addListener('click', () => {
       this.raceCars();
     });
@@ -107,7 +107,7 @@ export default class Garage extends BaseComponent {
   }
 
   private initReturnCarsBtn(): BaseButton {
-    const btn = new BaseButton('button', 'RETURN', ['outlined', 'create-car-btn', 'btn-sm', 'disabled']);
+    const btn = new BaseButton('button', 'RETURN', ['outlined', styles['create-car-btn'], 'btn-sm', 'disabled']);
     btn.addListener('click', () => {
       this.returnCars();
     });

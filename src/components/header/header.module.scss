@@ -1,26 +1,30 @@
 @import '../../styles/variables';
 
 .header {
+  composes: header from global;
   position: sticky;
   display: flex;
-  background-color: rgba($dark-color, 0.2);
+  background-color: rgb(255 255 255 / 4%);
   user-select: none;
 }
 
 .title {
+  composes: title from global;
   font-size: 1.5rem;
 }
 
 .navbar-nav {
+  composes: navbar-nav from global;
   display: flex;
   gap: 2rem;
 }
 
 .nav-link {
+  composes: nav-link from global;
   font-size: 1.1rem;
 
-  &.active {
-    color: $accent-color;
+  &.active-nav {
+    color: $accent-color !important;
     cursor: default;
     user-select: none;
   }
