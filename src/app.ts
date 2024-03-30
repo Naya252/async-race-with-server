@@ -43,6 +43,7 @@ export default class App {
 
   public async init(): Promise<void> {
     const { body } = document;
+    body.setAttribute('data-bs-theme', 'dark');
     this.appContainer.appendToParent(body);
 
     const data = await getCarsData();
