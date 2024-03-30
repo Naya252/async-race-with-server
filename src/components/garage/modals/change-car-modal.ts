@@ -9,10 +9,15 @@ import alerts from '@/components/alert/alert';
 
 export default class ChangeCar extends RightModal {
   private readonly contentModal: BaseComponent;
+
   private data: CarType | null;
+
   private readonly onCloseModal: () => void;
+
   private readonly nameInput: BaseInput;
+
   private readonly colorInput: ColorPicker;
+
   public isSubmit = false;
 
   constructor(closeModal: () => void) {

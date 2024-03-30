@@ -9,6 +9,7 @@ const createTitle = (): BaseComponent => {
 
 export default class Header extends BaseComponent {
   private readonly onChangeLink: (value: BaseComponent) => void;
+
   private active: BaseComponent | null;
 
   constructor(onChangeLink: (value: BaseComponent) => void) {

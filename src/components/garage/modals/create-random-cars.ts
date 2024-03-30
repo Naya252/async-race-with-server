@@ -6,7 +6,9 @@ import { getRadomHex, getRandomName } from '../services/garage-service';
 
 export default class CreateRandomCars extends BaseModal {
   private readonly text: string;
+
   private data: CarType[] = [];
+
   private readonly onCloseCreateRandomModal: (data: CarType[]) => void;
 
   constructor(closeModal: (carsData: CarType[]) => void) {

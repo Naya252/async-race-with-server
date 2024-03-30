@@ -10,6 +10,8 @@ export type CarTemplate = {
   color: string;
 };
 
+export type StatusEngine = 'started' | 'drive' | 'stopped';
+
 export type EngineParams = {
   id: number;
   status: StatusEngine;
@@ -20,8 +22,6 @@ export const STATUS: Record<string, StatusEngine> = {
   drive: 'drive',
   stop: 'stopped',
 };
-
-export type StatusEngine = 'started' | 'drive' | 'stopped';
 
 export type CarRaceData = {
   velocity: number;

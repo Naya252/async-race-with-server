@@ -18,8 +18,11 @@ const headers = [
 
 export default class Winners extends BaseComponent {
   private readonly winners: BaseTable;
+
   private readonly winnersWrapper: BaseComponent;
+
   private readonly emptyRow: BaseComponent;
+
   private readonly pagination: Pagination;
 
   constructor() {

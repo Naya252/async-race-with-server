@@ -22,22 +22,6 @@ export async function getWinnersData(): Promise<Winner[]> {
   return data;
 }
 
-export async function changeSort(e: Event): Promise<Winner[]> {
-  let value;
-  if (e.target !== null && e.target instanceof HTMLElement) {
-    if (e.target.id === SORT.time) {
-      value = await sortTable(SORT.time);
-    }
-    if (e.target.id === SORT.wins) {
-      value = await sortTable(SORT.wins);
-    }
-  }
-  if (typeof value === 'undefined') {
-    throw new Error('winners undefined');
-  }
-  return value;
-}
-
 async function sortTable(sortBy: string): Promise<Winner[]> {
   const sort = store.winners.getSort();
   const order = store.winners.getOrder();
@@ -54,6 +38,22 @@ async function sortTable(sortBy: string): Promise<Winner[]> {
   }
 
   const value = await getWinnersData();
+  return value;
+}
+
+export async function changeSort(e: Event): Promise<Winner[]> {
+  let value;
+  if (e.target !== null && e.target instanceof HTMLElement) {
+    if (e.target.id === SORT.time) {
+      value = await sortTable(SORT.time);
+    }
+    if (e.target.id === SORT.wins) {
+      value = await sortTable(SORT.wins);
+    }
+  }
+  if (typeof value === 'undefined') {
+    throw new Error('winners undefined');
+  }
   return value;
 }
 

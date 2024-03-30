@@ -3,8 +3,11 @@ import { ITEMS_PER_PAGE } from '@/shared/api-constants';
 
 export default class Garage {
   private cars: Car[];
+
   private currentPage: number;
+
   private allPages: number;
+
   private allCarsCount: number;
 
   constructor(carsData: Car[]) {

@@ -3,6 +3,7 @@ import Garage from '@/store/garage-store/store';
 
 class Store {
   public garage: Garage;
+
   public winners: Winners;
 
   constructor() {

@@ -32,15 +32,25 @@ const createNext = (): BaseComponent => {
 
 export default class Pagination extends BaseComponent {
   private readonly titleWrapper: BaseComponent;
+
   private readonly title: string;
+
   private readonly store: Garage | Winners;
+
   private readonly wrapper: BaseComponent;
+
   private pages: BaseComponent[] = [];
+
   private readonly prew: BaseComponent;
+
   private readonly next: BaseComponent;
+
   private readonly dots: BaseComponent;
+
   private readonly dots2: BaseComponent;
+
   private active: HTMLElement | null = null;
+
   private readonly onReplaceItems: () => void;
 
   constructor(title: string, store: Garage | Winners, replaceItems: () => void) {

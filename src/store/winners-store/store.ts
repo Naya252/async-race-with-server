@@ -3,10 +3,15 @@ import { ITEMS_PER_PAGE, SORT, ORDER } from '@/shared/api-constants';
 
 export default class Winers {
   private winners: Winner[];
+
   private currentPage: number;
+
   private allPages: number;
+
   private allWinnersCount: number;
+
   private sort: string;
+
   private order: string;
 
   constructor(winnersData: Winner[]) {

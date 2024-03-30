@@ -10,10 +10,15 @@ import { NAV_LINKS } from './shared/constants';
 
 export default class App {
   private readonly appContainer: BaseComponent;
+
   private readonly header: Header;
+
   private readonly main: BaseComponent;
+
   private readonly footer: Footer;
+
   private readonly garage: Garage;
+
   private readonly winners: Winners;
 
   constructor() {

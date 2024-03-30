@@ -5,7 +5,9 @@ import alerts from '@/components/alert/alert';
 
 export default class RemoveCar extends BaseModal {
   private text: string;
+
   private data: CarType | null;
+
   private readonly onCloseRemoveModal: (data: CarType) => void;
 
   constructor(closeRemoveModal: (carData: CarType) => void) {

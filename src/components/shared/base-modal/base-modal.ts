@@ -4,14 +4,23 @@ import '@/components/shared/base-modal/modal.module.scss';
 
 export default class BaseModal extends BaseComponent {
   private readonly backdrop: BaseComponent;
+
   private readonly dialog: BaseComponent;
+
   protected readonly title: BaseComponent;
+
   private readonly content: BaseComponent;
+
   protected readonly body: BaseComponent;
+
   protected readonly footer: BaseComponent;
+
   protected readonly submitBtn: BaseButton;
+
   protected readonly cancelBtn: BaseButton;
+
   private readonly documentBody: HTMLElement;
+
   private readonly container: BaseComponent;
 
   constructor() {

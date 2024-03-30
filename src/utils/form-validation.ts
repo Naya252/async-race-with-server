@@ -71,6 +71,37 @@ const checkMaxLength = (el: HTMLInputElement, info: HTMLDivElement): boolean => 
   return result;
 };
 
+const checkElements = (element: ChildNode[] | HTMLFormControlsCollection): boolean => {
+  const formElements = Array.from(element);
+
+  const isValid = new Set();
+  isValid.add(true);
+
+  formElements.forEach((el) => {
+    if (el instanceof HTMLInputElement) {
+      const info = el.nextSibling;
+      if (info === null || !(info instanceof HTMLDivElement)) {
+        throw new Error('null');
+      }
+
+      info.innerHTML = '';
+      if (el.getAttribute('maxlength') !== null) {
+        isValid.add(checkMaxLength(el, info));
+      }
+      if (el.getAttribute('pattern') !== null) {
+        isValid.add(checkPattern(el, info));
+      }
+      if (el.getAttribute('minlength') !== null) {
+        isValid.add(checkMinLength(el, info));
+      }
+
+      isValid.add(checkRequired(el, info));
+    }
+  });
+
+  return !isValid.has(false);
+};
+
 const validation = (e: Event | HTMLElement): boolean => {
   let isValid = true;
 
@@ -109,37 +140,6 @@ const validation = (e: Event | HTMLElement): boolean => {
   }
 
   return isValid;
-};
-
-const checkElements = (element: ChildNode[] | HTMLFormControlsCollection): boolean => {
-  const formElements = Array.from(element);
-
-  const isValid = new Set();
-  isValid.add(true);
-
-  formElements.forEach((el) => {
-    if (el instanceof HTMLInputElement) {
-      const info = el.nextSibling;
-      if (info === null || !(info instanceof HTMLDivElement)) {
-        throw new Error('null');
-      }
-
-      info.innerHTML = '';
-      if (el.getAttribute('maxlength') !== null) {
-        isValid.add(checkMaxLength(el, info));
-      }
-      if (el.getAttribute('pattern') !== null) {
-        isValid.add(checkPattern(el, info));
-      }
-      if (el.getAttribute('minlength') !== null) {
-        isValid.add(checkMinLength(el, info));
-      }
-
-      isValid.add(checkRequired(el, info));
-    }
-  });
-
-  return !isValid.has(false);
 };
 
 export default validation;

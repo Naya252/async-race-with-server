@@ -4,9 +4,13 @@ import type { TableTitle } from '@/types/types';
 
 export default class BaseTable extends BaseComponent {
   public readonly head: BaseComponent;
+
   private readonly tr: BaseComponent;
+
   private readonly body: BaseComponent;
+
   private readonly titles: TableTitle[];
+
   private rows: BaseComponent[];
 
   constructor(titles: TableTitle[]) {

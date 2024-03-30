@@ -5,7 +5,9 @@ import './car.module.scss';
 
 export default class Car extends BaseComponent {
   private readonly id: number;
+
   private color: string;
+
   private name: string;
 
   constructor(data: CarType) {

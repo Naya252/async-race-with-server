@@ -1,13 +1,5 @@
 import type { Car, CarRaceData, DriveMode, Winner } from '@/types/types';
 
-export const isCars = (value: unknown): value is Car[] => {
-  if (value !== null && typeof value === 'object' && Array.isArray(value) && value.every((round) => isCar(round))) {
-    return true;
-  }
-
-  return false;
-};
-
 export const isCar = (value: unknown): value is Car => {
   if (
     value !== null &&
@@ -19,6 +11,14 @@ export const isCar = (value: unknown): value is Car => {
     'color' in value &&
     typeof value.color === 'string'
   ) {
+    return true;
+  }
+
+  return false;
+};
+
+export const isCars = (value: unknown): value is Car[] => {
+  if (value !== null && typeof value === 'object' && Array.isArray(value) && value.every((round) => isCar(round))) {
     return true;
   }
 
@@ -48,14 +48,6 @@ export const isDriveMode = (value: unknown): value is DriveMode => {
   return false;
 };
 
-export const isWinners = (value: unknown): value is Winner[] => {
-  if (value !== null && typeof value === 'object' && Array.isArray(value) && value.every((round) => isWinner(round))) {
-    return true;
-  }
-
-  return false;
-};
-
 export const isWinner = (value: unknown): value is Winner => {
   if (
     value !== null &&
@@ -67,6 +59,14 @@ export const isWinner = (value: unknown): value is Winner => {
     'time' in value &&
     typeof value.time === 'number'
   ) {
+    return true;
+  }
+
+  return false;
+};
+
+export const isWinners = (value: unknown): value is Winner[] => {
+  if (value !== null && typeof value === 'object' && Array.isArray(value) && value.every((round) => isWinner(round))) {
     return true;
   }
 

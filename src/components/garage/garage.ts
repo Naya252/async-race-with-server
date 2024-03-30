@@ -15,20 +15,35 @@ import './garage.scss';
 
 export default class Garage extends BaseComponent {
   private cars: Item[];
+
   private readonly carsWrapper: BaseComponent;
+
   private readonly createCarBtn: BaseButton;
+
   private readonly create100CarsBtn: BaseButton;
+
   private readonly raceCarsBtn: BaseButton;
+
   private readonly returnCarsBtn: BaseButton;
+
   private readonly removeCarModal: RemoveCar;
+
   private readonly changeCarModal: ChangeCar;
+
   private readonly createCarModal: CreateCar;
+
   private readonly create100CarsModal: CreateRandomCars;
+
   private readonly pagination: Pagination;
+
   private hasWin: boolean;
+
   private isRace: boolean;
+
   private countRaceCars: number;
+
   private readonly emptyRow: BaseComponent;
+
   private readonly onChangeWinners: () => void;
 
   constructor(changeWinners: () => void) {
@@ -199,10 +214,8 @@ export default class Garage extends BaseComponent {
       this.changeGarage();
     }
 
-    try {
-      await deleteWinner(carData.id);
-      this.onChangeWinners();
-    } catch {}
+    await deleteWinner(carData.id);
+    this.onChangeWinners();
   }
 
   private changeGarage(): void {

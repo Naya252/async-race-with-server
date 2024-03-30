@@ -7,20 +7,35 @@ import { ENGINE_ERROR, NOT_FOUND_ERROR } from '@/repositories/api/api';
 
 export default class Item extends BaseComponent {
   private readonly car: Car;
+
   private readonly editBtn: BaseButton;
+
   private readonly removeBtn: BaseButton;
+
   private readonly startBtn: BaseButton;
+
   private readonly returnBtn: BaseButton;
+
   private readonly carName: BaseComponent;
+
   private readonly onOpenRemoveModal: (data: CarType) => void;
+
   private readonly onOpenChangeModal: (data: CarType) => void;
+
   private readonly onChangeWinner: (data: CarType, time: number) => void;
+
   private readonly onChangeCountInRace: (value: number) => void;
+
   private carAnimtion: Animation | null = null;
+
   private time: number;
+
   private carData: CarType;
+
   private controller: AbortController;
+
   private isRaceDrive: boolean;
+
   private isDrive: boolean;
 
   constructor(
@@ -189,7 +204,7 @@ export default class Item extends BaseComponent {
     this.carAnimtion = car.animate(carTranslating, carTiming);
     this.car.setClasses(['fast']);
 
-    this.carAnimtion.onfinish = () => {
+    this.carAnimtion.onfinish = (): void => {
       car.style.transform = `translateX(900%)`;
     };
   }

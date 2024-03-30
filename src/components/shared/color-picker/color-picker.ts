@@ -4,6 +4,7 @@ import '@/components/shared/color-picker/base-color-picker.module.scss';
 
 export default class ColorPicker extends BaseComponent {
   private readonly textInput: BaseInput;
+
   private readonly colorInput: BaseInput;
 
   constructor() {
