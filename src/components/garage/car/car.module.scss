@@ -42,6 +42,37 @@
       background-repeat: no-repeat;
       background-size: contain;
       content: '';
+      animation: scroll 2s linear infinite;
     }
+  }
+
+  &.win {
+    position: relative;
+
+    &::before {
+      position: absolute;
+      top: -50%;
+      right: -5%;
+      width: 40%;
+      height: 60%;
+      background-image: url('/src/assets/icons/trophy.svg');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      content: '';
+    }
+  }
+}
+
+@keyframes scroll {
+  0% {
+    transform: rotate(360deg);
+  }
+  50% {
+    transform: rotate(270deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }

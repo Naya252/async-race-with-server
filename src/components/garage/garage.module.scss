@@ -1,33 +1,71 @@
 @import '../../styles/variables';
 
-.create-car-btn {
+.create-car-btn,
+.create-cars-btn,
+.race-car-btn,
+.return-car-btn {
   margin-top: 0 !important;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+.race-car-btn {
+  margin-left: auto;
+  background-color: $color17;
+  border-color: $color17;
+  padding-right: 2rem;
+  padding-left: 2rem;
+  font-weight: 600;
+
+  &:hover,
+  &:focus {
+    background-color: $color12;
+    border-color: $color12;
+    box-shadow:
+      $color13 0px 0px 4px,
+      $color17 0px 0px 8px;
+  }
+
+  &:active {
+    background-color: $color6 !important;
+    border-color: $color6 !important;
+  }
+}
+
+.return-car-btn {
+  background-color: $violet;
+  border-color: $violet;
+  padding-right: 2rem;
+  padding-left: 2rem;
+  font-weight: 600;
+
+  &:hover,
+  &:focus {
+    background-color: $violet2;
+    border-color: $violet2;
+    box-shadow:
+      $color11 0px 0px 4px,
+      $color7 0px 0px 8px;
+  }
+
+  &:active {
+    background-color: $purple !important;
+    border-color: $purple !important;
+  }
 }
 
 .btns-wrapper {
   display: flex;
   gap: 1rem;
+  margin: 1rem 0 0;
 }
 
 .cars-wrapper {
-  margin-top: 2rem;
+  margin-top: 1.2rem;
 
   .item {
     position: relative;
     border-bottom: 2px dashed rgba($light-color, 0.05);
-
-    &::before {
-      position: absolute;
-      top: 0;
-      right: calc(10% - 2rem);
-      width: 2rem;
-      height: 100%;
-      background-image: url('/src/assets/icons/flag-checkered.svg');
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: contain;
-      content: '';
-    }
 
     .car-btns {
       display: flex;
@@ -40,5 +78,25 @@
       margin: 0;
       font-size: 1.15rem;
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .cars-wrapper .item .car-title {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .btns-wrapper {
+    display: block;
+    margin: 0;
+  }
+
+  .create-car-btn,
+  .create-cars-btn,
+  .race-car-btn,
+  .return-car-btn {
+    margin: 0.5rem !important;
   }
 }

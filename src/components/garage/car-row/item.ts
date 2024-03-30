@@ -132,7 +132,7 @@ export default class Item extends BaseComponent {
 
   private changeItemToDafault(): void {
     this.startBtn.removeClasses(['disabled']);
-    this.car.removeClasses([carStyles.fast, carStyles.wrench]);
+    this.car.removeClasses([carStyles.fast, carStyles.wrench, carStyles.win]);
     const car = this.car.getElement();
     car.style.transform = `translateX(0)`;
     if (this.carAnimtion !== null) {
@@ -181,6 +181,10 @@ export default class Item extends BaseComponent {
     this.car.removeClasses([carStyles.fast]);
     this.car.setClasses([carStyles.wrench]);
     this.stopAnimate();
+  }
+
+  public showWin(): void {
+    this.car.setClasses([carStyles.win]);
   }
 
   private showPortal(): void {
