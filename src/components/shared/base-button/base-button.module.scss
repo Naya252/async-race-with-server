@@ -19,18 +19,18 @@
     border-color: $color12;
     filter: brightness(1.2);
     box-shadow:
-      $color13 0px 0px 4px,
+      $main-color 0px 0px 4px,
       $color17 0px 0px 8px;
   }
 
   &:active {
-    background-color: $color6 !important;
-    border-color: $color6 !important;
+    background-color: $color6;
+    border-color: $color6;
     filter: brightness(1);
   }
 }
 
-.btn-pz-primary.outlined {
+.btn.btn-pz-primary.outlined {
   border: 2px solid $main-color;
   margin-top: 16px;
   background-color: rgba($main-color, 0.1);
@@ -40,23 +40,89 @@
 
   &:hover,
   &:focus {
-    background-color: $accent-color;
-    border-color: $accent-color;
+    background-color: none;
+    border-color: $main-color;
     color: $light-color;
     box-shadow:
       $color17 0px 0px 4px,
-      $color13 0px 0px 8px;
+      $main-color 0px 0px 10px;
     filter: brightness(1.2);
   }
 
   &:active {
-    background-color: $accent-color;
-    border-color: $accent-color;
+    background-color: none !important;
+    border-color: $main-color;
     color: $light-color;
     box-shadow:
-      $color17 0px 0px 6px,
-      $color13 0px 0px 12px;
+      $color17 0px 0px 8px,
+      $main-color 0px 0px 16px;
     filter: brightness(1);
+  }
+
+  &.accept {
+    border-color: $color14;
+    color: $color14;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    font-weight: 600;
+    box-shadow:
+      $color17 0px 0px 6px,
+      $main-color 0px 0px 10px;
+
+    &:hover,
+    &:focus {
+      color: $light-color;
+      box-shadow:
+        $color17 0px 0px 10px,
+        $main-color 0px 0px 16px;
+    }
+
+    &:active {
+      color: $light-color;
+      box-shadow:
+        $color17 0px 0px 10px,
+        $main-color 0px 0px 20px;
+    }
+
+    &.disabled {
+      border-color: rgba($light-color, 0.3);
+      color: rgba($light-color, 0.3);
+      background-color: rgba($light-color, 0.1);
+      box-shadow: none;
+    }
+  }
+
+  &.reject {
+    border-color: $color15;
+    color: $color15;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    font-weight: 600;
+    box-shadow:
+      $success-color 0px 0px 6px,
+      $color15 0px 0px 10px;
+
+    &:hover,
+    &:focus {
+      color: $light-color;
+      box-shadow:
+        $success-color 0px 0px 10px,
+        $color15 0px 0px 16px;
+    }
+
+    &:active {
+      color: $light-color;
+      box-shadow:
+        $success-color 0px 0px 10px,
+        $color15 0px 0px 20px;
+    }
+
+    &.disabled {
+      border-color: rgba($light-color, 0.3);
+      color: rgba($light-color, 0.3);
+      background-color: rgba($light-color, 0.1);
+      box-shadow: none;
+    }
   }
 }
 

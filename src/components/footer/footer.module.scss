@@ -14,7 +14,7 @@
   height: 40px;
   background: center / contain no-repeat url('/src/assets/img/rss.svg');
   cursor: pointer;
-  filter: drop-shadow(1px 1px 2px $dark-color) brightness(0.6);
+  filter: drop-shadow(1px 1px 2px $dark-color) brightness(0.4);
   transition: all 0.3s ease;
 }
 
@@ -27,7 +27,7 @@
   height: 50px;
   background: center / contain no-repeat url('/src/assets/img/github.svg');
   cursor: pointer;
-  filter: drop-shadow(1px 1px 2px $dark-color) brightness(0.6);
+  filter: drop-shadow(1px 1px 2px $dark-color) brightness(0.4);
   transition: all 0.3s ease;
 }
 

@@ -99,7 +99,7 @@ export default class Garage extends BaseComponent {
   }
 
   private initRaceBtn(): BaseButton {
-    const btn = new BaseButton('button', 'Race', [styles['race-car-btn'], 'btn-sm']);
+    const btn = new BaseButton('button', 'Race', [styles['race-car-btn'], 'btn-sm', 'outlined', 'accept']);
     btn.addListener('click', () => {
       this.raceCars();
     });
@@ -107,7 +107,13 @@ export default class Garage extends BaseComponent {
   }
 
   private initReturnCarsBtn(): BaseButton {
-    const btn = new BaseButton('button', 'Reset', [styles['return-car-btn'], 'btn-sm', 'disabled']);
+    const btn = new BaseButton('button', 'Reset', [
+      styles['return-car-btn'],
+      'btn-sm',
+      'outlined',
+      'reject',
+      'disabled',
+    ]);
     btn.addListener('click', () => {
       this.returnCars();
     });

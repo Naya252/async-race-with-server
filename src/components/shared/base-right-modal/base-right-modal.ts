@@ -48,7 +48,7 @@ export default class BaseRightModal extends BaseComponent {
     });
     header.append(this.title, headerBtn);
 
-    this.submitBtn = new BaseButton('button', 'Ok', ['btn', 'btn-pz-primary']);
+    this.submitBtn = new BaseButton('button', 'Ok', ['btn', 'btn-pz-primary', 'outlined', 'accept']);
     this.cancelBtn = new BaseButton('button', 'Cancel', ['btn', 'btn-pz-primary', 'outlined', 'cls']);
     this.cancelBtn.addListener('click', () => {
       this.close();

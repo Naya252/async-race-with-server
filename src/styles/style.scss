@@ -47,6 +47,8 @@ h1 {
   width: 100%;
   min-height: 100dvh;
   flex-direction: column;
+  background: $dark-color center / cover no-repeat url('/src/assets/img/bg.jpg');
+  background-blend-mode: multiply;
 }
 
 .modal-open {

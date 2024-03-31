@@ -11,47 +11,6 @@
 
 .race-car-btn {
   margin-left: auto;
-  background-color: $color17;
-  border-color: $color17;
-  padding-right: 2rem;
-  padding-left: 2rem;
-  font-weight: 600;
-
-  &:hover,
-  &:focus {
-    background-color: $color12;
-    border-color: $color12;
-    box-shadow:
-      $color13 0px 0px 4px,
-      $color17 0px 0px 8px;
-  }
-
-  &:active {
-    background-color: $color6 !important;
-    border-color: $color6 !important;
-  }
-}
-
-.return-car-btn {
-  background-color: $violet;
-  border-color: $violet;
-  padding-right: 2rem;
-  padding-left: 2rem;
-  font-weight: 600;
-
-  &:hover,
-  &:focus {
-    background-color: $violet2;
-    border-color: $violet2;
-    box-shadow:
-      $color11 0px 0px 4px,
-      $color7 0px 0px 8px;
-  }
-
-  &:active {
-    background-color: $purple !important;
-    border-color: $purple !important;
-  }
 }
 
 .btns-wrapper {

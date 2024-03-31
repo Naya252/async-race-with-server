@@ -19,7 +19,7 @@
   .page-title {
     box-shadow: none;
     text-shadow: none;
-    color: $color13;
+    color: $main-color;
   }
 
   .pagination {
@@ -29,7 +29,8 @@
     position: relative;
 
     .page-item .page-link {
-      border-radius: 8px;
+      border-width: 2px;
+      border-radius: 0.3rem;
       color: rgba($color10, 0.7);
       -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
       outline: 2px solid transparent;
@@ -40,15 +41,15 @@
         outline: 2px solid transparent;
         box-shadow: none;
         color: $light-color;
-        background-color: rgba($violet, 0.2);
-        border-color: rgba($color13, 0.3);
+        background-color: rgba($main-color, 0.2);
+        border-color: rgba($main-color, 0.3);
       }
     }
 
     .page-item.active .page-link {
       color: $light-color;
-      background-color: $violet;
-      border-color: rgba($color13, 0.8);
+      background-color: rgba($main-color, 0.3);
+      border-color: rgba($main-color, 0.8);
     }
 
     .page-item.disabled .page-link {

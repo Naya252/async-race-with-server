@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 .alerts {
   composes: alerts from global;
   position: fixed;
@@ -21,6 +23,16 @@
   margin-bottom: 0;
 }
 
+.alert-success {
+  border-color: $color15;
+  color: $color15;
+}
+
+.alert-danger {
+  border-color: $color14;
+  color: $color14;
+}
+
 .icon {
   width: 1rem;
   min-width: 1rem;
@@ -41,7 +53,7 @@
 
   &.warning {
     background: center / contain no-repeat url('/src/assets/icons/alarm.svg');
-    filter: brightness(0) saturate(100%) invert(40%) sepia(92%) saturate(735%) hue-rotate(328deg) brightness(92%)
-      contrast(88%);
+    filter: brightness(0) saturate(100%) invert(60%) sepia(92%) saturate(735%) hue-rotate(302deg) brightness(92%)
+      contrast(100%);
   }
 }
