@@ -61,8 +61,10 @@ export default class Pagination extends BaseComponent {
     this.titleWrapper = new BaseComponent('div', ['page-title', 'title'], {}, this.title);
     this.wrapper = new BaseComponent('ul', ['pagination', 'justify-content-end']);
     this.wrapper.addListener('click', (e: Event) => {
-      this.changePage(e);
-      this.onReplaceItems();
+      if (e.target instanceof HTMLElement && !e.target.classList.contains('disabled')) {
+        this.changePage(e);
+        this.onReplaceItems();
+      }
     });
     this.append(this.titleWrapper, this.wrapper);
     this.dots = new BaseComponent('div', ['page-item', 'dots-pagination'], {}, '...');
