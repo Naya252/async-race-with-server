@@ -1,10 +1,14 @@
 import BaseComponent from '@/components/shared/base-component';
 import styles from '@/components/header/header.module.scss';
 import { APP_NAME, NAV_LINKS } from '@/shared/constants';
+import logoImg from '@/assets/logo.svg';
 
 const createTitle = (): BaseComponent => {
+  const logo = new BaseComponent('img', ['logo'], { alt: 'logo', src: logoImg });
   const title = new BaseComponent('h1', [styles.title], {}, APP_NAME);
-  return title;
+  const container = new BaseComponent('dev', [styles['logo-container']]);
+  container.append(logo, title);
+  return container;
 };
 
 export default class Header extends BaseComponent {
@@ -18,6 +22,7 @@ export default class Header extends BaseComponent {
 
     const container = new BaseComponent('nav', ['container-xxl', 'navbar-dark', 'bd-navbar']);
     const title = createTitle();
+
     const nav = this.createNav();
     this.active = null;
 

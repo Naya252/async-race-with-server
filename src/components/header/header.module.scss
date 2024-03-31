@@ -8,6 +8,16 @@
   user-select: none;
 }
 
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  img {
+    height: 1.5rem;
+  }
+}
+
 .title {
   composes: title from global;
   font-size: 1.5rem;
