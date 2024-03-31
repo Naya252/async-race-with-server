@@ -40,6 +40,16 @@
   }
 }
 
+.run-title {
+  position: absolute;
+  width: 150%;
+  top: -3rem;
+  right: 0;
+  color: $light-color;
+  text-align: end;
+  padding-left: 0 !important;
+}
+
 @media (max-width: 768px) {
   .cars-wrapper .item .car-title {
     font-size: 0.8rem;

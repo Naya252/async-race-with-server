@@ -21,6 +21,8 @@ export default class Item extends BaseComponent {
 
   private readonly carName: BaseComponent;
 
+  private readonly btnWrapper: BaseComponent;
+
   private readonly onOpenRemoveModal: (data: CarType) => void;
 
   private readonly onOpenChangeModal: (data: CarType) => void;
@@ -61,9 +63,9 @@ export default class Item extends BaseComponent {
     this.startBtn = new BaseButton('button', '', ['btn', 'btn-pz-primary', 'icon', 'start']);
     this.returnBtn = new BaseButton('button', '', ['btn', 'btn-pz-primary', 'icon', 'return', 'disabled']);
     this.carName = new BaseComponent('p', [styles['car-title']], {}, data.name);
-    const btnWrapper = new BaseComponent('div', [styles['car-btns']]);
-    btnWrapper.append(this.removeBtn, this.editBtn, this.startBtn, this.returnBtn, this.carName);
-    this.append(btnWrapper, this.car);
+    this.btnWrapper = new BaseComponent('div', [styles['car-btns']]);
+    this.btnWrapper.append(this.removeBtn, this.editBtn, this.startBtn, this.returnBtn, this.carName);
+    this.append(this.btnWrapper, this.car);
     this.removeBtn.addListener('click', () => {
       this.onOpenRemoveModal(data);
     });
@@ -140,6 +142,8 @@ export default class Item extends BaseComponent {
     car.style.transform = `translateX(0)`;
     if (this.carAnimtion !== null) {
       this.carAnimtion.cancel();
+      this.carName.removeClasses([styles['run-title']]);
+      this.btnWrapper.append(this.carName);
     }
   }
 
@@ -215,7 +219,11 @@ export default class Item extends BaseComponent {
 
     const car = this.car.getElement();
     this.carAnimtion = car.animate(carTranslating, carTiming);
+
     this.car.setClasses([carStyles.fast]);
+
+    this.car.append(this.carName);
+    this.carName.setClasses([styles['run-title']]);
 
     this.carAnimtion.onfinish = (): void => {
       car.style.transform = `translateX(900%)`;
