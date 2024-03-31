@@ -250,6 +250,7 @@ export default class Garage extends BaseComponent {
 
   private submitChangeModal(): void {
     this.changeGarage();
+    this.onChangeWinners();
   }
 
   private openCreateModal(): void {
