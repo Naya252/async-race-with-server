@@ -6,6 +6,7 @@ import { startEngine, changeDriveMode, stopEngine } from '@/components/garage/se
 import { ENGINE_ERROR, NOT_FOUND_ERROR } from '@/repositories/api/api';
 import carStyles from '@/components/garage/car/car.module.scss';
 import styles from '@/components/garage/garage.module.scss';
+import alerts from '@/components/alert/alert';
 
 export default class Item extends BaseComponent {
   private readonly car: Car;
@@ -132,7 +133,7 @@ export default class Item extends BaseComponent {
 
   private changeItemToDafault(): void {
     this.startBtn.removeClasses(['disabled']);
-    this.car.removeClasses([carStyles.fast, carStyles.wrench, carStyles.win]);
+    this.car.removeClasses([carStyles.fast, carStyles.wrench, carStyles.win, carStyles.glitch, carStyles.sad]);
     const car = this.car.getElement();
     car.style.transform = `translateX(0)`;
     if (this.carAnimtion !== null) {
@@ -172,7 +173,7 @@ export default class Item extends BaseComponent {
         this.showWrench();
       }
       if (error.message === NOT_FOUND_ERROR) {
-        this.showPortal();
+        this.showGlitch();
       }
     }
   }
@@ -187,13 +188,15 @@ export default class Item extends BaseComponent {
     this.car.setClasses([carStyles.win]);
   }
 
-  private showPortal(): void {
-    const btn = this.startBtn.getElement();
-    if (btn !== null && this.carAnimtion !== null) {
-      this.carAnimtion.cancel();
-      this.onChangeCountInRace(-1);
-      btn.click();
-    }
+  private showGlitch(): void {
+    this.car.setClasses([carStyles.glitch, carStyles.sad]);
+    this.stopAnimate();
+
+    alerts.addAlert('warning', `Glitch! ${this.carData.name} dropped out of the race`);
+
+    setTimeout(() => {
+      this.car.removeClasses([carStyles.glitch, carStyles.fast]);
+    }, 3000);
   }
 
   private animate(engineData: CarRaceData): void {
