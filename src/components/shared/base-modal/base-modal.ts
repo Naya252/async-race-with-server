@@ -23,8 +23,8 @@ export default class BaseModal extends BaseComponent {
 
   private readonly container: BaseComponent;
 
-  constructor() {
-    super('div', ['modal', 'fade'], {
+  constructor(classes: string[] = []) {
+    super('div', [...classes, 'modal', 'fade'], {
       'data-bs-keyboard': 'false',
       tabindex: '-1',
       'aria-modal': 'true',
