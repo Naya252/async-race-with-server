@@ -60,12 +60,7 @@ export default class Pagination extends BaseComponent {
     this.title = title;
     this.titleWrapper = new BaseComponent('div', ['page-title', 'title'], {}, this.title);
     this.wrapper = new BaseComponent('ul', ['pagination', 'justify-content-end']);
-    this.wrapper.addListener('click', (e: Event) => {
-      if (e.target instanceof HTMLElement && !e.target.classList.contains('disabled')) {
-        this.changePage(e);
-        this.onReplaceItems();
-      }
-    });
+    this.handlePagination();
     this.append(this.titleWrapper, this.wrapper);
     this.dots = new BaseComponent('div', ['page-item', 'dots-pagination'], {}, '...');
     this.dots2 = new BaseComponent('div', ['page-item', 'dots-pagination'], {}, '...');
@@ -89,6 +84,19 @@ export default class Pagination extends BaseComponent {
       }
     });
     this.createAllPages();
+  }
+
+  public handlePagination(): void {
+    this.wrapper.addListener('click', (e: Event) => {
+      if (
+        e.target instanceof HTMLElement &&
+        !e.target.classList.contains('disabled') &&
+        e.target.textContent !== String(this.store.getCurrentPage())
+      ) {
+        this.changePage(e);
+        this.onReplaceItems();
+      }
+    });
   }
 
   public createAllPages(): void {
