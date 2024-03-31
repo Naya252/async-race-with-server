@@ -277,6 +277,9 @@ export default class Garage extends BaseComponent {
   private checkCarsInRace(): void {
     if (this.countRaceCars > 0) {
       this.raceCarsBtn.setClasses(['disabled']);
+      this.create100CarsBtn.setClasses(['disabled']);
+      this.createCarBtn.setClasses(['disabled']);
+      this.pagination.addDisabled();
 
       if (this.isRace && this.countRaceCars < this.cars.length) {
         this.returnCarsBtn.setClasses(['disabled']);
@@ -286,11 +289,18 @@ export default class Garage extends BaseComponent {
           this.returnCarsBtn.removeClasses(['disabled']);
         }, 2000);
       }
+
+      if (this.isRace) {
+        this.create100CarsBtn.setClasses(['disabled']);
+        this.createCarBtn.setClasses(['disabled']);
+      }
     }
     if (this.countRaceCars === 0) {
       this.raceCarsBtn.removeClasses(['disabled']);
       this.returnCarsBtn.setClasses(['disabled']);
       this.isRace = false;
+      this.create100CarsBtn.removeClasses(['disabled']);
+      this.createCarBtn.removeClasses(['disabled']);
       this.pagination.removeDisabled();
     }
   }

@@ -133,6 +133,8 @@ export default class Item extends BaseComponent {
 
   private changeItemToDafault(): void {
     this.startBtn.removeClasses(['disabled']);
+    this.editBtn.removeClasses(['disabled']);
+    this.removeBtn.removeClasses(['disabled']);
     this.car.removeClasses([carStyles.fast, carStyles.wrench, carStyles.win, carStyles.glitch, carStyles.sad]);
     const car = this.car.getElement();
     car.style.transform = `translateX(0)`;
@@ -149,6 +151,8 @@ export default class Item extends BaseComponent {
 
   private async start(): Promise<void> {
     this.startBtn.setClasses(['disabled']);
+    this.editBtn.setClasses(['disabled']);
+    this.removeBtn.setClasses(['disabled']);
     this.onChangeCountInRace(1);
     this.controller = new AbortController();
     const id = this.car.getCarId();
