@@ -111,7 +111,7 @@ export default class Garage extends BaseComponent {
       styles['return-car-btn'],
       'btn-sm',
       'outlined',
-      'reject',
+      'accept',
       'disabled',
     ]);
     btn.addListener('click', () => {
