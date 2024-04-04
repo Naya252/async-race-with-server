@@ -27,6 +27,8 @@
     border-bottom: 2px dashed rgba($light-color, 0.15);
 
     .car-btns {
+      position: relative;
+      z-index: 10;
       display: flex;
       padding: 0.5rem 0;
       gap: 0.3rem;
