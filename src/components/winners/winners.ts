@@ -58,10 +58,16 @@ export default class Winners extends BaseComponent {
       this.winners.removeClasses(['hide-item']);
       this.emptyRow.setClasses(['hide-item']);
       this.pagination.show();
-    } else {
-      this.winners.setClasses(['hide-item']);
-      this.emptyRow.removeClasses(['hide-item']);
-      this.pagination.hide();
+    }
+    if (data.length === 0) {
+      if (store.winners.getCurrentPage() > 1) {
+        store.winners.setCurrentPage();
+        this.changeWinners().catch(() => null);
+      } else {
+        this.winners.setClasses(['hide-item']);
+        this.emptyRow.removeClasses(['hide-item']);
+        this.pagination.hide();
+      }
     }
   }
 

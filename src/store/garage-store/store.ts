@@ -50,6 +50,12 @@ export default class Garage {
     return this.currentPage;
   }
 
+  public setCurrentPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage -= 1;
+    }
+  }
+
   public changeAllPages(): void {
     this.allPages = Math.ceil(this.allCarsCount / ITEMS_PER_PAGE.garage);
   }

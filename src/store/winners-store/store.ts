@@ -48,6 +48,12 @@ export default class Winers {
     return this.currentPage;
   }
 
+  public setCurrentPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage -= 1;
+    }
+  }
+
   public changeAllPages(): void {
     this.allPages = Math.ceil(this.allWinnersCount / ITEMS_PER_PAGE.winners);
   }

@@ -218,11 +218,16 @@ export default class Garage extends BaseComponent {
       return false;
     });
 
+    if (this.cars.length === 1) {
+      store.garage.setCurrentPage();
+    }
+
     if (typeof item !== 'undefined') {
       this.changeGarage();
     }
 
     await deleteWinner(carData.id);
+
     this.onChangeWinners();
   }
 
