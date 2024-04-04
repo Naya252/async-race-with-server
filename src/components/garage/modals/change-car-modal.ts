@@ -6,6 +6,8 @@ import BaseInput from '@/components/shared/base-input/base-input';
 import ColorPicker from '@/components/shared/color-picker/color-picker';
 import isValid from '@/utils/form-validation';
 import alerts from '@/components/alert/alert';
+import Car from '@/components/garage/car/car';
+import carStyles from '@/components/garage/car/car.module.scss';
 
 export default class ChangeCar extends RightModal {
   private readonly contentModal: BaseComponent;
@@ -15,6 +17,8 @@ export default class ChangeCar extends RightModal {
   private readonly onCloseModal: () => void;
 
   private readonly nameInput: BaseInput;
+
+  private readonly car: Car;
 
   private readonly colorInput: ColorPicker;
 
@@ -34,14 +38,39 @@ export default class ChangeCar extends RightModal {
     });
 
     this.colorInput = new ColorPicker();
-    this.contentModal.append(this.nameInput, this.colorInput);
-
     this.data = null;
+
+    this.car = new Car({ id: 0, name: '', color: '#000000' });
+    this.car.setClasses([carStyles['width-70']]);
+    this.contentModal.append(this.nameInput, this.colorInput, this.car);
+
     this.onCloseModal = closeModal;
     this.submitBtn.addListener('click', (e: Event) => {
       this.submitModal(e).catch(() => null);
     });
+
     this.validateInput();
+    this.colorInput.addListener('input', (event: Event) => this.inputCarColor(event));
+    this.colorInput.addListener('change', (event: Event) => this.changeCarColor(event));
+  }
+
+  private inputCarColor(event: Event): void {
+    if (event.target !== null && event.target instanceof HTMLInputElement) {
+      const picker = event.target.closest('#picker');
+
+      if (picker && picker instanceof HTMLInputElement) {
+        this.car.setColor(picker.value);
+      }
+    }
+  }
+
+  private changeCarColor(event: Event): void {
+    if (event.target !== null && event.target instanceof HTMLInputElement) {
+      const text = event.target.closest('#color');
+      if (text && text instanceof HTMLInputElement) {
+        this.car.setColor(text.value);
+      }
+    }
   }
 
   private fillForm(carData: CarType): void {
@@ -55,6 +84,7 @@ export default class ChangeCar extends RightModal {
     this.data = carData;
     this.nameInput.changeSubText();
     this.colorInput.changeSubText();
+    this.car.setColor(carData.color);
     this.fillForm(carData);
     this.isSubmit = false;
     this.contentModal.removeClasses(['was-validated']);
