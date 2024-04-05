@@ -7,7 +7,7 @@ export default class Footer extends BaseComponent {
 
     const github = new BaseComponent('a', [styles.github], { href: 'https://github.com/Naya252', target: '_blank' });
     const rss = new BaseComponent('a', [styles['rs-logo']], {
-      href: 'https://rs.school/js/',
+      href: 'https://rs.school/',
       target: '_blank',
     });
 
