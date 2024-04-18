@@ -1,4 +1,4 @@
-export const BASE_URL = `http://localhost:3000/`;
+export const BASE_URL = `https://async-race-api-b09b.onrender.com/`;
 
 export const ITEMS_PER_PAGE = {
   garage: 7,
