@@ -1,0 +1,36 @@
+1. Task: [link](https://github.com/rolling-scopes-school/tasks/tree/master/stage2/tasks/async-race)
+2. Screenshot: 
+![image](https://github.com/rolling-scopes-school/naya252-JSFE2023Q4/assets/52450582/591e5225-4e7b-4993-b4ab-03f1a5a24b51)
+
+3. Deploy: [link](https://naya252-async-race.netlify.app/)
+4. Done 01.04.2024 / deadline 02.04.2024
+5. Score: 215 / 215
+  - Basic Structure (85 points)
+  - [x] View Configuration (30 points)
+    - [x] Two Views (10 points): Implement two primary views: "Garage" and "Winners".  (10 points)
+    - [x] Garage View Content: The "Garage" view must display its name, the current page number, and the total number of cars in the database (how many car user has in his garage). (5 points)
+    - [x] Winners View Content: The "Winners" view should similarly display its name, the current page number, and the total count of records in the database (how many records the winners table contains). (5 points)
+    - [x] Persistent State: Ensure the view state remains consistent when navigating between views. This includes preserving page numbers and input states. For example, page number shouldn't be reset, input controls should contain that they contained before switching, etc. (10 points)
+  - [x] Car Management (45 points)
+    - [x] CRUD Operations: Enable users to create, update, and delete cars, and display the list of cars. A car has two attributes: "name" and "color". For "delete"-operation car should be deleted from "garage" table as well as from "winners". (20 points)
+    - [x] Color Selection: Allow color selection from an RGB palette ([like here](https://colorspire.com/rgb-color-wheel/)), displaying the selected color on the car's image along with its name. (10 points)
+    - [x] Management Buttons: Provide buttons near each car's image for updating its attributes or deleting it. (5 points)
+    - [x] Pagination: Implement pagination for the "Garage" view, displaying 7 cars per page.  (10 points)
+   - [x] Car Generation (10 points)
+     - [x] Random Car Creation (10 points): There should be a button to create random cars (100 cars per click). Name should be assembled from two random parts, for example "Tesla" + "Model S", or "Ford" + "Mustang" (At least 10 different names for each part). Color should be also generated randomly.
+  -  Car Animation (50 points)
+   - [x] Engine Control Buttons: Place start/stop engine buttons near each car's image. (10 points)
+   - [x] Start Engine Animation: User clicks to the engine start button -> UI is waiting for car's velocity answer -> animate the car and makes another request to drive. In case api returned 500 error car animation should be stopped. (20 points)
+   - [x] Stop Engine Animation: User clicks to the engine stop button -> UI is waiting for answer for stopping engine -> car returned to it's initial place. (10 points)
+   - [x] Button States: Start engine button should be disabled in case car is already in driving mode. As well as stop engine button should be disabled when car is on it's initial place. (5 points)
+   - [x] Responsive Animation: Ensure car animations are fluid and responsive on screens as small as 500px. (5 points)
+  -  Race Animation (35 points)
+   - [x] Start Race Button: Implement a button to start the race for all cars on the current page. (15 points)
+   - [x] Reset Race Button: Create a button to reset the race, returning all cars to their starting positions. (10 points)
+   - [x] Winner Announcement: After some car finishes first user should see the message contains car's name that shows which one has won. (10 points)
+  -  Winners View (45 points)
+   - [x] Display Winners: After some car wins it should be displayed at the "Winners view" table. (15 points)
+   - [x] Pagination for Winners: Implement pagination for the "Winners" view, with 10 winners per page. (10 points)
+   - [x] Winners Table: The table should include columns for the car's №, image, name, number of wins, and best time in seconds. If the same car wins more than once the number of wins should be incremented while best time should be saved only if it's better than the stored one. (10 points)
+   - [x] Sorting Functionality: Allow users to sort the table by the number of wins and best time, in ascending or descending order. (10 points)
+
